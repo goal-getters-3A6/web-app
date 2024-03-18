@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/reservation')]
 class ReservationController extends AbstractController
-{
+{    
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
     public function index(ReservationRepository $reservationRepository): Response
     {

@@ -11,9 +11,10 @@ class Seance
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+   // #[ORM\Column]
+   #[ORM\Column(type: "integer")]
+   
     private ?int $idseance=null;
-
     #[ORM\Column(length:255)]
     private ?string $nom=null;
 

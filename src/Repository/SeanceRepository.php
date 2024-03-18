@@ -20,6 +20,13 @@ class SeanceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Seance::class);
     }
+    public function findAllImages()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.imageseance IS NOT NULL') // Filtrer uniquement les enregistrements avec des images non nulles
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Seance[] Returns an array of Seance objects

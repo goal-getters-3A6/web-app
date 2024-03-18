@@ -71,7 +71,7 @@ p a
 	display: inline;
 	position: relative;
 	color: inherit;
-	border-bottom: solid 1px #ffa07f;
+	border-bottom: solid 1px #004369;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
@@ -100,12 +100,12 @@ a, a:hover, a:visited, a:active, a:link
 p a:active
 {
 	position: relative;
-	color: #FF6347;
+	color: #004369;
 }
 p a:hover
 {
 	color: #FFFFFF;
-	background: #ffa07f;
+	background: #004369;
 }
 p a:hover::after
 {
@@ -144,7 +144,7 @@ h6::selection
 }
 .form-control
 {
-	color: #db5246;
+	color: #004369;
 }
 section
 {
@@ -296,7 +296,7 @@ section
 	width: 130px;
 	height: 100%;
 	content: '';
-	background: #ff9711;
+	background: #004369;
 	border-radius: 22px;
 	z-index: -1;
 	-webkit-transition: all 200ms ease;
@@ -314,7 +314,7 @@ section
 	font-size: 12px;
 	font-weight: 600;
 	text-transform: uppercase;
-	color: #ff9711;
+	color: #004369;
 	line-height: 0.75;
 }
 .section_title
@@ -337,21 +337,21 @@ section
 	margin-right: 4px;
 	color: #e0cccd;
 }
-.rating_1 i:first-child::before{color: #fba40e;}
-.rating_2 i:first-child::before{color: #fba40e;}
-.rating_2 i:nth-child(2)::before{color: #fba40e;}
-.rating_3 i:first-child::before{color: #fba40e;}
-.rating_3 i:nth-child(2)::before{color: #fba40e;}
-.rating_3 i:nth-child(3)::before{color: #fba40e;}
-.rating_4 i:first-child::before{color: #fba40e;}
-.rating_4 i:nth-child(2)::before{color: #fba40e;}
-.rating_4 i:nth-child(3)::before{color: #fba40e;}
-.rating_4 i:nth-child(4)::before{color: #fba40e;}
-.rating_5 i:first-child::before{color: #fba40e;}
-.rating_5 i:nth-child(2)::before{color: #fba40e;}
-.rating_5 i:nth-child(3)::before{color: #fba40e;}
-.rating_5 i:nth-child(4)::before{color: #fba40e;}
-.rating_5 i:nth-child(5)::before{color: #fba40e;}
+.rating_1 i:first-child::before{color: #004369;}
+.rating_2 i:first-child::before{color: #004369;}
+.rating_2 i:nth-child(2)::before{color: #004369;}
+.rating_3 i:first-child::before{color: #004369;}
+.rating_3 i:nth-child(2)::before{color: #004369;}
+.rating_3 i:nth-child(3)::before{color: #004369;}
+.rating_4 i:first-child::before{color: #004369;}
+.rating_4 i:nth-child(2)::before{color: #004369;}
+.rating_4 i:nth-child(3)::before{color: #004369;}
+.rating_4 i:nth-child(4)::before{color: #004369;}
+.rating_5 i:first-child::before{color: #004369;}
+.rating_5 i:nth-child(2)::before{color: #004369;}
+.rating_5 i:nth-child(3)::before{color: #004369;}
+.rating_5 i:nth-child(4)::before{color: #004369;}
+.rating_5 i:nth-child(5)::before{color: #004369;}
 
 /*********************************
 3. Header
@@ -409,7 +409,7 @@ section
 .main_nav ul li.active a,
 .main_nav ul li a:hover
 {
-	color: #ff9711;
+	color: #004369;
 }
 .phone
 {
@@ -417,13 +417,13 @@ section
 	padding-left: 23px;
 	padding-right: 20px;
 	border-radius: 22px;
-	border: solid 1px #ff9711;
-	box-shadow: 0 0 1px 0 #ff9711 inset, 0 0 1px 0 #ff9711;
+	border: solid 1px #004369;
+	box-shadow: 0 0 1px 0 #004369 inset, 0 0 1px 0 #004369;
 }
 .phone i
 {
 	font-size: 18px;
-	color: #ff9711;
+	color: #004369;
 	margin-right: 12px;
 }
 .phone > div
@@ -589,13 +589,13 @@ section
 	padding-left: 23px;
 	padding-right: 20px;
 	border-radius: 22px;
-	border: solid 1px #ff9711;
-	box-shadow: 0 0 1px 0 #ff9711 inset, 0 0 1px 0 #ff9711;
+	border: solid 1px #004369;
+	box-shadow: 0 0 1px 0 #004369 inset, 0 0 1px 0 #004369;
 }
 .menu_phone i
 {
 	font-size: 18px;
-	color: #ff9711;
+	color: #004369;
 	margin-right: 12px;
 }
 
@@ -684,7 +684,7 @@ section
 }
 .blog_post_title a:hover
 {
-	color: #ff9711;
+	color: #004369;
 }
 .blog_post_date
 {
@@ -695,7 +695,7 @@ section
 	font-size: 12px;
 	font-weight: 600;
 	text-transform: uppercase;
-	color: #ff9711;
+	color: #004369;
 }
 .blog_post_text
 {
@@ -714,7 +714,7 @@ section
 {
 	font-size: 12px;
 	font-weight: 400;
-	color: #ff9711;
+	color: #004369;
 }
 .blog_button
 {
@@ -771,7 +771,7 @@ section
 }
 .footer_nav ul li a:hover
 {
-	color: #ff9711;
+	color: #004369;
 }
 .newsletter_container
 {
@@ -788,7 +788,7 @@ section
 	height: 61px;
 	background: rgba(0,0,0,0.58);
 	border-radius: 31px;
-	border: solid 1px #ff880f;
+	border: solid 1px #004369;
 	padding-left: 39px;
 	outline: none;
 	color: #FFFFFF;
@@ -836,7 +836,7 @@ section
 	width: 61px;
 	height: 61px;
 	border-radius: 50%;
-	background: #ff880f;
+	background: #004369;
 	border: none;
 	outline: none;
 	font-size: 16px;

@@ -116,7 +116,7 @@ $(document).ready(function()
 		    			strokeWidth: 4,
 						easing: 'easeInOut',
 						duration: 1400,
-						color: '#ff9711',
+						color: '#004369',
 						trailColor: 'transparent',
 						trailWidth: 1,
 						svgStyle: {width: '100%', height: '100%'},
@@ -134,8 +134,8 @@ $(document).ready(function()
 								},
 								autoStyleContainer: false
 						},
-						from: {color: '#ff9711'},
-						to: {color: '#ff9711'},
+						from: {color: '#004369'},
+						to: {color: '#004369'},
 						step: function(state, bar) {
 						bar.setText(Math.round(bar.value() * 100) + ' %');
 						}

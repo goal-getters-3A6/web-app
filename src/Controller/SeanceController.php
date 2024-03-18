@@ -78,4 +78,25 @@ class SeanceController extends AbstractController
 
         return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{idseance}/seanceimage', name: 'seanceimage')]
+    public function imageseance(SeanceRepository $seanceRepository): Response
+    {    // Récupérer toutes les entrées de la table seance
+        $seances = $seanceRepository->findAll();
+
+        // Tableau pour stocker les chemins des images
+        $images = [];
+
+        // Parcourir toutes les entrées de la table seance et extraire les chemins des images
+        foreach ($seances as $seance) {
+            // Vérifier si le champ imageseance contient un chemin d'image non vide
+            if ($seance->getImageseance() !== null) {
+                // Ajouter le chemin de l'image au tableau des images
+                $images[] = $seance->getImageseance();
+            }
+        }
+
+        return $this->render('seance/index.html.twig', [
+            'images' => $images, // Passer le tableau des chemins d'images à la vue Twig
+        ]);
+    }
 }

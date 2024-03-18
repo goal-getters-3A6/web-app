@@ -61,7 +61,7 @@ class Reservation
         return $this->ids;
     }
 
-    public function setIds(?Seance $ids): static
+   public function setIds(?Seance $ids): static
     {
         $this->ids = $ids;
 
