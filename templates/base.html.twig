@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title> {% block titre %}SportFIT {% endblock %}</title>
+<title> {% block titre %}Go FIT {% endblock %}</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="SportFIT template project">
+<meta name="description" content=" Go FIT template project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
  {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{asset('Front/styles/bootstrap-4.1.2/bootstrap.min.css')}}">
@@ -31,21 +31,23 @@
 				<div class="col">
 					<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
 						<a href="#">
-							<div class="logo d-flex flex-row align-items-center justify-content-start"><img src="{{ asset ('Front/images/dot.png')}}" alt=""><div>Sport<span>fit</span></div></div>
-						</a>
+                        <div class="logo d-flex flex-row align-items-center justify-content-start">
+                        <img src="{{ asset ('Front/images/logo.png')}}" alt="" style="width: 75px;">
+                      <div>Go<span>FIT</span></div>
+                      </div>						
+					  </a>
 						<nav class="main_nav">
-							<ul class="d-flex flex-row align-items-center justify-content-start">
-								<li class="active"><a href="index.html">Accueil</a></li>
-								<li><a href="about.html">About us</a></li>
-								<li><a href="services.html">Classes & Services</a></li>
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="contact.html">Contact</a></li>
+								<ul class="d-flex flex-sm-row flex-column align-items-sm-start align-items-center justify-content-center">
+								<li class="active"><a href="{{path('app_accueil')}}">Accueil</a></li>
+								    <li><a href="{{path('app_equipement')}} ">Equipement</a></li>
+									<li><a href="{{path('app_reservation')}}">Reservation</a></li>
+									<li><a href="{{path('app_abonnement')}}">Abonnement</a></li>
+									<li><a href="{{path('app_alimentaire')}}">Alimentaire</a></li>
+									<li><a href="{{path('app_evenement')}}">Evenement</a></li>
+									<li><a href="{{path('app_reclamation')}}">Reclamation</a></li>
 							</ul>
 						</nav>
-						<div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
-							<i class="fa fa-phone" aria-hidden="true"></i>
-							<div>652-345 3222 11</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -181,8 +183,8 @@
 				<div class="col-lg-6">
 					<div class="about_content">
 						<div class="section_title_container">
-							<div class="section_subtitle">welcome to sportfit</div>
-							<div class="section_title">About <span>Sportfit</span></div>
+							<div class="section_subtitle">welcome to Go FIT</div>
+							<div class="section_title">About <span> Go FIT</span></div>
 						</div>
 						<div class="text_highlight">Etiam commodo justo nec aliquam feugiat. Donec a leo eget eget augue porttitor sollicitudin augue porttitor sollicitudin.</div>
 						<div class="about_text">
@@ -214,7 +216,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="section_title_container">
-						<div class="section_subtitle">welcome to sportfit</div>
+						<div class="section_subtitle">welcome to  Go FIT</div>
 						<div class="section_title">Testimonials</div>
 					</div>
 
@@ -306,7 +308,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="section_title_container">
-						<div class="section_subtitle">welcome to sportfit</div>
+						<div class="section_subtitle">welcome to  Go FIT</div>
 						<div class="section_title">Our Courses</div>
 					</div>
 				</div>
@@ -407,7 +409,7 @@
 				<div class="col">
 					<div class=" d-flex flex-row align-items-start justify-content-start">
 						<div class="section_title_container">
-							<div class="section_subtitle">welcome to sportfit</div>
+							<div class="section_subtitle">welcome to  Go FIT</div>
 							<div class="section_title">The Blog</div>
 						</div>
 						<div class="all_posts_link ml-auto"><a href="#">View all blog posts</a></div>
@@ -474,16 +476,13 @@
 						<div class="footer_content">
 							<div class="footer_logo">
 								<a href="#">
-									<div class="logo d-flex flex-row align-items-center justify-content-center"><img src="{{ asset ('Front/images/dot.png')}}" alt=""><div>Sport<span>fit</span></div></div>
+									<div class="logo d-flex flex-row align-items-center justify-content-center"><img src="{{ asset ('Front/images/logo.png')}}" alt="" style="width: 80px;"><div>Go<span>FIT</span></div></div>
 								</a>
 							</div>
 							<nav class="footer_nav">
 								<ul class="d-flex flex-sm-row flex-column align-items-sm-start align-items-center justify-content-center">
-									<li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About us</a></li>
-									<li><a href="services.html">Classes & Services</a></li>
-									<li><a href="blog.html">Blog</a></li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="{{path('app_apropos')}}">A propos</a></li>
+									<li><a href="{{path('app_contact')}}">Contact</a></li>
 								</ul>
 							</nav>
 							<div class="newsletter_container">
