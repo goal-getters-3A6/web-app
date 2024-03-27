@@ -1,0 +1,41 @@
+{% extends 'equipement/equipement.html.twig' %}
+
+{% block title %}Equipement{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Equipement</h1>
+            <div class="equipement-details">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ asset(equipement.imageeq) }}" class="img-fluid" style="max-height: 200px;">
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong>Equipement:</strong> {{ equipement.nomeq }}</p>
+                        <p><strong>Description:</strong> {{ equipement.desceq }}</p>
+                        <p><strong>Documentation:</strong> {{ equipement.doceq }}</p>
+                        <p><strong>Categorie:</strong> {{ equipement.categeq }}</p>
+                        <p><strong>Marque:</strong> {{ equipement.marqueeq }}</p>
+                        <p><strong>Matricule:</strong> {{ equipement.matriculeeq }}</p>
+                        <p><strong>Date de maintenance prévue:</strong> {{ equipement.datepremainte ? equipement.datepremainte|date('Y-m-d H:i:s') : '' }}</p>
+                        <p><strong>Date de prochaine maintenance:</strong> {{ equipement.datepromainte ? equipement.datepromainte|date('Y-m-d H:i:s') : '' }}</p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <a href="{{ path('app_equipement_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            <a href="{{ path('avis_equipement', {'idEq': equipement.idEq}) }}" class="btn btn-primary">Avis</a>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}
