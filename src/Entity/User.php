@@ -2,66 +2,91 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass:UserRepository::class)]
-class User
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id=null;
+    private ?int $id = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $nom=null;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
-    #[ORM\Column(length:255)]
-    private ?string  $prenom=null;
+    #[ORM\Column(length: 255)]
+    private ?string  $prenom = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $mail=null;
+    #[ORM\Column(length: 255)]
+    private ?string $mail = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $mdp=null;
+    #[ORM\Column(length: 255)]
+    private ?string $mdp = null;
 
     #[ORM\Column]
     private ?bool $statut = false;
 
     #[ORM\Column]
-    private ?int $nbTentative=null;
+    private ?int $nbTentative = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $image=null;
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
 
     #[ORM\Column]
     private ?\DateTime $dateNaissance = null;
 
     #[ORM\Column]
-    private ?\DateTime $dateInscription=null;
+    private ?\DateTime $dateInscription = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $tel=null;
+    #[ORM\Column(length: 255)]
+    private ?string $tel = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $role=null;
-
-    #[ORM\Column]
-    private ?float $poids=null;
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
 
     #[ORM\Column]
-    private ?float $taille=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $sexe=null;
+    private ?float $poids = null;
 
     #[ORM\Column]
-    private ?int $tfa=null;
+    private ?float $taille = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $tfaSecret=null;
+    #[ORM\Column(length: 255)]
+    private ?string $sexe = null;
+
+    #[ORM\Column]
+    private ?int $tfa = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $tfaSecret = null;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $activation_token;
+
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     */
+    private $reset_token;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $disable_token;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Length(min="8" , minMessage="Phone number must contain exactly 8 numbers")
+     * @Assert\Length(max="8" , maxMessage="Phone number must contain exactly 8 numbers")
+     */
+    private $verificationCode;
 
     public function getId(): ?int
     {
@@ -260,5 +285,149 @@ class User
         return $this;
     }
 
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+    public function getUserIdentifier(): ?string
+    {
+        return $this->id;
+    }
+    public function __toString(): string
+    {
+        return $this->id;
+    }
+    public function serialize()
+    {
+        return serialize($this->id);
+    }
+    public function unserialize($data)
+    {
+        $this->id = unserialize($data);
+    }
+    /**
+     * Get the value of isVerified
+     */
+    public function getIsVerified()
+    {
+        return $this->isVerified;
+    }
+    /**
+     * Set the value of isVerified
+     *
+     * @return  self
+     */
+    public function setIsVerified($isVerified)
+    {
+        $this->isVerified = $isVerified;
 
+        return $this;
+    }
+    /**
+     * Get the value of activation_token
+     */
+    public function getActivationToken()
+    {
+        return $this->activation_token;
+    }
+    /**
+     * Set the value of activation_token
+     *
+     * @return  self
+     */
+    public function setActivationToken($activation_token)
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
+    /**
+     * Get the value of reset_token
+     */
+    public function getResetToken()
+    {
+        return $this->reset_token;
+    }
+    /**
+     * Set the value of reset_token
+     *
+     * @return  self
+     */
+    public function setResetToken($reset_token)
+    {
+        $this->reset_token = $reset_token;
+
+        return $this;
+    }
+    /**
+     * Get the value of disable_token
+     */
+    public function getDisableToken()
+    {
+        return $this->disable_token;
+    }
+    /**
+     * Set the value of disable_token
+     *
+     * @return  self
+     */
+    public function setDisableToken($disable_token)
+    {
+        $this->disable_token = $disable_token;
+
+        return $this;
+    }
+    /**
+     * Get the value of verificationCode
+     */
+    public function getVerificationCode()
+    {
+        return $this->verificationCode;
+    }
+    /**
+     * Set the value of verificationCode
+     *
+     * @return  self
+     */
+    public function setVerificationCode($verificationCode)
+    {
+        $this->verificationCode = $verificationCode;
+
+        return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return (string) $this->mail;
+    }
+
+    public function getPassword(): string
+    {
+        return (string) $this->mdp;
+    }
+
+    public function getRoles(): array
+    {
+        $role = $this->role;
+        if (strcmp($role, "CLIENT") == 0) {
+            return $roles = array("ROLE_USER");
+        } else {
+            return $roles = array("ROLE_ADMIN");
+        }
+    }
+
+    function getJsonData()
+    {
+        $var = get_object_vars($this);
+        foreach ($var as &$value) {
+            if (is_object($value) && method_exists($value, 'getJsonData')) {
+                $value = $value->getJsonData();
+            }
+        }
+        return $var;
+    }
 }
