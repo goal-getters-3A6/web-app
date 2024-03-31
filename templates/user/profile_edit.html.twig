@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<section class="login spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+
+					<div class="login__form">
+						{% if not form.vars.valid %}
+							{% for child in  form.children %}
+								{% for error in child.vars.errors %}
+									<div class="alert alert-danger">{{ error.message }}</div>
+								{% endfor %}
+							{% endfor %}
+						{% endif %}
+						{{ form_start(form ,  {'attr' : {'novalidate' : 'novalidate'}}) }}
+
+						{{ form_end(form) }}
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div style="display: grid" class="login__register">
+						<a class="primary-btn" href="{{ path('edit_profile_password') }}">Edit Password</a>
+						<form method="post" action="{{ path('delete_profile') }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+							<button style="border: none;" class="primary-btn">Delete Account</button>
+						</form>
+					</div>
+					<a class="primary-btn" href="{{ path('profile') }}">Back</a>
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface
+#[UniqueEntity(fields: ['mail'], message: 'There is already an account with this mail')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface, PasswordUpgraderInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +25,7 @@ class User implements UserInterface
     #[ORM\Column(length: 255)]
     private ?string  $prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]
@@ -414,9 +419,18 @@ class User implements UserInterface
     {
         $role = $this->role;
         if (strcmp($role, "CLIENT") == 0) {
-            return $roles = array("ROLE_USER");
+            return
+                array("ROLE_USER");
         } else {
-            return $roles = array("ROLE_ADMIN");
+            return
+                array("ROLE_ADMIN");
+        }
+    }
+
+    public function upgradePassword($user, $newHashedPassword)
+    {
+        if ($user instanceof User) {
+            $user->setMdp($newHashedPassword);
         }
     }
 
@@ -429,5 +443,10 @@ class User implements UserInterface
             }
         }
         return $var;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
     }
 }

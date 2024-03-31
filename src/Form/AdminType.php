@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,8 @@ class AdminType extends AbstractType
             ->add('mail')
             ->add('mdp')
             ->add('dateNaissance')
-            ->add('tel');
+            ->add('tel')
+            ->add('submit', SubmitType::class, ['label' => 'Ajouter']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
