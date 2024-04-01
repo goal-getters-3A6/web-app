@@ -40,13 +40,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column, Assert\Date]
+    #[ORM\Column]
     private ?\DateTime $dateNaissance = null;
 
     #[ORM\Column]
     private ?\DateTime $dateInscription = null;
 
-    #[ORM\Column(length: 255), Assert\Regex(pattern: "/^0[1-9]([-. ]?[0-9]{2}){4}$/")]
+    #[ORM\Column(length: 255)]
     private ?string $tel = null;
 
     #[ORM\Column(length: 255)]
