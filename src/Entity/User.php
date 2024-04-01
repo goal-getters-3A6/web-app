@@ -25,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     #[ORM\Column(length: 255)]
     private ?string  $prenom = null;
 
-    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true), Assert\Email]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]
@@ -40,13 +40,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column]
+    #[ORM\Column, Assert\Date]
     private ?\DateTime $dateNaissance = null;
 
     #[ORM\Column]
     private ?\DateTime $dateInscription = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255), Assert\Regex(pattern: "/^0[1-9]([-. ]?[0-9]{2}){4}$/")]
     private ?string $tel = null;
 
     #[ORM\Column(length: 255)]
@@ -67,30 +67,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     #[ORM\Column(length: 255)]
     private ?string $tfaSecret = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean', name: 'isVerified', options: ['default' => '0'])]
     private $isVerified = false;
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $activation_token;
 
-    /**
-     * @ORM\Column(type="string", length=60, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 60, nullable: true)]
     private $reset_token;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string', length: 60, nullable: true)]
     private $disable_token;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Length(min="8" , minMessage="Phone number must contain exactly 8 numbers")
-     * @Assert\Length(max="8" , maxMessage="Phone number must contain exactly 8 numbers")
-     */
+    #[ORM\Column(type: 'integer', name: "verificationCode", nullable: true)]
     private $verificationCode;
 
     public function getId(): ?int

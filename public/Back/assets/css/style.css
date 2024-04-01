@@ -11564,7 +11564,7 @@ code {
 
 /* Buttons */
 .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload {
-  font-size: 0.875rem;
+  font-size: 0.675rem;
   line-height: 1.71;
   font-family: "Rubik", sans-serif;
   font-weight: 500;

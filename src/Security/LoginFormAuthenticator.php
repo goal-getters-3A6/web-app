@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +20,13 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
+    private EntityManagerInterface $entityManager;
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager)
     {
+        $this->entityManager = $entityManager;
     }
 
     public function authenticate(Request $request): Passport
@@ -44,10 +48,20 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        if (in_array('ROLE_ADMIN', $token->getUser()->getRoles())) {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $token->getUser()->getUserIdentifier()]);
+        $activated = $user->getIsVerified();
+        $hasAccess = in_array('ROLE_ADMIN', $token->getUser()->getRoles());
+        $disabled = $user->getDisableToken();
+
+        if ($activated === false) {
+            return new RedirectResponse($this->urlGenerator->generate('denied_access'));
+        } elseif ($disabled !== null) {
+            return new RedirectResponse($this->urlGenerator->generate('DisabledAccount'));
+        } elseif ($hasAccess) {
             return new RedirectResponse($this->urlGenerator->generate('choice'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('profile'));
         }
-        return new RedirectResponse($this->urlGenerator->generate('app_home_index'));
     }
 
     protected function getLoginUrl(Request $request): string

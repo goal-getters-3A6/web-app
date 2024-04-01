@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ProfileType;
 use App\Form\PasswordProfileType;
+use App\Form\UserAdminEdit;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -97,6 +98,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/", name="app_users_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
@@ -141,12 +143,33 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserAdminEdit::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user);
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $userRepository->createQueryBuilder('u')
+                ->update()
+                ->set('u.nom', ':nom')
+                ->set('u.prenom', ':prenom')
+                ->set('u.mail', ':mail')
+                ->set('u.dateNaissance', ':dateNaissance')
+                ->set('u.tel', ':tel')
+                ->set('u.poids', ':poids')
+                ->set('u.taille', ':taille')
+                ->set('u.sexe', ':sexe')
+                ->where('u.id = :id')
+                ->setParameter('id', $user->getId())
+                ->setParameter('nom', $user->getNom())
+                ->setParameter('prenom', $user->getPrenom())
+                ->setParameter('mail', $user->getMail())
+                ->setParameter('dateNaissance', $user->getDateNaissance())
+                ->setParameter('tel', $user->getTel())
+                ->setParameter('poids', $user->getPoids())
+                ->setParameter('taille', $user->getTaille())
+                ->setParameter('sexe', $user->getSexe())
+                ->getQuery()
+                ->execute();
+            return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -161,23 +184,32 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $userRepository->remove($user);
+            $userRepository->createQueryBuilder('u')
+                ->delete()
+                ->where('u.id = :id')
+                ->setParameter('id', $user->getId())
+                ->getQuery()
+                ->execute();
         }
 
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/disable_user/{id}", name="disable_user", methods={"GET", "POST"})
      */
     public function disable_user(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        $user->setDisableToken("1");
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $entityManager->createQuery('UPDATE App\Entity\User u SET u.disable_token = :disableToken WHERE u.id = :id')
+            ->setParameter('disableToken', bin2hex(random_bytes(32)))
+            ->setParameter('id', $user->getId())
+            ->execute();
+
         return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/enable_user/{id}", name="enable_user", methods={"GET", "POST"})
      */
     public function enable_user(Request $request, User $user, EntityManagerInterface $entityManager): Response

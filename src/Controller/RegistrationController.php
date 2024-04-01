@@ -34,7 +34,6 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-        var_dump($request->request);
         $date = new \DateTime('now');
         $user->setDateInscription($date);
         $user->setRole("CLIENT");
