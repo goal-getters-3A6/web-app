@@ -13,6 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Symfony\Component\Mailer\MailerInterface;
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {    
@@ -84,17 +91,116 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/{idreservation}', name: 'app_reservation_delete', methods: ['POST'])]
-    public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$reservation->getIdreservation(), $request->request->get('_token'))) {
+   /* #[Route('/{idreservation}', name: 'app_reservation_delete', methods: ['POST'])]
+    public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager, MailerInterface $mailer): Response*/
+    //{
+       /* if ($this->isCsrfTokenValid('delete'.$reservation->getIdreservation(), $request->request->get('_token'))) {
             $entityManager->remove($reservation);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
-    }
+        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);*/
+        /*if ($this->isCsrfTokenValid('delete'.$reservation->getIdreservation(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($reservation);
+            $entityManager->flush();
     
+            // Créer une nouvelle instance de PHPMailer
+            $mail = new PHPMailer(true);
+    
+            try {
+                // Paramètres du serveur
+                $mail->SMTPDebug = 2;                                 
+                $mail->isSMTP();                                      
+                $mail->Host = 'smtp.office365.com';  
+                $mail->SMTPAuth = true;                               
+                $mail->Username = 'Sarra Hammemi';                 
+                $mail->Password = '211JFt436114515103';                           
+                $mail->SMTPSecure = 'tls';                            
+                $mail->Port = 587;                                    
+    
+                // Destinataires
+                $mail->setFrom('sarrahammemi524@gmail.com', 'Mailer');
+                $mail->addAddress('sarra.hammemi@esprit.tn', 'Joe User');     
+    
+                // Contenu
+                $mail->isHTML(true);                                  
+                $mail->Subject = 'Annulation de la réservation';
+                $mail->Body    = 'Votre réservation a été annulée.';
+    
+                $mail->send();
+                echo 'Message has been sent';
+            } catch (Exception $e) {
+                echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+            }
+        }
+    
+        return $this->redirectToRoute('app_reservation_index');*/
+
+       /* if ($this->isCsrfTokenValid('delete'.$reservation->getIdreservation(), $request->request->get('_token'))) {
+            $entityManager->remove($reservation);
+            $entityManager->flush();
+    
+            // Créer l'email
+            $email = (new \Symfony\Component\Mime\Email())
+            ->from('sarrahammemi524@gmail.com')
+            ->to('sarra.hammemi@esprit.tn')
+            ->subject('Annulation de la réservation')
+            ->text('Votre réservation a été annulée.');
+        
+    
+            // Envoyer l'email
+            $mailer->send($email);
+        }
+    
+        return $this->redirectToRoute('app_reservation_index');*/
+        
+   // }
+   #[Route('/{idreservation}', name: 'app_reservation_delete', methods: ['POST'])]
+   public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+   {
+       if ($this->isCsrfTokenValid('delete'.$reservation->getIdreservation(), $request->request->get('_token'))) {
+           $entityManager->remove($reservation);
+           $entityManager->flush();
+   
+           // Créer une nouvelle instance de PHPMailer
+           $mail = new PHPMailer(true);
+           $mail->SMTPDebug = 2;
+
+   
+           try {
+               // Paramètres du serveur
+              $mail->isSMTP();
+
+              $mail->Host = 'smtp-mail.outlook.com';
+              $mail->SMTPAuth = true;
+               $mail->Username = 'sarra.hammemi@esprit.tn';
+               $mail->Password = '211JFt4361';
+               $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+               $mail->Port = 587;
+   
+               // Destinataires
+               $mail->setFrom('sarra.hammemi@esprit.tn', 'Service de reservation');
+               $mail->addAddress('jbooo7345@gmail.com');
+   
+               // Contenu
+               $mail->isHTML(true);
+               $mail->Subject = 'Annulation de la reservation pour ' . $reservation->getIduser()->getNom();
+               $mail->Body    = 'Cher(e) ' . $reservation->getIduser()->getNom() 
+               . ',<br><br>Nous sommes désolés de vous informer que votre réservation pour la séance de ' . 
+               $reservation->getIds()->getNom() . ' a été annulée en raison de circonstances imprévues.
+               <br><br>Nous nous excusons pour tout inconvénient que cela pourrait causer et nous 
+               vous remercions de votre compréhension.<br><br>Cordialement,<br>Service de réservation';   
+               // Envoyer l'email
+               $mail->send();
+           } catch (Exception $e) {
+               echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+           }
+           
+       }
+   
+       return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+   }
     #[Route('/search', name: 'reservation_search', methods: ['GET'])]
     public function search(Request $request, ReservationRepository $reservationRepository): Response
     {
