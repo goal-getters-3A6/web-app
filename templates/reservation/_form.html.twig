@@ -1,0 +1,26 @@
+<div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+
+     <div class="form-group">
+        {{ form_label(form.ids, 'Seance') }}
+        {{ form_widget(form.ids, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert alert-danger">
+            {{ form_errors(form.ids) }}
+        </div>
+    </div>
+ <div class="form-group">
+        {{ form_label(form.iduser, 'Utilisateur') }}
+        {{ form_widget(form.iduser, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert alert-danger">
+            {{ form_errors(form.iduser) }}
+        </div>
+    </div>
+    <br>
+    
+    <!-- Vos champs de formulaire ici -->
+   <!-- <button class="btn">{{ button_label|default('Save') }}</button>-->
+    <button type="submit" id="btnAjouter" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+    {{ form_end(form) }}
+</div>

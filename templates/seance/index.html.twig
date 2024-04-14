@@ -1,0 +1,31 @@
+{% extends 'seance/seance_elements.html.twig' %}
+
+{% block title %}Seance List{% endblock %}
+
+{% block body %}
+    <h1>Seance List</h1>
+
+    <div class="row">
+        {% for seance in seances %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                            <img src="{{ asset('uploads/' ~ seance.imageseance) }}" class="seance-image" alt="{{ seance.nom }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ seance.nom }}</h5>
+                        <p class="card-text">{{ seance.jourseance}}</p>
+                         <p class="card-text">{{ seance.duree}}</p>
+                    <p class="card-text">{{ seance.horaire|date('H:i') }}H</p>
+                    <a href="{{ path('app_seance_show', {'idseance': seance.idseance}) }}">show</a>
+                    <a href="{{ path('app_seance_edit', {'idseance': seance.idseance}) }}">edit</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col">
+                <p>No records found</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('app_seance_new') }}">Create new</a>
+{% endblock %}

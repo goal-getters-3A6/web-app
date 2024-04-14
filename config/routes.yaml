@@ -1,0 +1,11 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+app_planning:
+    path: seance/pl
+    controller: App\Controller\SeanceController::planning
+    # config/routes.yaml
+app_reservationb:
+    path: /rb
+    controller: App\Controller\TemplatesControllerBack::new
+    methods: [GET, POST]
