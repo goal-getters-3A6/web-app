@@ -4,12 +4,10 @@
 
 {% block body %}
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <br><br><br><br>
+        <div class="row justify-content-center"><br><br>
+            <div class="col-md-8"><br><br>
                 <h1 class="text-center">Avis de l'équipement {{ equipement.nomeq }}</h1>
-<br>
-<br>
-<br>
                 <div class="mb-4">
                     <h2>Veuillez saisir votre commentaire :</h2>
                     {{ include('avisequipement/_form.html.twig') }}
@@ -22,12 +20,16 @@
                             <ul class="list-group">
                                 {% for avis in avisEquipement %}
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div><img src="{{ asset(avis.idUs.image) }}" style="width: 50px; height: 50px;" />
+                                      {# <div><img src="{{ asset(avis.idUs.image) }}" style="width: 50px; height: 50px;" />
                                    {{ avis.idUs.nom ~ ' ' ~ avis.idUs.prenom ~ '    :'  }}</td>
                                         {{ avis.commaeq }}
-                                            
-                                        </div>
+  
+                                        </div>#}
+                                        {{ avis.commaeq }}
                                         <div>
+                                            <!-- Affichage de l'icône en fonction de l'émotion -->
+                                           {# {{ renderSmileyIcon(avis.emotion) }}#}
+
                                             <form method="post" action="{{ path('avis_delete', {'id': avis.idaeq}) }}" style="display: inline;">
                                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                                             </form>
@@ -43,9 +45,51 @@
                 </div>
 
                 <a href="{{ path('app_equipement_index') }}" class="btn btn-secondary">Retour à la liste des équipements</a>
-                <br>
-                <br>
             </div>
         </div>
     </div>
+
+    <!-- Modal pour l'alerte badword -->
+    <div class="modal fade" id="badwordModal" tabindex="-1" aria-labelledby="badwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="badwordModalLabel">Alerte</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Le contenu de l'avis contient des mots interdits. Veuillez ne pas utiliser ces mots.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Fonction pour afficher l'alerte badword
+        function showBadwordAlert() {
+            $('#badwordModal').modal('show');
+        }
+
+        // Vérification du contenu de l'avis lors de la soumission du formulaire
+        $('form').submit(function(event) {
+            var avisContent = $('#avisequipement_commaeq').val();
+            var badwords = ['badword1', 'badword2', 'badword3']; // Ajoutez vos mots interdits ici
+
+            // Vérification si le contenu de l'avis contient un mot interdit
+            for (var i = 0; i < badwords.length; i++) {
+                if (avisContent.toLowerCase().indexOf(badwords[i]) !== -1) {
+                    showBadwordAlert();
+                    event.preventDefault(); // Empêche la soumission du formulaire
+                    return;
+                }
+            }
+        });
+    </script>
+   
 {% endblock %}
