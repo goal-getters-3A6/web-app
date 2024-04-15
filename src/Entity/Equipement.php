@@ -5,6 +5,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EquipementRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass:EquipementRepository::class)]
 class Equipement
@@ -17,34 +19,44 @@ private ?int $idEq=null;
 
 
 
-    #[ORM\Column(length:255)]
-    private ?string $nomeq=null;
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
+private ?string $nomeq = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $desceq=null;
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La description ne peut pas être vide.")]
+private ?string $desceq = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $doceq=null;
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La documentation ne peut pas être vide.")]
+private ?string $doceq = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $imageeq=null;
+#[ORM\Column(length:255)]
+private ?string $imageeq = null;
 
-    #[ORM\Column(length:255)]
-    private ?string $categeq=null;
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La catégorie ne peut pas être vide.")]
+private ?string $categeq = null;
+
+#[ORM\Column]
+private ?int $noteeq = null;
+
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La marque ne peut pas être vide.")]
+private ?string $marqueeq = null;
+
+#[ORM\Column(length:255 )]
+#[Assert\NotBlank(message: "Le matricule ne peut pas être vide.")]
+private ?string $matriculeeq = null;
 
     #[ORM\Column]
-    private ?int $noteeq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $marqueeq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $matriculeeq=null;
-
-    #[ORM\Column]
+    #[Assert\NotBlank(message: "La date de précédente maintenance est obligatoire.")]
+    #[Assert\LessThanOrEqual(value: "today", message: "La date de précédente maintenance doit être égale ou antérieure à la date actuelle.")]
     private ?\DateTime $datepremainte=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La date de prochaine maintenance est obligatoire.")]
+    #[Assert\GreaterThanOrEqual(value: "today", message: "La date de prochaine maintenance doit être postérieure à la date actuelle.")]
     private ?\DateTime $datepromainte=null;
 
 

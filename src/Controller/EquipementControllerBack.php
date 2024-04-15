@@ -57,23 +57,6 @@ class EquipementControllerBack extends AbstractController
     #[Route('/new', name: 'app_equipement_back_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-       /* $equipement = new Equipement();
-    $form = $this->createForm(EquipementType::class, $equipement);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager->persist($equipement);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_equipement_back_index');
-    }
-
-    return $this->render('equipement/newBack.html.twig', [
-        'equipement' => $equipement,
-        'form' => $form->createView(), // Pass the form variable to the template
-    ]);*/
-
-
 
     $equipement = new Equipement();
     $form = $this->createForm(EquipementType::class, $equipement);

@@ -175,6 +175,8 @@ public function avisEquipement(Equipement $equipement, EntityManagerInterface $e
     $alertType = null; // Initialisez la variable alertType à null par défaut
 
     if ($form->isSubmitted() && $form->isValid()) {
+ 
+
         $alertType = $this->handleBadwordAndTentatives($avisequipement); // Récupérez le type d'alerte en fonction de la situation de l'utilisateur
         if ($alertType == null) {
             $avisequipement->setIdEq($equipement); // Associer l'avis à l'équipement

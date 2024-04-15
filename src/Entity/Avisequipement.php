@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AvisEquipementRepository;
 use App\Entity\User;
 use App\Entity\Equipement;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass:AvisEquipementRepository::class)]
 class Avisequipement
@@ -16,6 +18,7 @@ class Avisequipement
     private ?int $idaeq =null;
 
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message: "Le commentaire ne peut pas être vide.")]
     private ?string $commaeq=null;
 
     #[ORM\Column(type: "boolean")]

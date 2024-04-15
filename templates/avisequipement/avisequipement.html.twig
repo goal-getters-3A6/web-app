@@ -40,7 +40,7 @@
                                             <!-- Affichage de l'icône en fonction de l'émotion -->
                                            {# {{ renderSmileyIcon(avis.emotion) }}#}
 
-                                            <form method="post" action="{{ path('avis_delete', {'id': avis.idaeq}) }}" style="display: inline;">
+                                            <form method="post" action="{{ path('avis_delete', {'id': avis.idaeq}) }}" style="display: inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet élément ?');">
                                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                                             </form>
                                             <a href="{{ path('avis_edit', {'id': avis.idaeq}) }}" class="btn btn-primary ml-2">Modifier</a>
@@ -55,6 +55,8 @@
                 </div>
 
                 <a href="{{ path('app_equipement_index') }}" class="btn btn-secondary">Retour à la liste des équipements</a>
+                <br>
+                <br>
             </div>
         </div>
     </div>
