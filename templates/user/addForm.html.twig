@@ -1,0 +1,57 @@
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+{{ form_row(form.nom) }}
+{{ form_row(form.prenom) }}
+{{ form_row(form.mail) }}
+{{ form_row(form.plainPassword) }}
+{% if form.image is defined %}
+	{{ form_row(form.image) }}
+{% endif %}
+{% if form.dateNaissance is defined %}
+	{{ form_row(form.dateNaissance) }}
+{% endif %}
+{% if form.tel is defined %}
+	{{ form_row(form.tel) }}
+{% endif %}
+{% if form.poids is defined %}
+	<div style="display:flex;">
+		<label for="poids" style="margin-right: 38px;">Poids:</label>
+		{{ form_widget(form.poids, {'attr': {'class': 'poids-input'}}) }}
+		<div style="color:black; margin-left: 10px; padding-top:3px;">
+			<span id="poids-value">{{ form.vars.value.poids }}</span>
+			kg
+		</div>
+	</div>
+{% endif %}
+{% if form.taille is defined %}
+	<div style="display:flex;">
+		<label for="taille" style="margin-right: 40px;">Taille:</label>
+		{{ form_widget(form.taille, {'attr': {'class': 'taille-input'}}) }}
+		<div style="color:black; margin-left: 10px; padding-top:3px;">
+			<span id="taille-value">{{ form.vars.value.taille }}</span>
+			cm
+		</div>
+	</div>
+{% endif %}
+{% if form.sexe is defined %}
+	{{ form_row(form.sexe) }}
+{% endif %}
+{{ form_row(form.role) }}{{ form_row(form.submit) }}{# JavaScript to update display values #}<script>
+	document.addEventListener('DOMContentLoaded', function () {
+const poidsInputs = document.querySelectorAll('.poids-input');
+const tailleInputs = document.querySelectorAll('.taille-input');
+
+// Update display values on input change
+poidsInputs.forEach(function (input) {
+input.addEventListener('input', function () {
+document.getElementById('poids-value').textContent = this.value;
+});
+});
+
+tailleInputs.forEach(function (input) {
+input.addEventListener('input', function () {
+document.getElementById('taille-value').textContent = this.value;
+});
+});
+});
+</script>
+{{ form_end(form) }}

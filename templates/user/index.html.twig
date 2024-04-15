@@ -4,9 +4,12 @@
 {% endblock %}
 
 {% block body %}
+	<div style="display:flex;">
+		<h1 style="margin-right: 72vw;">Users
+		</h1>
+		<a href="{{ path('admin_user_add') }}" class="btn btn-outline-dark">Create new</a>
+	</div>
 
-	<h1>Users
-	</h1>
 	{% block stylesheets%}
 		<input type="text" id="search" class="form-control" placeholder="Search">
 

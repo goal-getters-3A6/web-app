@@ -6,13 +6,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['mail'], message: 'There is already an account with this mail')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, PasswordUpgraderInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, PasswordUpgraderInterface, TwoFactorInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -81,6 +82,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 
     #[ORM\Column(type: 'integer', name: "verificationCode", nullable: true)]
     private $verificationCode;
+
+    /**
+     * @ORM\Column(name="googleAuthenticatorSecret", type="string", nullable=true)
+     */
+    private $googleAuthenticatorSecret;
 
     public function getId(): ?int
     {
@@ -287,6 +293,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+
+
+
     public function getUserIdentifier(): ?string
     {
         return $this->id;
@@ -421,6 +431,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
         if ($user instanceof User) {
             $user->setMdp($newHashedPassword);
         }
+    }
+
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return null !== $this->tfaSecret;
+    }
+
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->mail;
+    }
+
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->tfaSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->tfaSecret = $googleAuthenticatorSecret;
     }
 
     function getJsonData()

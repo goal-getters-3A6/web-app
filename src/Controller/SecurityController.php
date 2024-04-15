@@ -15,7 +15,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Endroid\QrCode\Builder\Builder;
+use Monolog\Formatter\GoogleCloudLoggingFormatter;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class SecurityController extends AbstractController
 {
@@ -24,6 +30,8 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        $this->isGranted('IS_AUTHENTICATED_FULLY');
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -156,6 +164,7 @@ class SecurityController extends AbstractController
         }
     }
 
+
     /**
      * @Route("/choice", name="choice")
      */
@@ -166,5 +175,64 @@ class SecurityController extends AbstractController
         return $this->render('user/choice.html.twig', [
             'full_name' => $lastUsername,
         ]);
+    }
+
+    /**
+     * @Route("/tfa/setup", name="setup_tfa")
+     */
+
+    public function setupTfa(EntityManagerInterface $entityManager, GoogleAuthenticatorInterface $googleAuthenticator)
+    {
+        $user = $entityManager->getRepository(User::class)->find($this->getUser()->getUserIdentifier());
+        if (!$user->isGoogleAuthenticatorEnabled()) {
+            $user->setGoogleAuthenticatorSecret($googleAuthenticator->generateSecret());
+            $entityManager->flush();
+        }
+        return $this->render('user/enable2fa.html.twig');
+    }
+
+    /**
+     * @Route("/tfa/qr-code", name="app_qr_code")
+     */
+    public function displayGoogleAuthenticatorQrCode(GoogleAuthenticatorInterface $googleAuthenticator, EntityManagerInterface $entityManager)
+    {
+        $qrCodeContent = $googleAuthenticator->getQRContent(($entityManager->getRepository(User::class)->find($this->getUser()->getUserIdentifier())));
+        $result = Builder::create()
+            ->data($qrCodeContent)
+            ->build();
+        return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
+    }
+
+    /**
+     * @Route("/verify/tfa", name="app_verify_tfa")
+     */
+    public function verifyTfa(Request $request): Response
+    {
+        // Check if there's an error parameter in the query string
+        $error = $request->query->get('error');
+
+        // Render the template with the error message, if any
+        return $this->render('user/2fa_form.html.twig', [
+            'error' => $error,
+        ]);
+    }
+
+    /**
+     * @Route("/tfa/check", name="app_check_tfa")
+     */
+    public function checkTfa(Request $request, GoogleAuthenticatorInterface $googleAuthenticator, EntityManagerInterface $entityManager)
+    {
+        $user = $entityManager->getRepository(User::class)->find($this->getUser()->getUserIdentifier());
+        $code = $request->request->get('_auth_code');
+
+        if ($googleAuthenticator->checkCode($user, $code)) {
+            $hasAccess = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
+            if ($hasAccess) {
+                return $this->redirectToRoute('choice');
+            }
+            return $this->redirectToRoute('profile');
+        } else {
+            return $this->redirectToRoute('app_verify_tfa', ['error' => 'InvalidTFA']);
+        }
     }
 }

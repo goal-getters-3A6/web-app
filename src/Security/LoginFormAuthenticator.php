@@ -52,14 +52,21 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $activated = $user->getIsVerified();
         $hasAccess = in_array('ROLE_ADMIN', $token->getUser()->getRoles());
         $disabled = $user->getDisableToken();
+        $tfaActivated = $user->isGoogleAuthenticatorEnabled();
 
         if ($activated === false) {
             return new RedirectResponse($this->urlGenerator->generate('denied_access'));
         } elseif ($disabled !== null) {
             return new RedirectResponse($this->urlGenerator->generate('DisabledAccount'));
         } elseif ($hasAccess) {
+            if ($tfaActivated) {
+                return new RedirectResponse($this->urlGenerator->generate('app_verify_tfa'));
+            }
             return new RedirectResponse($this->urlGenerator->generate('choice'));
         } else {
+            if ($tfaActivated) {
+                return new RedirectResponse($this->urlGenerator->generate('app_verify_tfa'));
+            }
             return new RedirectResponse($this->urlGenerator->generate('profile'));
         }
     }
