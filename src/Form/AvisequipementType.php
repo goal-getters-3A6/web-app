@@ -18,10 +18,10 @@ class AvisequipementType extends AbstractType
             ->add('commaeq')
            // ->add('likes')
            // ->add('dislikes')
-           /* ->add('idus', EntityType::class, [
+            ->add('idus', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id', // ou un autre champ pour l'étiquette
-            ])
+            ])/*
             ->add('ideq', EntityType::class, [
                 'class' => Equipement::class,
                 'choice_label' => 'idEq', // ou un autre champ pour l'étiquette

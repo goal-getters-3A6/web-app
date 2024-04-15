@@ -28,10 +28,10 @@ class User
     private ?string $mdp=null;
 
     #[ORM\Column]
-    private ?bool $statut = false;
+    private ?bool $statut = true;
 
     #[ORM\Column]
-    private ?int $nbTentative=null;
+    private ?int $nbTentative=0;
 
     #[ORM\Column(length:255)]
     private ?string $image=null;
@@ -138,6 +138,9 @@ class User
         $this->nbTentative = $nbTentative;
 
         return $this;
+    }
+    public function incrementNbTentative() {
+        $this->nbTentative++;
     }
 
     public function getImage(): ?string

@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Avisequipement;
 use App\Entity\Equipement;
+use App\Entity\User;
 use App\Form\AvisequipementType;
 use App\Form\EquipementType;
 use App\Repository\EquipementRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -111,17 +113,17 @@ public function index(EquipementRepository $equipementRepository, PaginatorInter
     public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
     {
         $avisEquipements = $entityManager->getRepository(Avisequipement::class)->findBy(['idEq' => $equipement]);
-        $commaeq = $avisEquipements->getCommaeq();
-        $emotion = $this->detecterEmotion($commaeq);
         $avisequipement = new Avisequipement();
         $form = $this->createForm(AvisequipementType::class, $avisequipement);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->handleBadwordAndTentatives($avisequipement);
             $avisequipement->setIdEq($equipement); // Associer l'avis à l'équipement
             $entityManager->persist($avisequipement);
             $entityManager->flush();
-    
+
+            
             // Redirection vers la même page après l'ajout d'un avis
             return new RedirectResponse($this->generateUrl('avis_equipement', ['idEq' => $equipement->getIdEq()]));
         }
@@ -129,12 +131,126 @@ public function index(EquipementRepository $equipementRepository, PaginatorInter
         return $this->render('avisequipement/avisequipement.html.twig', [
             'equipement' => $equipement,
             'avisEquipement' => $avisEquipements,
-            'emotion' => $emotion,
             'form' => $form->createView(),
         ]);
-    }*/
+        
+    }
+    // Méthode pour vérifier si l'avis contient un mot interdit et gérer le nombre de tentatives
+    private function handleBadwordAndTentatives(Avisequipement $avisequipement): void
+    {
+        if ($this->containsBadword($avisequipement->getCommaeq())) {
+            // Incrémenter le compteur de tentatives de l'utilisateur
+            $user = $this->getDoctrine()->getRepository(User::class)->find(19);
+            $user->incrementNbTentative();
+            
 
-    #[Route('/{idEq}/avis', name: 'avis_equipement')]
+            // Si le nombre de tentatives dépasse 3, modifier le statut de l'utilisateur
+            if ($user->getNbTentative()>=3) {
+                $user->setStatut(true);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+    }
+  // Fonction pour vérifier si l'avis contient un mot interdit
+private function containsBadword($avisContent) {
+    $badwords = ['badword1', 'badword2', 'badword3']; // Ajoutez vos mots interdits ici
+
+    foreach ($badwords as $badword) {
+        if (stripos($avisContent, $badword) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}*/
+#[Route('/{idEq}/avis', name: 'avis_equipement')]
+public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
+{
+    $avisEquipements = $entityManager->getRepository(Avisequipement::class)->findBy(['idEq' => $equipement]);
+    $avisequipement = new Avisequipement();
+    $form = $this->createForm(AvisequipementType::class, $avisequipement);
+    $form->handleRequest($request);
+
+    $alertType = null; // Initialisez la variable alertType à null par défaut
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $alertType = $this->handleBadwordAndTentatives($avisequipement); // Récupérez le type d'alerte en fonction de la situation de l'utilisateur
+        if ($alertType == null) {
+            $avisequipement->setIdEq($equipement); // Associer l'avis à l'équipement
+            $entityManager->persist($avisequipement);
+            $entityManager->flush();
+            // Redirection vers la même page après l'ajout d'un avis
+            return $this->redirectToRoute('avis_equipement', ['idEq' => $equipement->getIdEq()]);
+        }
+    }
+
+    return $this->render('avisequipement/avisequipement.html.twig', [
+        'equipement' => $equipement,
+        'avisEquipement' => $avisEquipements,
+        'form' => $form->createView(),
+        'alertType' => $alertType, // Passez la variable alertType au modèle Twig
+    ]);
+}
+
+// Méthode pour vérifier si l'avis contient un mot interdit et gérer le nombre de tentatives
+private function handleBadwordAndTentatives(Avisequipement $avisequipement): ?string // Retourne une chaîne de caractères ou null
+{
+    if ($this->containsBadword($avisequipement->getCommaeq())) {
+        // Incrémenter le compteur de tentatives de l'utilisateur
+        $user = $this->getDoctrine()->getRepository(User::class)->find(19);
+        $user->incrementNbTentative();
+        $this->getDoctrine()->getManager()->flush();
+
+        // Si le nombre de tentatives dépasse 3, modifier le statut de l'utilisateur
+        if ($user->getNbTentative() >= 3) {
+            $user->setStatut(true);
+            $this->getDoctrine()->getManager()->flush();
+
+            //return 'block'; // Retourne 'block' pour indiquer que le compte est bloqué
+        }
+        if ($user->isStatut() === true) {
+           // Création du client Twilio
+   $sid = "AC3f9de0017be9564b86cb4664a10df6b1";
+   $token = "67c512333f9c1077be2e0fb2263a4373";
+   $twilio = new \Twilio\Rest\Client($sid, $token);
+
+   // Envoi du SMS
+   $message = $twilio->messages
+     ->create("+21697336009", // Numéro de téléphone de destination
+       array(
+         "from" => "+19123859879", // Numéro Twilio
+         "body" => "Bonjour, block." // Corps du message
+       )
+     );
+            return 'block'; // Retourne 'block' pour indiquer que le compte est bloqué
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return 'warning'; // Retourne 'warning' pour indiquer que le compte est sous avertissement
+    }
+
+    return null; // Retourne null si aucun avertissement n'est nécessaire
+}
+ // Fonction pour vérifier si l'avis contient un mot interdit
+ private function containsBadword($avisContent) {
+    $badwords = ['badword1', 'badword2', 'badword3']; // Ajoutez vos mots interdits ici
+
+    foreach ($badwords as $badword) {
+        if (stripos($avisContent, $badword) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+
+
+  /*  #[Route('/{idEq}/avis', name: 'avis_equipement')]
 public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
 {
     // Récupérer tous les avis pour cet équipement
@@ -172,7 +288,7 @@ public function avisEquipement(Equipement $equipement, EntityManagerInterface $e
         'emotions' => $emotions,
         'form' => $form->createView(),
     ]);
-}
+}*/
 
    
 
@@ -205,21 +321,6 @@ public function deleteAvis(Avisequipement $avisequipement, EntityManagerInterfac
     $entityManager->remove($avisequipement);
     $entityManager->flush();
 
-    
-
-   // Création du client Twilio
-   $sid = "AC3f9de0017be9564b86cb4664a10df6b1";
-   $token = "67c512333f9c1077be2e0fb2263a4373";
-   $twilio = new \Twilio\Rest\Client($sid, $token);
-
-   // Envoi du SMS
-   $message = $twilio->messages
-     ->create("+21697336009", // Numéro de téléphone de destination
-       array(
-         "from" => "+19123859879", // Numéro Twilio
-         "body" => "Bonjour, votre avis a été supprimé avec succès." // Corps du message
-       )
-     );
     // Redirection vers la même page après la suppression de l'avis
     return $this->redirectToRoute('avis_equipement', ['idEq' => $avisequipement->getIdEq()->getIdEq()]);
 }
