@@ -1,19 +1,13 @@
-{% extends 'equipement/equipementback.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Modifier Equipement{% endblock %}
+{% block title %}Edit Equipement{% endblock %}
 
 {% block body %}
-<div class="col-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-        <br><br><br><br><br><br>
-            <h4 class="card-title text-dark">Edit Equipement</h4>
+    <h1>Edit Equipement</h1>
 
-            {{ include('equipement/_form.html.twig', {'button_label': 'Modifier'}) }}
+    {{ include('equipement/_form.html.twig', {'button_label': 'Update'}) }}
 
-            <a href="{{ path('app_equipement_back_index') }}" class="btn btn-light mt-3">Annuler</a>
+    <a href="{{ path('app_equipement_index') }}">back to list</a>
 
-        </div>
-    </div>
-</div>
+    {{ include('equipement/_delete_form.html.twig') }}
 {% endblock %}

@@ -18,7 +18,7 @@ class AvisequipementController extends AbstractController
     #[Route('/', name: 'app_avisequipement_index', methods: ['GET'])]
     public function index(AvisEquipementRepository $avisEquipementRepository): Response
     {
-        return $this->render('avisequipement/avisequipementback.html.twig', [
+        return $this->render('avisequipement/index.html.twig', [
             'avisequipements' => $avisEquipementRepository->findAll(),
         ]);
     }
