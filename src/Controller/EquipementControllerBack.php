@@ -9,20 +9,50 @@ use App\Repository\EquipementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
 #[Route('/eqb')]
 class EquipementControllerBack extends AbstractController
 {
-    #[Route('/', name: 'app_equipement_back_index', methods: ['GET'])]
+   /* #[Route('/', name: 'app_equipement_back_index', methods: ['GET'])]
     public function index(EquipementRepository $equipementRepository): Response
     {
         return $this->render('equipement/equipementback.html.twig', [
             'equipements' => $equipementRepository->findAll(),
         ]);
-    }
+    }*/
+    #[Route('/', name: 'app_equipement_back_index', methods: ['GET'])]
+    public function index(EquipementRepository $equipementRepository): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+
+    // Récupération du nombre d'équipements par catégorie spécifique
+    $categories = [
+        'Fitness' => $entityManager->getRepository(Equipement::class)->countByCategory('Fitness'),
+        'Cardiotraining' => $entityManager->getRepository(Equipement::class)->countByCategory('Cardio-training'),
+        'Musculation' => $entityManager->getRepository(Equipement::class)->countByCategory('Musculation'),
+    ];
+
+    // Formatage des données pour le graphique doughnut
+    $labels = array_keys($categories);
+    $data = array_values($categories);
+
+    return $this->render('equipement/equipementback.html.twig', [
+        'equipements' => $equipementRepository->findAll(),
+        'labels' => json_encode($labels),
+        'data' => json_encode($data),
+    ]);
+}
+
+
+    
+    
+    
 
     #[Route('/new', name: 'app_equipement_back_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -123,8 +153,76 @@ public function delete(Request $request, Equipement $equipement, EntityManagerIn
     }
 
    
+  /*  
+    #[Route('/eqb/search', name: 'ajax_search')]
+    public function searchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+  
+        $requestString = $request->get('q');
+  
+        $entities =  $em->getRepository(Equipement::class)->showByDestination($requestString);
+  
+        if(!$entities) {
+            $result['entities']['error'] = "Aucun équipement trouvé";
+        } else {
+            $result['entities'] = $this->getRealEntities($entities);
+        }
+  
+        return new Response(json_encode($result));
+    }
+    public function getRealEntities($entities){
+        $realEntities = []; // Initialisez le tableau des entités réelles
     
+        foreach ($entities as $entity){
+            // Ajoutez chaque entité sous forme de tableau associatif à $realEntities
+            $realEntities[] = [
+                'nomeq' => $entity->getNomeq(),
+                'categeq' => $entity->getCategeq(), // Ajoutez d'autres attributs si nécessaire
+                'imageeq' => $entity->getImageeq(),
+                'detailsLink' => $this->generateUrl('app_equipement_back_show', ['idEq' => $entity->getIdEq()]), // Générez le lien pour afficher les détails de l'équipement
+                'editLink' => $this->generateUrl('app_equipement_back_edit', ['idEq' => $entity->getIdEq()]) // Générez le lien pour modifier l'équipement
+            ];
+        }
+    
+        return $realEntities;
+    }*/
 
+    #[Route('/eqb/search', name: 'app_equipement_search', methods: ['GET'])]
+    public function search(Request $request, EquipementRepository $EquipementRepository): Response
+    {
+        $criteria = array(
+            'nomeq' => $request->query->get('nomeq'), // Critère : commaeq
+            'categeq' => $request->query->get('categeq'), // Critère : idEq.nomeq
+           
+        );
 
+        // Utiliser le repository pour rechercher avec les critères
+        $equipements = $EquipementRepository->findByCriteria($criteria);
+
+        return $this->render('avisequipement/search_result.html.twig', [
+            'avisequipements' => $equipements,
+        ]);
+    }
+
+    #[Route('/eqb/sort/{sortDirection}', name: 'app_equipement_back_sort', methods: ['GET'])]
+    public function sort(EntityManagerInterface $entityManager, $sortDirection)
+    {
+        // Assurez-vous que $sortDirection est soit 'ASC' soit 'DESC'
+
+        $query = $entityManager->createQuery(
+            'SELECT e FROM App\Entity\Equipement e ORDER BY e.datepremainte ' . $sortDirection
+        );
+
+        $equipements = $query->getResult();
+
+        // Faites quelque chose avec les objets triés, comme les passer à un modèle Twig pour l'affichage
+
+        return $this->render('equipement/equipementback.html.twig', [
+            'equipements' => $equipements,
+        ]);
+    }
+
+   
 
 }

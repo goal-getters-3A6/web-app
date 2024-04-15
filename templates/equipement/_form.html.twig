@@ -1,4 +1,42 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'forms-sample'}}) }}
+    <div class="form-group">
+        {{ form_label(form.nomeq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.nomeq, {'attr': {'class': 'form-control', 'placeholder': 'Name', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.desceq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.desceq, {'attr': {'class': 'form-control', 'placeholder': 'Description', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.doceq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.doceq, {'attr': {'class': 'form-control', 'placeholder': 'Documentation', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.imageeq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        <div class="input-group col-xs-12">
+            {{ form_widget(form.imageeq, {'attr': {'class': 'form-control file-upload-info', 'placeholder': 'Upload Image', 'style': 'color: #000'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.categeq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.categeq, {'attr': {'class': 'form-control', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.marqueeq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.marqueeq, {'attr': {'class': 'form-control', 'placeholder': 'Brand', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.matriculeeq, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.matriculeeq, {'attr': {'class': 'form-control', 'placeholder': 'Matriculation', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.datepremainte, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.datepremainte, {'attr': {'class': 'form-control', 'style': 'color: #000'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.datepromainte, null, {'label_attr': {'style': 'color: #000'}}) }}
+        {{ form_widget(form.datepromainte, {'attr': {'class': 'form-control', 'style': 'color: #000'}}) }}
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn btn-light">Cancel</button>
 {{ form_end(form) }}
