@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\Form\AvisequipementType;
 use App\Form\EquipementType;
 use App\Repository\EquipementRepository;
-use App\Service\EmotionDetectionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use GuzzleHttp\Client as GuzzleClient;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Security\Core\Security;
 
-require_once ('C:\Users\Yosr\OneDrive - ESPRIT\Bureau\gg\3-workshop-symfony\vendor\twilio\sdk\src\Twilio\autoload.php');
+
+//require_once ('C:\Users\Yosr\OneDrive - ESPRIT\Bureau\gg\3-workshop-symfony\vendor\twilio\sdk\src\Twilio\autoload.php');
 
 
 #[Route('/eq')]
@@ -57,34 +58,42 @@ class EquipementController extends AbstractController
 
 
 #[Route('/{idEq}/avis', name: 'avis_equipement')]
-public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
+public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request, Security $security): Response
 {
-    $avisEquipements = $entityManager->getRepository(Avisequipement::class)->findBy(['idEq' => $equipement]);
-    $avisequipement = new Avisequipement();
-    $form = $this->createForm(AvisequipementType::class, $avisequipement);
-    $form->handleRequest($request);
+    $user = $security->getUser(); // Récupérer l'utilisateur actuel
 
-    $alertType = null; // Initialisez la variable alertType à null par défaut
+    // Vérifier si l'utilisateur est authentifié
+    if ($user) {
+        $avisEquipements = $entityManager->getRepository(Avisequipement::class)->findBy(['idEq' => $equipement]);
+        $avisequipement = new Avisequipement();
+        $form = $this->createForm(AvisequipementType::class, $avisequipement);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
- 
+        $alertType = null; // Initialisez la variable alertType à null par défaut
 
-        $alertType = $this->handleBadwordAndTentatives($avisequipement); // Récupérez le type d'alerte en fonction de la situation de l'utilisateur
-        if ($alertType == null) {
-            $avisequipement->setIdEq($equipement); // Associer l'avis à l'équipement
-            $entityManager->persist($avisequipement);
-            $entityManager->flush();
-            // Redirection vers la même page après l'ajout d'un avis
-            return $this->redirectToRoute('avis_equipement', ['idEq' => $equipement->getIdEq()]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $alertType = $this->handleBadwordAndTentatives($avisequipement); // Récupérez le type d'alerte en fonction de la situation de l'utilisateur
+            if ($alertType == null) {
+                $avisequipement->setIdEq($equipement); // Associer l'avis à l'équipement
+                $avisequipement->setIdUs($user); // Définir l'utilisateur pour l'avis
+                $entityManager->persist($avisequipement);
+                $entityManager->flush();
+                // Redirection vers la même page après l'ajout d'un avis
+                return $this->redirectToRoute('avis_equipement', ['idEq' => $equipement->getIdEq()]);
+            }
         }
+
+        return $this->render('avisequipement/avisequipement.html.twig', [
+            'equipement' => $equipement,
+            'avisEquipement' => $avisEquipements,
+            'form' => $form->createView(),
+            'alertType' => $alertType, // Passez la variable alertType au modèle Twig
+        ]);
+    } else {
+        // Gérer le cas où l'utilisateur n'est pas authentifié, peut-être rediriger vers une page de connexion
+        // ou afficher un message d'erreur.
     }
 
-    return $this->render('avisequipement/avisequipement.html.twig', [
-        'equipement' => $equipement,
-        'avisEquipement' => $avisEquipements,
-        'form' => $form->createView(),
-        'alertType' => $alertType, // Passez la variable alertType au modèle Twig
-    ]);
 }
 
 // Méthode pour vérifier si l'avis contient un mot interdit et gérer le nombre de tentatives
@@ -175,45 +184,56 @@ public function deleteAvis(Avisequipement $avisequipement, EntityManagerInterfac
     return $this->redirectToRoute('avis_equipement', ['idEq' => $avisequipement->getIdEq()->getIdEq()]);
 }
 
-#[Route('/avis/{id}/show', name: 'avis_show', methods: ['GET'])]
-public function showComments(Avisequipement $avisequipement): Response
-{
-    // Obtenez le contenu de l'avis
-    $commentContent = $avisequipement->getCommaeq();
+/*
+ // Fonction pour détecter l'émotion à partir du commentaire
+ private function detecterEmotion($commentaire)
+ {
     
-    // Utilisation du modèle BERT pour détecter l'émotion
-    $emotion = $this->detectEmotion($commentContent);
+         // Utilisation du client Guzzle pour envoyer des requêtes HTTP
+        $httpClient = new GuzzleClient();
+            
+         // Envoi de la requête POST à l'API Python pour détecter l'émotion
+         $response = $httpClient->post('http://localhost:5000/detect_emotion', [
+             'json' => ['comment' => $commentaire]
+         ]);
+ 
+         // Analyse de la réponse JSON et récupération de l'émotion détectée
+         $responseJson = json_decode($response->getBody(), true);
+         return $responseJson['emotion_bert'];
+      
+ }
 
-    // Affichage de l'image correspondante en fonction de l'émotion détectée
-    switch ($emotion) {
+ // Fonction pour obtenir l'icône smiley en fonction de l'émotion détectée
+ private function getSmileyIcon($emotion)
+ {
+     $imagePath = '';
+     switch ($emotion) {
         case 'Joie':
-            // Affichage de l'image correspondante pour la joie
+            $imagePath = '/Front/images/joie.png';
             break;
         case 'Tristesse':
-            // Affichage de l'image correspondante pour la tristesse
+            $imagePath = '/Front/images/tristesse.png';
             break;
         case 'Neutre':
-            // Affichage de l'image correspondante pour la neutralité
+            $imagePath = '/Front/images/neutre.png';
             break;
         default:
-            // Gestion des autres cas si nécessaire
+            $imagePath = '/Front/images/question.png';
             break;
-    }
+     }
+     return $imagePath;
+ }
 
-    // Affichage de l'avis équipement avec les images correspondantes
-    // ...
-}
-
-private function detectEmotion(string $comment): string
-{
-    // Utilisez le modèle BERT pour détecter l'émotion du commentaire
-    // Remplacez cette logique par votre logique de détection d'émotion
-    
-    // Pour cet exemple, renvoyons toujours une émotion neutre
-    return 'Neutre';
-}
-
-// Autres méthodes de votre contrôleur...
+ // Fonction pour afficher l'icône smiley dans la vue Twig
+ 
+ private function renderSmileyIcon($emotion)
+ {
+     $imagePath = $this->getSmileyIcon($emotion);
+     // Chargez l'image dans votre template Twig
+     return '<img src="' . $imagePath . '" alt="' . $emotion . '">';
+ }
+*/
+ 
 
 
 }

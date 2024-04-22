@@ -1,11 +1,9 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}New Reclamation{% endblock %}
-
+{% extends 'abonnement/abonnement.html.twig' %}
 {% block body %}
-    <h1>Create new Reclamation</h1>
+<div style="text-align: center;">
+  
 
     {{ include('reclamation/_form.html.twig') }}
 
-    <a href="{{ path('app_reclamation_index') }}">back to list</a>
+    <a href="{{ path('reclamations_utilisateur', {'userId': app.user.id}) }}">Mes Réclamations</a>
 {% endblock %}

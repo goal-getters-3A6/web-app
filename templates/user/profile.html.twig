@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<style>
+		body {
+			background: #141d2b
+		}
+
+		.card {
+			border: none;
+			position: relative;
+			overflow: hidden;
+			background-color: #141d2b;
+			border-radius: 8px;
+			cursor: pointer
+		}
+
+		.card:before {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 4px;
+			height: 100%;
+			background-color: #141d2b;
+			transform: scaleY(1);
+			transition: all 0.5s;
+			transform-origin: bottom
+		}
+
+		.card:after {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 4px;
+			height: 100%;
+			background-color: #9fef00;
+			transform: scaleY(0);
+			transition: all 0.5s;
+			transform-origin: bottom
+		}
+
+		.card:hover::after {
+			transform: scaleY(1)
+		}
+
+		.fonts {
+			font-size: 11px
+		}
+
+		.social-list {
+			display: flex;
+			list-style: none;
+			justify-content: center;
+			padding: 0
+		}
+
+		.social-list li {
+			padding: 10px;
+			color: #e6922e;
+			font-size: 19px
+		}
+
+		.buttons button:nth-child(1) {
+			border: 1px solid #e6922e !important;
+			color: #e6922e;
+			height: 40px
+		}
+
+		.buttons button:nth-child(1):hover {
+			border: 1px solid #e6922e !important;
+			color: #fff;
+			height: 40px;
+			background-color: #e6922e
+		}
+
+		.buttons button:nth-child(2) {
+			border: 1px solid #e6922e !important;
+			background-color: #e6922e;
+			color: #fff;
+			height: 40px
+		}
+	</style>
+	<div class="container mt-5" style="margin-top:10%; margin-bottom:5%">
+		<div class="row d-flex justify-content-center" style='display: flex;justify-content: center;align-items: center;'>
+			<div class="col-md-7">
+				<div class="card p-3 py-4">
+					<div class="text-center">
+						<img src={{user.image}} width="15%" class="rounded-circle">
+					</div>
+					<div class="text-center">
+						<span class="bg-secondary p-1 px-4 rounded text-white">PROFILE</span>
+						<h5 class="mt-2 mb-0">Welcome
+							{{ user.nom}}
+							{{user.prenom}}</h5>
+					</br>
+					<div class="px-4 mt-1">
+						<ul>
+							<li>
+								<span style="font-style:bold;color:white;">Email :</span>
+								{{ user.mail }}</li>
+							<li>
+								<span style="font-style:bold;color:white;">Name :</span>
+								{{ user.nom }}
+								{{user.prenom}}
+							</li>
+
+							<li>
+								<span style="font-style:bold;color:white;">Phone Number:</span>
+								{{ user.tel }}</li>
+
+							<li>
+								<span style="font-style:bold;color:white;">Birthdate :</span>
+								{{ user.dateNaissance | date("d-m-Y")}}</li>
+
+						</div>
+						<div class="col-lg-6 col-md-6">
+							<div style="font-style:bold;position:relative;top:50%;left:55%;">
+
+								<form method="get" action="{{ path('edit_profile') }}">
+									<button class="btn btn-success btn-fw">
+										<i class="fa "></i>
+										Edit Account</button>
+								</form>
+
+							</div>
+							<div class="text-center" style="font-style:bold;position:relative;top:50%;left:55%;">
+								<a class="btn btn-danger btn-block enter-btn" href="{{ path('app_logout') }}">
+									<i class="mdi mdi-arrow-right-bold-hexagon-outline"></i>
+									Log out
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	{% endblock %}

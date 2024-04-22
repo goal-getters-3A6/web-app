@@ -2,7 +2,7 @@
 
 .sidebar {
   min-height: calc(100vh - #{$navbar-height});
-  background: linear-gradient(to bottom, #FBFBEB, #365679); /* Changer la couleur de l'arrière-plan */
+  background: linear-gradient(to bottom, #e6e5f2, #4599cd);
   font-family: $type1;
   padding: 0;
   width: $sidebar-width-lg;
@@ -98,7 +98,7 @@
             &:before {
               content: "\F415";
               font-size: 16px;
-              color: #365679;
+              color: #423a8e;
               opacity: 0.36;
             }
             + .menu-icon {
@@ -273,7 +273,7 @@
 //sidebar color variation
 .sidebar-dark {
   .sidebar {
-    background: $sidebar-dark-bg; /* Changer la couleur de l'arrière-plan */
+    background: $sidebar-dark-bg;
     .nav {
       .nav-item {
         .nav-link {
@@ -295,7 +295,7 @@
           }
         }
         &.active {
-          background: $sidebar-dark-menu-active-bg; /* Changer la couleur de fond */
+          background: $sidebar-dark-menu-active-bg;
           > .nav-link {
             .menu-title {
               color: $sidebar-dark-menu-active-color;
@@ -306,7 +306,15 @@
           }
         }
         &:hover {
-          background: $sidebar-dark-menu-hover-bg; /* Changer la couleur de fond au survol */
+          background: $sidebar-dark-menu-hover-bg;
+        }
+        &.sidebar-actions {
+          &:hover {
+            background: initial;
+            .nav-link {
+              color: initial;
+            }
+          }
         }
       }
       &:not(.sub-menu) {

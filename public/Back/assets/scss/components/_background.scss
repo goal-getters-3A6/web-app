@@ -3,6 +3,6 @@
 /* inverse varient */
 @each $color, $value in $theme-colors {
   .bg-inverse-icon-#{$color} {
-    @include bg-inverse-icon(#FBFBEB); /* Modifier la couleur en FBFBEB */
+    @include bg-inverse-icon($value);
   }
 }
