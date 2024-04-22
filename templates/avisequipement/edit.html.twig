@@ -1,13 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends 'equipement/equipement.html.twig' %}
 
-{% block title %}Edit Avisequipement{% endblock %}
+{% block title %}Modifier votre avis{% endblock %}
 
 {% block body %}
-    <h1>Edit Avisequipement</h1>
 
-    {{ include('avisequipement/_form.html.twig', {'button_label': 'Update'}) }}
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+<br>
+<br>
+<br>
+<br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+ 
+                    <h1 class="card-title text-center mb-4">Modifier votre avis</h1>
 
-    <a href="{{ path('app_avisequipement_index') }}">back to list</a>
+                    {# Utilisation de la directive include pour inclure le formulaire d'édition #}
+                    {{ include('avisequipement/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    {{ include('avisequipement/_delete_form.html.twig') }}
+                    <div class="text-center mt-4">
+                        <a href="{{ path('avis_equipement', {'idEq': avisequipement.idEq.idEq}) }}" class="btn btn-secondary">Annuler</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+<br>
+<br>
+
+</div>
 {% endblock %}

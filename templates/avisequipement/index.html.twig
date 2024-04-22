@@ -20,8 +20,8 @@
             <tr>
                 <td>{{ avisequipement.idaeq }}</td>
                 <td>{{ avisequipement.commaeq }}</td>
-                <td>{{ avisequipement.like ? 'Yes' : 'No' }}</td>
-                <td>{{ avisequipement.dislike ? 'Yes' : 'No' }}</td>
+                <td>{{ avisequipement.likes ? 'Yes' : 'No' }}</td>
+                <td>{{ avisequipement.dislikes ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_avisequipement_show', {'idaeq': avisequipement.idaeq}) }}">show</a>
                     <a href="{{ path('app_avisequipement_edit', {'idaeq': avisequipement.idaeq}) }}">edit</a>

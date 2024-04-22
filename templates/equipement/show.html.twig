@@ -1,62 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends 'equipement/equipement.html.twig' %}
 
 {% block title %}Equipement{% endblock %}
 
 {% block body %}
-    <h1>Equipement</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Ideq</th>
-                <td>{{ equipement.ideq }}</td>
-            </tr>
-            <tr>
-                <th>Nomeq</th>
-                <td>{{ equipement.nomeq }}</td>
-            </tr>
-            <tr>
-                <th>Desceq</th>
-                <td>{{ equipement.desceq }}</td>
-            </tr>
-            <tr>
-                <th>Doceq</th>
-                <td>{{ equipement.doceq }}</td>
-            </tr>
-            <tr>
-                <th>Imageeq</th>
-                <td>{{ equipement.imageeq }}</td>
-            </tr>
-            <tr>
-                <th>Categeq</th>
-                <td>{{ equipement.categeq }}</td>
-            </tr>
-            <tr>
-                <th>Noteeq</th>
-                <td>{{ equipement.noteeq }}</td>
-            </tr>
-            <tr>
-                <th>Marqueeq</th>
-                <td>{{ equipement.marqueeq }}</td>
-            </tr>
-            <tr>
-                <th>Matriculeeq</th>
-                <td>{{ equipement.matriculeeq }}</td>
-            </tr>
-            <tr>
-                <th>Datepremainte</th>
-                <td>{{ equipement.datepremainte ? equipement.datepremainte|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Datepromainte</th>
-                <td>{{ equipement.datepromainte ? equipement.datepromainte|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_equipement_index') }}">back to list</a>
-
-    <a href="{{ path('app_equipement_edit', {'ideq': equipement.ideq}) }}">edit</a>
-
-    {{ include('equipement/_delete_form.html.twig') }}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Equipement</h1>
+            <div class="equipement-details">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ asset(equipement.imageeq) }}" class="img-fluid" style="max-height: 200px;">
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong>Equipement:</strong> {{ equipement.nomeq }}</p>
+                        <p><strong>Description:</strong> {{ equipement.desceq }}</p>
+                        <p><strong>Documentation:</strong> {{ equipement.doceq }}</p>
+                        <p><strong>Categorie:</strong> {{ equipement.categeq }}</p>
+                        <p><strong>Marque:</strong> {{ equipement.marqueeq }}</p>
+                        <p><strong>Matricule:</strong> {{ equipement.matriculeeq }}</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <a href="{{ path('app_equipement_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            <a href="{{ path('avis_equipement', {'idEq': equipement.idEq}) }}" class="btn btn-primary">Avis</a>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
 {% endblock %}

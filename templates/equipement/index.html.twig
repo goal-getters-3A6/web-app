@@ -34,8 +34,8 @@
                 <td>{{ equipement.noteeq }}</td>
                 <td>{{ equipement.marqueeq }}</td>
                 <td>{{ equipement.matriculeeq }}</td>
-                <td>{{ equipement.datepremainte ? equipement.datepremainte|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ equipement.datepromainte ? equipement.datepromainte|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ equipement.datepremainte ? equipement.datepremainte|date('Y-m-d ') : '' }}</td>
+                <td>{{ equipement.datepromainte ? equipement.datepromainte|date('Y-m-d ') : '' }}</td>
                 <td>
                     <a href="{{ path('app_equipement_show', {'ideq': equipement.ideq}) }}">show</a>
                     <a href="{{ path('app_equipement_edit', {'ideq': equipement.ideq}) }}">edit</a>

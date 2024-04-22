@@ -1,4 +1,87 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'forms-sample', 'novalidate': 'novalidate' }}) }}    
+    <div class="form-group">
+        {{ form_label(form.nomeq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.nomeq, {'attr': {'class': 'form-control', 'placeholder': 'Name', 'style': 'color: #000'}}) }}
+        {% if form_errors(form.nomeq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.nomeq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.desceq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.desceq, {'attr': {'class': 'form-control', 'placeholder': 'Description', 'style': 'color: #000'}}) }}
+         {% if form_errors(form.desceq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.desceq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.doceq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.doceq, {'attr': {'class': 'form-control', 'placeholder': 'Documentation', 'style': 'color: #000'}}) }}
+         {% if form_errors(form.doceq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.doceq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.imageeq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        <div class="input-group col-xs-12">
+            {{ form_widget(form.imageeq, {'attr': {'class': 'form-control file-upload-info', 'placeholder': 'Image', 'style': 'color: #000'}}) }}
+        </div>
+         {% if form_errors(form.imageeq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.imageeq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.categeq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.categeq, {'attr': {'class': 'form-control', 'style': 'color: #000'}}) }}
+        {% if form_errors(form.categeq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.categeq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.marqueeq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.marqueeq, {'attr': {'class': 'form-control', 'placeholder': 'Marque', 'style': 'color: #000'}}) }}
+        {% if form_errors(form.marqueeq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.marqueeq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.matriculeeq, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.matriculeeq, {'attr': {'class': 'form-control', 'placeholder': 'Matricule', 'style': 'color: #000'}}) }}
+         {% if form_errors(form.matriculeeq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.matriculeeq) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.datepremainte, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.datepremainte, {'attr': {'class': 'form-control', 'style': 'color: #000'}}) }}
+         {% if form_errors(form.datepremainte) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.datepremainte) }}
+        </div>
+    {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.datepromainte, null, {'label_attr': {'style': 'color: #000; font-size: 18px;'}}) }}
+        {{ form_widget(form.datepromainte, {'attr': {'class': 'form-control', 'style': 'color: #000'}}) }}
+       {% if form_errors(form.datepromainte) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.datepromainte) }}
+        </div>
+    {% endif %} 
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">{{ button_label|default('Enregistrer') }}</button>
+    
 {{ form_end(form) }}

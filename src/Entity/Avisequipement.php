@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AvisEquipementRepository;
 use App\Entity\User;
 use App\Entity\Equipement;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass:AvisEquipementRepository::class)]
 class Avisequipement
@@ -16,19 +18,25 @@ class Avisequipement
     private ?int $idaeq =null;
 
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message: "Le commentaire ne peut pas être vide.")]
     private ?string $commaeq=null;
 
-    #[ORM\Column]
-    private ?bool $like;
+    #[ORM\Column(type: "boolean")]
+    private ?bool $likes;
 
-    #[ORM\Column]
-    private ?bool $dislike;
+    #[ORM\Column(type: "boolean")]
+    private ?bool $dislikes;
 
-    #[ORM\ManyToOne(inversedBy: "aviseEquipements")]
-    private ?User $idus=null;
+   // #[ORM\ManyToOne(inversedBy: "aviseEquipement")]
+   #[ORM\ManyToOne(targetEntity: User::class)]
+   #[ORM\JoinColumn(name: "idUs", referencedColumnName: "id")]
+    private ?User $idUs=null;
 
-    #[ORM\ManyToOne(inversedBy: "aviseEquipements")]
-    private ?Equipement $ideq=null;
+   // #[ORM\ManyToOne(inversedBy: "avisequipement")]
+   #[ORM\ManyToOne(targetEntity: Equipement::class)]
+   #[ORM\JoinColumn(name: "idEq", referencedColumnName: "idEq")]
+private ?Equipement $idEq;
+
 
     public function getIdaeq(): ?int
     {
@@ -47,50 +55,50 @@ class Avisequipement
         return $this;
     }
 
-    public function isLike(): ?bool
+    public function isLikes(): ?bool
     {
-        return $this->like;
+        return $this->likes;
     }
 
-    public function setLike(bool $like): static
+    public function setLikes(bool $likes): static
     {
-        $this->like = $like;
+        $this->likes = $likes;
 
         return $this;
     }
 
-    public function isDislike(): ?bool
+    public function isDislikes(): ?bool
     {
-        return $this->dislike;
+        return $this->dislikes;
     }
 
-    public function setDislike(bool $dislike): static
+    public function setDislikes(bool $dislikes): static
     {
-        $this->dislike = $dislike;
+        $this->dislikes = $dislikes;
 
         return $this;
     }
 
-    public function getIdus(): ?User
+    public function getIdUs(): ?User
     {
-        return $this->idus;
+        return $this->idUs;
     }
 
-    public function setIdus(?User $idus): static
+    public function setIdUs(?User $idUs): static
     {
-        $this->idus = $idus;
+        $this->idUs = $idUs;
 
         return $this;
     }
 
-    public function getIdeq(): ?Equipement
+    public function getIdEq(): ?Equipement
     {
-        return $this->ideq;
+        return $this->idEq;
     }
 
-    public function setIdeq(?Equipement $ideq): static
+    public function setIdEq(?Equipement $idEq): static
     {
-        $this->ideq = $ideq;
+        $this->idEq = $idEq;
 
         return $this;
     }

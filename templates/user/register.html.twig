@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User
+{% endblock %}
+
+{% block body %}
+<br><br><br><br>
+	<div class="container mt-5" style="margin-top:10%; margin-bottom:5%">
+		<div class="row d-flex justify-content-center" style='display: flex;justify-content: center;align-items: center;'>
+<br><br><br><br>
+			{{ include('user/registrationForm.html.twig') }}
+		</div>
+	</div>
+{% endblock %}

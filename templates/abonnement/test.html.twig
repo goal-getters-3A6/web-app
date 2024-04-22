@@ -1,0 +1,38 @@
+{# templates/abonnement/test.html.twig #}
+{% extends 'base.html.twig' %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mes Abonnements</title>
+</head>
+<body>
+    <h1>Mes Abonnements</h1>
+
+    <ul>
+        <li>
+            <strong>Abonnement Ordinaire</strong>
+            <p>Accès à toutes les fonctionnalités de base</p>
+            <p>Prix : 10 € / mois</p>
+           
+            
+            <button type="button">Acheter</button>
+        </li>
+        <li>
+            <strong>Abonnement Premium</strong>
+            <p>Accès à toutes les fonctionnalités avancées</p>
+            <p>Prix : 20 € / mois</p>
+            <img src="{{ asset('path/to/your/image2.jpg') }}" alt="Image 2">
+            <button type="button">Acheter</button>
+        </li>
+        <li>
+            <strong>Abonnement Entreprise</strong>
+            <p>Accès illimité à toutes les fonctionnalités</p>
+            <p>Prix : 50 € / mois</p>
+            <img src="{{ asset('path/to/your/image3.jpg') }}" alt="Image 3">
+            <button type="button">Acheter</button>
+        </li>
+    </ul>
+</body>
+</html>
+{% endblock %}

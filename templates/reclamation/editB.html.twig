@@ -1,0 +1,28 @@
+{# templates/reclamation/editB.html.twig #}
+
+{% extends 'abonnement/abonnementB.html.twig' %}
+
+{% block title %}Modifier Réclamation{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Modifier Réclamation</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="etatrec">État :</label>
+                        <select id="etatrec" name="etatrec" class="form-control">
+                            <option value="1" {% if reclamation.etatrec == 1 %}selected{% endif %}>Traitée</option>
+                            <option value="0" {% if reclamation.etatrec == 0 %}selected{% endif %}>Pas Traitée</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

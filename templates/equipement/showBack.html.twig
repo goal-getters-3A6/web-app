@@ -1,0 +1,49 @@
+{% extends 'equipement/equipementback.html.twig' %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+        <br>
+<br>
+<br><br>
+<br>
+<br>
+            <h1 class="text-dark">Equipement</h1>
+            <div class="equipement-details">
+                <div class="row">
+                    <div class="col-md-4">
+                    <br>
+<br>
+<br>
+                       <img src="{{ asset(equipement.imageeq) }}" class="img-fluid" style="max-height: 200px;">
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong class="text-dark">Equipement:</strong> <span class="text-dark">{{ equipement.nomeq }}</span></p>
+                        <p><strong class="text-dark">Description:</strong> <span class="text-dark">{{ equipement.desceq }}</span></p>
+                        <p><strong class="text-dark">Documentation:</strong> <span class="text-dark">{{ equipement.doceq }}</span></p>
+                        <p><strong class="text-dark">Categorie:</strong> <span class="text-dark">{{ equipement.categeq }}</span></p>
+                        <p><strong class="text-dark">Marque:</strong> <span class="text-dark">{{ equipement.marqueeq }}</span></p>
+                        <p><strong class="text-dark">Matricule:</strong> <span class="text-dark">{{ equipement.matriculeeq }}</span></p>
+                        <p><strong class="text-dark">Date de maintenance prévue:</strong> <span class="text-dark">{{ equipement.datepremainte ? equipement.datepremainte|date('Y-m-d ') : '' }}</span></p>
+                        <p><strong class="text-dark">Date de prochaine maintenance:</strong> <span class="text-dark">{{ equipement.datepromainte ? equipement.datepromainte|date('Y-m-d ') : '' }}</span></p>
+                    </div>
+                </div>
+            </div>
+             <br>
+            <br>
+            {{ include('equipement/_delete_form.html.twig') }}
+            <a href="{{ path('app_equipement_back_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

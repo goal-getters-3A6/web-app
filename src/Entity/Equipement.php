@@ -2,51 +2,72 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EquipementRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 
 #[ORM\Entity(repositoryClass:EquipementRepository::class)]
+#[UniqueEntity(fields: ["matriculeeq"], message: "Cette matricule est déjà utilisée.")]
 class Equipement
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[ORM\Column(name: "idEq")]
+private ?int $idEq=null;
+
+
+
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
+private ?string $nomeq = null;
+
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La description ne peut pas être vide.")]
+private ?string $desceq = null;
+
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La documentation ne peut pas être vide.")]
+private ?string $doceq = null;
+
+#[ORM\Column(length:255)]
+private ?string $imageeq = null;
+
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La catégorie ne peut pas être vide.")]
+private ?string $categeq = null;
+
+#[ORM\Column]
+private ?int $noteeq = null;
+
+#[ORM\Column(length:255)]
+#[Assert\NotBlank(message: "La marque ne peut pas être vide.")]
+private ?string $marqueeq = null;
+
+#[ORM\Column(length:255 )]
+#[Assert\NotBlank(message: "Le matricule ne peut pas être vide.")]
+private ?string $matriculeeq = null;
+
     #[ORM\Column]
-    private ?int $ideq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $nomeq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $desceq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $doceq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $imageeq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $categeq=null;
-
-    #[ORM\Column]
-    private ?int $noteeq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $marqueeq=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $matriculeeq=null;
-
-    #[ORM\Column]
+    #[Assert\NotBlank(message: "La date de précédente maintenance est obligatoire.")]
+    #[Assert\LessThanOrEqual(value: "today", message: "La date de précédente maintenance doit être égale ou antérieure à la date actuelle.")]
     private ?\DateTime $datepremainte=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La date de prochaine maintenance est obligatoire.")]
+    #[Assert\GreaterThanOrEqual(value: "today", message: "La date de prochaine maintenance doit être postérieure à la date actuelle.")]
     private ?\DateTime $datepromainte=null;
 
-    public function getIdeq(): ?int
+
+
+  
+    public function getIdEq(): ?int
     {
-        return $this->ideq;
+        return $this->idEq;
     }
 
     public function getNomeq(): ?string
