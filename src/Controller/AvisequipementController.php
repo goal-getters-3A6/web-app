@@ -23,26 +23,6 @@ class AvisequipementController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_avisequipement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $avisequipement = new Avisequipement();
-        $form = $this->createForm(AvisequipementType::class, $avisequipement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($avisequipement);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_avisequipement_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('avisequipement/new.html.twig', [
-            'avisequipement' => $avisequipement,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/{idaeq}', name: 'app_avisequipement_show', methods: ['GET'])]
     public function show(Avisequipement $avisequipement): Response
     {
@@ -50,36 +30,6 @@ class AvisequipementController extends AbstractController
             'avisequipement' => $avisequipement,
         ]);
     }
-
-    #[Route('/{idaeq}/edit', name: 'app_avisequipement_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Avisequipement $avisequipement, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(AvisequipementType::class, $avisequipement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_avisequipement_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('avisequipement/edit.html.twig', [
-            'avisequipement' => $avisequipement,
-            'form' => $form,
-        ]);
-    }
-
- /*  #[Route('/{idaeq}', name: 'app_avisequipement_delete', methods: ['POST'])]
-    public function delete(Request $request, Avisequipement $avisequipement, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$avisequipement->getIdaeq(), $request->request->get('_token'))) {
-            $entityManager->remove($avisequipement);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('avis_equipement',  [], Response::HTTP_SEE_OTHER);
-    }
-*/
     
 #[Route('/avisequipement/search', name: 'app_avisequipement_search', methods: ['GET'])]
     public function search(Request $request, AvisEquipementRepository $avisEquipementRepository): Response

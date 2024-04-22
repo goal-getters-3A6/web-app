@@ -12,6 +12,8 @@
                 <div class="mb-4">
                     <h2>Veuillez saisir votre commentaire :</h2>
                     {{ include('avisequipement/_form.html.twig') }}
+
+                    
                     {% if alertType %}
                         {% if alertType == 'warning' %}
                             <div class="alert alert-warning" role="alert">

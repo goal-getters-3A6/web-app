@@ -8,10 +8,9 @@ use App\Entity\User;
 use App\Form\AvisequipementType;
 use App\Form\EquipementType;
 use App\Repository\EquipementRepository;
-use App\Repository\UserRepository;
+use App\Service\EmotionDetectionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,21 +20,13 @@ use Knp\Component\Pager\PaginatorInterface;
 require_once ('C:\Users\Yosr\OneDrive - ESPRIT\Bureau\gg\3-workshop-symfony\vendor\twilio\sdk\src\Twilio\autoload.php');
 
 
-use Twilio\Rest\Client;
-
 #[Route('/eq')]
 class EquipementController extends AbstractController
 {
-   /* #[Route('/', name: 'app_equipement_index', methods: ['GET'])]
-    public function index(EquipementRepository $equipementRepository): Response
-    {
-        return $this->render('equipement/equipement.html.twig', [
-            'equipements' => $equipementRepository->findAll(),
-        ]);
-    }*/
+   
 
     #[Route('/', name: 'app_equipement_index', methods: ['GET'])]
-public function index(EquipementRepository $equipementRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(EquipementRepository $equipementRepository, PaginatorInterface $paginator, Request $request): Response
 {
     // Récupérer tous les équipements non paginés
     $allEquipements = $equipementRepository->findAll();
@@ -52,25 +43,7 @@ public function index(EquipementRepository $equipementRepository, PaginatorInter
     ]);
 }
 
-    #[Route('/new', name: 'app_equipement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $equipement = new Equipement();
-        $form = $this->createForm(EquipementType::class, $equipement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($equipement);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('equipement/new.html.twig', [
-            'equipement' => $equipement,
-            'form' => $form,
-        ]);
-    }
+    
 
     #[Route('/{idEq}', name: 'app_equipement_show', methods: ['GET'])]
     public function show(Equipement $equipement): Response
@@ -80,90 +53,9 @@ public function index(EquipementRepository $equipementRepository, PaginatorInter
         ]);
     }
 
-    #[Route('/{ideq}/edit', name: 'app_equipement_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Equipement $equipement, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(EquipementType::class, $equipement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('equipement/edit.html.twig', [
-            'equipement' => $equipement,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{ideq}', name: 'app_equipement_delete', methods: ['POST'])]
-    public function delete(Request $request, Equipement $equipement, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$equipement->getIdeq(), $request->request->get('_token'))) {
-            $entityManager->remove($equipement);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-   /* #[Route('/{idEq}/avis', name: 'avis_equipement')]
-    public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
-    {
-        $avisEquipements = $entityManager->getRepository(Avisequipement::class)->findBy(['idEq' => $equipement]);
-        $avisequipement = new Avisequipement();
-        $form = $this->createForm(AvisequipementType::class, $avisequipement);
-        $form->handleRequest($request);
     
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleBadwordAndTentatives($avisequipement);
-            $avisequipement->setIdEq($equipement); // Associer l'avis à l'équipement
-            $entityManager->persist($avisequipement);
-            $entityManager->flush();
 
-            
-            // Redirection vers la même page après l'ajout d'un avis
-            return new RedirectResponse($this->generateUrl('avis_equipement', ['idEq' => $equipement->getIdEq()]));
-        }
-    
-        return $this->render('avisequipement/avisequipement.html.twig', [
-            'equipement' => $equipement,
-            'avisEquipement' => $avisEquipements,
-            'form' => $form->createView(),
-        ]);
-        
-    }
-    // Méthode pour vérifier si l'avis contient un mot interdit et gérer le nombre de tentatives
-    private function handleBadwordAndTentatives(Avisequipement $avisequipement): void
-    {
-        if ($this->containsBadword($avisequipement->getCommaeq())) {
-            // Incrémenter le compteur de tentatives de l'utilisateur
-            $user = $this->getDoctrine()->getRepository(User::class)->find(19);
-            $user->incrementNbTentative();
-            
 
-            // Si le nombre de tentatives dépasse 3, modifier le statut de l'utilisateur
-            if ($user->getNbTentative()>=3) {
-                $user->setStatut(true);
-            }
-
-            $this->getDoctrine()->getManager()->flush();
-        }
-    }
-  // Fonction pour vérifier si l'avis contient un mot interdit
-private function containsBadword($avisContent) {
-    $badwords = ['badword1', 'badword2', 'badword3']; // Ajoutez vos mots interdits ici
-
-    foreach ($badwords as $badword) {
-        if (stripos($avisContent, $badword) !== false) {
-            return true;
-        }
-    }
-
-    return false;
-}*/
 #[Route('/{idEq}/avis', name: 'avis_equipement')]
 public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
 {
@@ -248,51 +140,7 @@ private function handleBadwordAndTentatives(Avisequipement $avisequipement): ?st
     return false;
 }
 
-
-
-
-
-  /*  #[Route('/{idEq}/avis', name: 'avis_equipement')]
-public function avisEquipement(Equipement $equipement, EntityManagerInterface $entityManager, Request $request): Response
-{
-    // Récupérer tous les avis pour cet équipement
-    $avisEquipements = $entityManager->getRepository(Avisequipement::class)->findBy(['idEq' => $equipement]);
-
-    // Initialiser un tableau pour stocker les émotions de chaque avis
-    $emotions = [];
-
-    // Pour chaque avis, détecter l'émotion et l'ajouter au tableau des émotions
-    foreach ($avisEquipements as $avis) {
-        $commentaire = $avis->getCommaeq();
-        $emotion = $this->detecterEmotion($commentaire);
-        $emotions[] = $emotion;
-    }
-
-    // Créer un formulaire pour ajouter un nouvel avis
-    $avisequipement = new Avisequipement();
-    $form = $this->createForm(AvisequipementType::class, $avisequipement);
-    $form->handleRequest($request);
-
-    // Traitement du formulaire lors de sa soumission
-    if ($form->isSubmitted() && $form->isValid()) {
-        $avisequipement->setIdEq($equipement);
-        $entityManager->persist($avisequipement);
-        $entityManager->flush();
-
-        // Redirection vers la même page après l'ajout d'un avis
-        return $this->redirectToRoute('avis_equipement', ['idEq' => $equipement->getIdEq()]);
-    }
-
-    // Rendre le template Twig avec les données nécessaires
-    return $this->render('avisequipement/avisequipement.html.twig', [
-        'equipement' => $equipement,
-        'avisEquipement' => $avisEquipements,
-        'emotions' => $emotions,
-        'form' => $form->createView(),
-    ]);
-}*/
-
-   
+  
 
 
     #[Route('/avis/{id}/edit', name: 'avis_edit', methods: ['GET', 'POST'])]
@@ -327,56 +175,45 @@ public function deleteAvis(Avisequipement $avisequipement, EntityManagerInterfac
     return $this->redirectToRoute('avis_equipement', ['idEq' => $avisequipement->getIdEq()->getIdEq()]);
 }
 
-
- // Fonction pour détecter l'émotion à partir du commentaire
- private function detecterEmotion($commentaire)
- {
+#[Route('/avis/{id}/show', name: 'avis_show', methods: ['GET'])]
+public function showComments(Avisequipement $avisequipement): Response
+{
+    // Obtenez le contenu de l'avis
+    $commentContent = $avisequipement->getCommaeq();
     
-         // Utilisation du client Guzzle pour envoyer des requêtes HTTP
-        $httpClient = new GuzzleClient();
-            
-         // Envoi de la requête POST à l'API Python pour détecter l'émotion
-         $response = $httpClient->post('http://localhost:5000/detect_emotion', [
-             'json' => ['comment' => $commentaire]
-         ]);
- 
-         // Analyse de la réponse JSON et récupération de l'émotion détectée
-         $responseJson = json_decode($response->getBody(), true);
-         return $responseJson['emotion_bert'];
-      
- }
+    // Utilisation du modèle BERT pour détecter l'émotion
+    $emotion = $this->detectEmotion($commentContent);
 
- // Fonction pour obtenir l'icône smiley en fonction de l'émotion détectée
- private function getSmileyIcon($emotion)
- {
-     $imagePath = '';
-     switch ($emotion) {
+    // Affichage de l'image correspondante en fonction de l'émotion détectée
+    switch ($emotion) {
         case 'Joie':
-            $imagePath = '/Front/images/joie.png';
+            // Affichage de l'image correspondante pour la joie
             break;
         case 'Tristesse':
-            $imagePath = '/Front/images/tristesse.png';
+            // Affichage de l'image correspondante pour la tristesse
             break;
         case 'Neutre':
-            $imagePath = '/Front/images/neutre.png';
+            // Affichage de l'image correspondante pour la neutralité
             break;
         default:
-            $imagePath = '/Front/images/question.png';
+            // Gestion des autres cas si nécessaire
             break;
-     }
-     return $imagePath;
- }
+    }
 
- // Fonction pour afficher l'icône smiley dans la vue Twig
- 
- private function renderSmileyIcon($emotion)
- {
-     $imagePath = $this->getSmileyIcon($emotion);
-     // Chargez l'image dans votre template Twig
-     return '<img src="' . $imagePath . '" alt="' . $emotion . '">';
- }
+    // Affichage de l'avis équipement avec les images correspondantes
+    // ...
+}
 
- 
+private function detectEmotion(string $comment): string
+{
+    // Utilisez le modèle BERT pour détecter l'émotion du commentaire
+    // Remplacez cette logique par votre logique de détection d'émotion
+    
+    // Pour cet exemple, renvoyons toujours une émotion neutre
+    return 'Neutre';
+}
+
+// Autres méthodes de votre contrôleur...
 
 
 }

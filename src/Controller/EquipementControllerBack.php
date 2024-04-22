@@ -9,7 +9,6 @@ use App\Repository\EquipementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/eqb')]
 class EquipementControllerBack extends AbstractController
 {
-   /* #[Route('/', name: 'app_equipement_back_index', methods: ['GET'])]
-    public function index(EquipementRepository $equipementRepository): Response
-    {
-        return $this->render('equipement/equipementback.html.twig', [
-            'equipements' => $equipementRepository->findAll(),
-        ]);
-    }*/
+   
     #[Route('/', name: 'app_equipement_back_index', methods: ['GET'])]
     public function index(EquipementRepository $equipementRepository): Response
 {
@@ -70,16 +63,12 @@ class EquipementControllerBack extends AbstractController
         if ($imageFile) {
             // Génère un nom de fichier unique
             $newFilename = uniqid().'.'.$imageFile->guessExtension();
-    
-            // Déplace le fichier dans le répertoire où sont stockées les images
-            try {
+   
                 $imageFile->move(
                     $this->getParameter('images_directory'),
                     $newFilename
                 );
-            } catch (FileException $e) {
-                // Gère les erreurs de fichier, si nécessaire
-            }
+            
     
             // Stocke le nom du fichier dans la propriété de l'entité
             $equipement->setImageeq($newFilename);
@@ -113,7 +102,28 @@ class EquipementControllerBack extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            // Gestion de l'image téléchargée
+        $imageFile = $form['imageeq']->getData();
+    
+        // Vérifie si un fichier a été téléchargé
+        if ($imageFile) {
+            // Génère un nom de fichier unique
+            $newFilename = uniqid().'.'.$imageFile->guessExtension();
+    
+            // Déplace le fichier dans le répertoire où sont stockées les images
+           
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+            
+    
+            // Stocke le nom du fichier dans la propriété de l'entité
+            $equipement->setImageeq($newFilename);
+        }
+    
+        $entityManager->persist($equipement);
+        $entityManager->flush();
 
             return $this->redirectToRoute('app_equipement_back_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -135,41 +145,9 @@ public function delete(Request $request, Equipement $equipement, EntityManagerIn
         return $this->redirectToRoute('app_equipement_back_index', [], Response::HTTP_SEE_OTHER);
     }
 
-   
-  /*  
-    #[Route('/eqb/search', name: 'ajax_search')]
-    public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-  
-        $requestString = $request->get('q');
-  
-        $entities =  $em->getRepository(Equipement::class)->showByDestination($requestString);
-  
-        if(!$entities) {
-            $result['entities']['error'] = "Aucun équipement trouvé";
-        } else {
-            $result['entities'] = $this->getRealEntities($entities);
-        }
-  
-        return new Response(json_encode($result));
-    }
-    public function getRealEntities($entities){
-        $realEntities = []; // Initialisez le tableau des entités réelles
+ 
     
-        foreach ($entities as $entity){
-            // Ajoutez chaque entité sous forme de tableau associatif à $realEntities
-            $realEntities[] = [
-                'nomeq' => $entity->getNomeq(),
-                'categeq' => $entity->getCategeq(), // Ajoutez d'autres attributs si nécessaire
-                'imageeq' => $entity->getImageeq(),
-                'detailsLink' => $this->generateUrl('app_equipement_back_show', ['idEq' => $entity->getIdEq()]), // Générez le lien pour afficher les détails de l'équipement
-                'editLink' => $this->generateUrl('app_equipement_back_edit', ['idEq' => $entity->getIdEq()]) // Générez le lien pour modifier l'équipement
-            ];
-        }
-    
-        return $realEntities;
-    }*/
+      
 
     #[Route('/eqb/search', name: 'app_equipement_search', methods: ['GET'])]
     public function search(Request $request, EquipementRepository $EquipementRepository): Response
