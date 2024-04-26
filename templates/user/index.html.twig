@@ -9,6 +9,7 @@
 		</h1>
 		<a href="{{ path('admin_user_add') }}" class="btn btn-outline-dark">Create new</a>
 	</div>
+    {% include 'statistics/statistics.html.twig' with {'stats': stats} %}
 
 	{% block stylesheets%}
 		<input type="text" id="search" class="form-control" placeholder="Search">

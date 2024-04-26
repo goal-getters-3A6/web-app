@@ -108,6 +108,9 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        // Get the gender statistics
+        $stats = $userRepository->getUserGenderStats();
+
         $users = $userRepository->findAll();
         $users = $paginator->paginate(
             // Doctrine Query, not results
@@ -120,7 +123,10 @@ class UserController extends AbstractController
 
         return $this->render(
             'user/index.html.twig',
-            array('users' => $users)
+            array(
+                'users' => $users,
+                'stats' => $stats
+            )
         );
     }
 
