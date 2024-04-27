@@ -7,6 +7,9 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\DropboxFile;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +40,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, VerifyEmailHelperInterface $verifyEmailHelper, AuthenticationUtils $authenticationUtils): Response
     {
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -45,6 +49,22 @@ class RegistrationController extends AbstractController
         $user->setRole("CLIENT");
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            //upload to dropbox
+            $app = new DropboxApp("29jc4g04ebdszbm", "7el38mr9szx12fu");
+            $dropbox = new Dropbox($app);
+            $authHelper = $dropbox->getOAuth2Client();
+
+            $accessToken = $authHelper->getAccessToken(
+                '-utECBOm-pIAAAAAAAAAAb6kjimQJxPDKglTUw3JOE1h-6OatTG4VUdfdLR23omt',
+                null,
+                'refresh_token'
+            );
+
+            $dropbox->setAccessToken($accessToken['access_token']);
+            $mode = DropboxFile::MODE_READ;
+            $dropBoxFile = DropboxFile::createByPath($image->getPathname(), $mode);
+            $dropbox->upload($dropBoxFile, '/' . $image->getClientOriginalName(), ['autorename' => true]);
             // encode the plain password
             $user->setMdp(
                 $userPasswordHasher->hashPassword(
