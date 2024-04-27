@@ -349,6 +349,9 @@
             "branch": "main",
             "version": "1.5",
             "ref": "f604d862b3ce4434d131a0e9b3a2eb7bb1784aff"
-        }
+        },
+        "files": [
+            "./config/packages/recaptcha.yaml"
+        ]
     }
 }
