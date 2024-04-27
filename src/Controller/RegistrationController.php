@@ -65,6 +65,8 @@ class RegistrationController extends AbstractController
             $mode = DropboxFile::MODE_READ;
             $dropBoxFile = DropboxFile::createByPath($image->getPathname(), $mode);
             $dropbox->upload($dropBoxFile, '/' . $image->getClientOriginalName(), ['autorename' => true]);
+            $imageURL = $dropbox->getTemporaryLink('/' . $image->getClientOriginalName())->getLink();
+            $user->setImage($imageURL);
             // encode the plain password
             $user->setMdp(
                 $userPasswordHasher->hashPassword(

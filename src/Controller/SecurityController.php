@@ -17,11 +17,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Endroid\QrCode\Builder\Builder;
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\DropboxFile;
 use Monolog\Formatter\GoogleCloudLoggingFormatter;
+use PHPUnit\Util\Json;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SecurityController extends AbstractController
 {
@@ -54,6 +58,69 @@ class SecurityController extends AbstractController
     {
         return $this->render('user/login_denied.html.twig');
     }
+
+    /**
+     * @Route("/capture_face", name="capture_face")
+     */
+    public function capture_face(): Response
+    {
+        return $this->render('user/capture_face.html.twig');
+    }
+
+    /**
+     * @Route("/verify_face", name="verify_face")
+     */
+    public function verify_face(Request $request, UserRepository $userRepository): Response
+    {
+        $image = $request->request->get('image');
+        $app = new DropboxApp("29jc4g04ebdszbm", "7el38mr9szx12fu");
+        $dropbox = new Dropbox($app);
+        $authHelper = $dropbox->getOAuth2Client();
+
+        $accessToken = $authHelper->getAccessToken(
+            '-utECBOm-pIAAAAAAAAAAb6kjimQJxPDKglTUw3JOE1h-6OatTG4VUdfdLR23omt',
+            null,
+            'refresh_token'
+        );
+
+        $dropbox->setAccessToken($accessToken['access_token']);
+        $mode = DropboxFile::MODE_READ;
+        $dropBoxFile = DropboxFile::createByPath($image, $mode);
+        $dropboxPath = '/' . basename($image);
+        $dropbox->upload($dropBoxFile, $dropboxPath, ['autorename' => true]);
+        $imageURL = $dropbox->getTemporaryLink($dropboxPath)->getLink();
+        $py_file_path = $this->getParameter('kernel.project_dir') . '/src/Services/FaceRecognition/face_recognition_.py';
+        $user = $userRepository->findOneBy(['id' => $this->getUser()->getUserIdentifier()]);
+        $targetFilename = $user->getImage();
+        $command = escapeshellcmd(
+            'python ' .
+                $py_file_path . ' ' .
+                $imageURL . ' ' .
+                $targetFilename
+        );
+
+        $output = shell_exec($command);
+        $json_response = json_decode($output);
+        $percentage = $json_response->percentage;
+        if ($percentage > 70) {
+            return new JsonResponse ([
+                'status' => Response::HTTP_OK,
+                'result' => [
+                    'comparison_result' => $json_response->status,
+                    'percentage' => $json_response->percentage
+                ],
+            ]);
+        } else {
+            return new JsonResponse([
+                'status' => Response::HTTP_OK,
+                'result' => [
+                    'comparison_result' => $json_response->status,
+                    'percentage' => $json_response->percentage
+                ],
+            ]);
+        }
+    }
+
     /**
      * @Route("/forgotten-password", name="app_forgotten_password")
      */

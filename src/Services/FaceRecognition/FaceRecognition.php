@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FaceRecognition
 {
-    public static function comparison(string $sourceFilename, string $targetFilename, $prj_directory, Request $request): Response
+    public static function comparison(string $sourceFilename, string $targetFilename): Response
     {
 
         $py_file_path = 'src/Services/FaceRecognition/face_recognition_.py';
