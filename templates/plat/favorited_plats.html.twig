@@ -1,0 +1,15 @@
+{# favorited_plats.html.twig #}
+
+<h1>Favorited Plats for {{ user.username }}</h1>
+
+<ul>
+    {% for plat in favoritedPlats %}
+        <li>
+            {{ plat.nomp }} - Price: {{ plat.prixp }} - Calories: {{ plat.calories }}
+            <form action="{{ path('toggle_favoris', { 'platId': plat.idp }) }}" method="post">
+                <button type="submit">Remove from Favorites</button>
+                <input type="hidden" name="_token" value="{{ csrf_token('toggle_favoris' ~ plat.idp) }}">
+            </form>
+        </li>
+    {% endfor %}
+</ul>

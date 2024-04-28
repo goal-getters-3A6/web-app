@@ -1,0 +1,20 @@
+{% extends 'plat/alimentaireback.html.twig' %}
+
+{% block title %}Nouveau Plat{% endblock %}
+
+{% block body %}
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Ajouter un Plat</h1>
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ include('plat/_form.html.twig') }}
+                {{ form_end(form) }}
+
+                <a href="{{ path('app_plat_indexb') }}" class="btn btn-secondary mt-3">Consulter Liste</a>
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

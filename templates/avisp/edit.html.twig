@@ -1,0 +1,27 @@
+{% extends 'plat/alimentaire.html.twig' %}
+
+{% block title %}Modifiez votre avis{% endblock %}
+
+{% block body %}
+<div style="height: 100px;"></div> <!-- Empty space with height 100px -->
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header" style="background-color: #004369; color: white; font-size: 24px; font-weight: bold;">
+                    Modifiez votre avis
+                </div>
+                <div class="card-body">
+                    {{ include('avisp/_form.html.twig', {'button_label': 'Mettre A jour'}) }}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('app_avisp_index') }}" class="btn btn-primary" style="background-color: #db1f48; border-color: #db1f48;">Retournez a la Liste</a>
+                </div>
+            </div>
+            <div class="mt-3">
+                {{ include('avisp/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

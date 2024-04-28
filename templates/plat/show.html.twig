@@ -1,0 +1,52 @@
+{% extends 'plat/alimentaire.html.twig' %}
+
+{% block title %}Plat{% endblock %}
+
+{% block body %}
+    <div style="height: 100px;"></div> <!-- Empty space with height 100px -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-4">
+              <img src="{{ asset(plat.photop) }}" alt="{{ plat.nomp }}" style="width: 330px; height: 330px;">
+            </div>
+            <div class="col-md-8">
+                <h1 style="color: #004369; font-size: 28px; font-weight: bold;">{{ plat.nomp }}</h1>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th style="color: black;">Prix : </th>
+                            <td style="color: black;">{{ plat.prixp }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Description : </th>
+                            <td style="color: black;">{{ plat.descp }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Alergies : </th>
+                            <td>
+                                <div style="background-color: #ffcccc; color: black; padding: 10px; border-radius: 5px;"> <!-- Set color to black -->
+                                    {{ plat.alergiep }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Etat : </th>
+                            <td style="color: black;">{{ plat.etatp ? 'En stock' : 'Ripture stock' }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Calories : </th>
+                            <td style="color: black;">{{ plat.calories }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_plat_index') }}" class="btn btn-secondary" style="background-color: #db1f48;">Retour a la liste</a>
+                <a href="{{ path('app_avisp_new', {'idp': plat.idp}) }}" class="btn btn-secondary" style="background-color: #db1f48;">laissez un avis</a>
+                <a href="{{ path('app_avisp_indexuc', {'idp': plat.idp}) }}" class="btn btn-secondary" style="background-color: #db1f48;">consultez avis du plat</a>
+               
+
+             
+            </div>
+        </div>
+    </div>
+{% endblock %}

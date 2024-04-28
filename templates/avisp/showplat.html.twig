@@ -1,0 +1,7 @@
+{% extends 'plat/alimentaire.html.twig' %}
+
+<h1>{{ plat.nomp }}</h1>
+
+{% for avis in plats_avis %}
+    <p>{{ avis.commap }}</p>
+{% endfor %}
