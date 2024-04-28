@@ -6,6 +6,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AbonnementRepository;
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass:AbonnementRepository::class)]
 class Abonnement
@@ -19,10 +20,15 @@ class Abonnement
     private  ?float $montantab=null;
 
     #[ORM\Column]
-    private ?\DateTime $dateexpirationab=null;
-
+    #[Assert\NotBlank(message:"La date d'expiration est obligatoire")]
+    #[Assert\GreaterThanOrEqual(value :"today +30 days", message :"La date d'expiration doit être supérieure à la date actuelle de 30 jours maximum")]
+    private ?\DateTime $dateexpirationab = null;
+   
+  
     #[ORM\Column(length:255)]
-    private ?string $codepromoab=null;
+   
+    #[Assert\Choice(choices: ["GoFit10", "GoFit20", "GoFit30"], message: "Le code promo n'est pas valide")]
+    private ?string $codepromoab = null;
 
     #[ORM\Column(length:255)]
     private ?string $typeab=null;
@@ -30,8 +36,12 @@ class Abonnement
     #[ORM\Column]
     private ?int $dureeab=null;
 
-    #[ORM\ManyToOne(inversedBy: "abonnements")]
+    // #[ORM\ManyToOne(inversedBy: "abonnements")]
+   #[ORM\ManyToOne(targetEntity: User::class)]
+   #[ORM\JoinColumn(name: "idu", referencedColumnName: "id")]
     private ?User $idu=null;
+
+
 
     public function getIdab(): ?int
     {
