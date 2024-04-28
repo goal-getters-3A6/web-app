@@ -11,14 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 
-class UserType extends AbstractType
+class UserAdminEdit extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -26,7 +25,6 @@ class UserType extends AbstractType
             ->add('nom', null, ['label' => 'Nom'])
             ->add('prenom', null, ['label' => 'Prénom'])
             ->add('mail', EmailType::class, ['label' => 'Email'])
-            ->add('mdp', PasswordType::class, ['label' => 'Mot de passe'])
             ->add('image', FileType::class, ['label' => 'Image', 'mapped' => false, 'required' => false, 'constraints' => [new Image([
                 'maxSize' => '5M',
                 'mimeTypes' => ['image/jpeg', 'image/png'],
@@ -44,7 +42,7 @@ class UserType extends AbstractType
                     'Femme' => 'Femme',
                 ],
             ])
-            ->add('submit', SubmitType::class, ['label' => 'S\'inscrire']);
+            ->add('submit', SubmitType::class, ['label' => 'Modifier']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
