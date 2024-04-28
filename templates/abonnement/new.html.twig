@@ -1,11 +1,70 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}New Abonnement{% endblock %}
+{% extends '/abonnement/abonnement.html.twig' %}
 
 {% block body %}
-    <h1>Create new Abonnement</h1>
+<br>
+<br>
+<br>
+<div style="text-align: center;">
+    <h1>Saisissez vos données</h1>
 
     {{ include('abonnement/_form.html.twig') }}
 
-    <a href="{{ path('app_abonnement_index') }}">back to list</a>
+    <a href="{{ path('abonnements_utilisateur', {'userId': app.user.id}) }}">Mes Abonnements</a><br>
+    <a href="{{ path('process', {'type': 'Ordinaire'}) }}" id="ordinaireLink">Paiement en ligne </a>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Dans votre fichier Twig 
+<a href="{{ path('process', {'type': 'Ordinaire'}) }}" id="ordinaireLink">Paiement en ligne - Ordinaire</a>
+<a href="{{ path('process', {'type': 'Familiale'}) }}" id="familialeLink">Paiement en ligne - Familiale</a>
+<a href="{{ path('process', {'type': 'Premium'}) }}" id="premiumLink">Paiement en ligne - Premium</a>
+
+    
+<script>
+
+// Dans votre fichier JavaScript ou inclus dans votre template Twig
+document.addEventListener("DOMContentLoaded", function() {
+    var ordinaireLink = document.getElementById("ordinaireLink");
+    var familialeLink = document.getElementById("familialeLink");
+    var premiumLink = document.getElementById("premiumLink");
+
+    // Récupérez le type d'abonnement du modèle Twig
+    var type = "{{ type }}";
+
+    // Désactivez les liens en fonction du type d'abonnement
+    if (type === "Ordinaire") {
+        familialeLink.style.pointerEvents = "none";
+        premiumLink.style.pointerEvents = "none";
+        familialeLink.style.color = "gray";
+        premiumLink.style.color = "gray";
+    } else if (type === "Familiale") {
+        ordinaireLink.style.pointerEvents = "none";
+        premiumLink.style.pointerEvents = "none";
+        ordinaireLink.style.color = "gray";
+        premiumLink.style.color = "gray";
+    } else if (type === "Premium") {
+        ordinaireLink.style.pointerEvents = "none";
+        familialeLink.style.pointerEvents = "none";
+        ordinaireLink.style.color = "gray";
+        familialeLink.style.color = "gray";
+    }
+});
+
+</script>-->
+
+<br>
+<br>
+<br>
+<br>
 {% endblock %}
+
+
