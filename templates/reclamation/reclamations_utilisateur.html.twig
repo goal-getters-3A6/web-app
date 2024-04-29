@@ -1,0 +1,21 @@
+{% extends '/abonnement/abonnement.html.twig' %}
+
+{% block title %}Récalamtions  de {{ user.non }}{% endblock %}
+
+{% block body %}
+    <h1>Récalamtions de {{ user.nom }}</h1>
+
+    {% if reclamations is empty %}
+        <p>Aucun reclamation trouvé pour cet utilisateur.</p>
+    {% else %}
+        <ul>
+            {% for reclamation in reclamations%}
+                <li>
+                    <strong>{{ reclamation.categorierec }}</strong>
+                    <p>Description {{ reclamation.descriptionrec}} </p>
+                    {# Ajoutez d'autres détails d'abonnement si nécessaire #}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

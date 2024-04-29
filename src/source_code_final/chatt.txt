@@ -1,0 +1,8 @@
+1/23/24, 14:30 - Messages and bookings are end-to-end encrypted. No one outside of this chat, not even the gym staff, can access them. Tap to learn more.
+1/23/24, 14:30 - Emma: Hi there! I'd like to reserve a spin bike for tomorrow morning.
+1/23/24, 14:31 - Emma: Are there any available slots?
+1/23/24, 14:32 - Gym Reception: Hello Emma! Let me check for you. Yes, we have an available spin bike tomorrow at 8:00 AM. Would you like me to reserve it for you?
+1/23/24, 14:33 - Emma: Yes, please! That works perfectly for me. Thank you!
+1/23/24, 14:34 - Gym Reception: Great! Your spin bike at 8:00 AM tomorrow is reserved. See you then!
+1/23/24, 14:35 - Emma: Thank you so much! Looking forward to it.
+1/23/24, 14:35 - Gym Reception: You're welcome! If you need any further assistance, feel free to ask.

@@ -10,17 +10,15 @@
         </div>
     {% endif %}
     </div>
-
+        {% if not app.user.isStatut() %}
         <button type="submit" class="btn btn-primary">{{ button_label|default('Publier') }}</button>
+        {% else %}
+                <button type="submit" class="btn btn-primary" disabled>{{ button_label|default('Publier') }}</button>
+                {% endif %}
     </div>
 
     
-    {#<div class="d-flex justify-content-between align-items-center">
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">{{ button_label|default('Publier') }}</button>
-        <button type="submit" class="btn btn-success" name="like">Like</button>
-        <button type="submit" class="btn btn-danger" name="dislike">Dislike</button>
-    </div>#}
+    
 
 
 {{ form_end(form) }}

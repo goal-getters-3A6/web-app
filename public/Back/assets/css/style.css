@@ -1843,7 +1843,7 @@ html {
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(225, 16, 16, 0); }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
@@ -1854,7 +1854,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #e9003e;
+  color: #343a40;
   text-align: left;
   background-color: #fff; }
 
@@ -11564,7 +11564,7 @@ code {
 
 /* Buttons */
 .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload {
-  font-size: 0.875rem;
+  font-size: 0.675rem;
   line-height: 1.71;
   font-family: "Rubik", sans-serif;
   font-weight: 500;
@@ -15472,7 +15472,7 @@ dl {
       width: 100%; } }
 
 .content-wrapper {
-  background: #FBFBEB;
+  background: #f2f2f2;
   padding: 2.75rem 2.25rem;
   width: 100%;
   -webkit-box-flex: 1;

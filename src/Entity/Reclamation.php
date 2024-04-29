@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert; 
 
 #[ORM\Entity(repositoryClass:ReclamationRepository::class)]
 class Reclamation
@@ -18,12 +19,20 @@ class Reclamation
     private ?string $categorierec=null;
 
     #[ORM\Column(length:255)]
-    private ?string $descriptionrec;
+    #[Assert\NotBlank(message: "Veuillez saisir une description")]
+    private ?string $descriptionrec=null;
+    
+   /* #[ORM\Column(length:255)]
+    private ?string $descriptionrec;*/
 
     #[ORM\Column(length:255)]
-    private ?string $piécejointerec=null;
+    private ?string $piecejointerec=null;
 
+   /* #[ORM\Column(length:255)]
+    private ?string $oddrec=null;*/
+    
     #[ORM\Column(length:255)]
+    #[Assert\Length(max:255, maxMessage:"L'identifiant ODD ne peut pas dépasser {{ limit }} caractères")]
     private ?string $oddrec=null;
 
     #[ORM\Column(length:255)]
@@ -32,7 +41,10 @@ class Reclamation
     #[ORM\Column]
     private ?int $etatrec=null;
 
-    #[ORM\ManyToOne(inversedBy: "reclamations")]
+  
+    // #[ORM\ManyToOne(inversedBy: "abonnements")]
+   #[ORM\ManyToOne(targetEntity: User::class)]
+   #[ORM\JoinColumn(name: "idu", referencedColumnName: "id")]
     private ?User $idu=null;
 
     public function getIdrec(): ?int
@@ -64,14 +76,14 @@ class Reclamation
         return $this;
     }
 
-    public function getPiécejointerec(): ?string
+   public function getPiecejointerec(): ?string
     {
-        return $this->piécejointerec;
+        return $this->piecejointerec;
     }
 
-    public function setPiécejointerec(string $piécejointerec): static
+    public function setPiecejointerec(string $piecejointerec): static
     {
-        $this->piécejointerec = $piécejointerec;
+        $this->piecejointerec = $piecejointerec;
 
         return $this;
     }

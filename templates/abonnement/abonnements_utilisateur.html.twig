@@ -1,0 +1,22 @@
+{% extends '/abonnement/abonnement.html.twig' %}
+
+{% block title %}Abonnements de {{ user.non }}{% endblock %}
+
+{% block body %}
+    <h1>Abonnements de {{ user.nom }}</h1>
+
+    {% if abonnements is empty %}
+        <p>Aucun abonnement trouvé pour cet utilisateur.</p>
+    {% else %}
+        <ul>
+            {% for abonnement in abonnements %}
+                <li>
+                    <strong>{{ abonnement.typeab }}</strong>
+                    <p>Prix : {{ abonnement.montantab }} € / mois</p>
+                    <p>Date d'expiration : {{ abonnement.dateexpirationab|date('d/m/Y') }}</p>
+                    {# Ajoutez d'autres détails d'abonnement si nécessaire #}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
