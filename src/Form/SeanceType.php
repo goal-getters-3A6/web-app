@@ -48,7 +48,7 @@ class SeanceType extends AbstractType
             ->add('duree')
             ->add('imageseance', FileType::class, [
                 'label' => 'Image de la séance',
-                'required' => true, // Ou true si vous le souhaitez
+                'required' => false, // Ou true si vous le souhaitez
                 'mapped' => false, // Ne pas mapper la propriété dans l'entité pour l'édition
                 'attr' => ['class' => 'form-control'],
 

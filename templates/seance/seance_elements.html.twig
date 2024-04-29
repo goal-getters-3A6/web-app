@@ -357,31 +357,62 @@
               
             </div>
             
-<form action="{{ path('app_reservationb') }}" method="GET">
-    <label for="critere">Critère de recherche :</label>
-    <select id="critere" name="critere">
-        <option value="nom">Nom de la séance</option>
-        <option value="jourseance">Jour de la séance</option>
-        <option value="numesalle">Numéro de salle</option>
-    </select>
-    
-    <label for="valeur">Valeur de recherche :</label>
-    <input type="text" id="valeur" name="valeur">
-    
-    <button type="submit">Rechercher</button>
-</form>
 
-{# Afficher les résultats de la recherche #}
-{% if seancesr is not empty %}
-    <h2>Résultats de la recherche :</h2>
-    <ul>
-        {% for seance in seancesr %}
-            <li>{{ seance.nom }} - {{ seance.jourseance }} - Salle {{ seance.numesalle }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune séance trouvée.</p>
-{% endif %}
+ <!-- Inclusion de jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+<!-- Script JavaScript pour la recherche AJAX -->
+<script>
+    $(document).ready(function() {
+        $('#search').on('keyup', function() {
+            var query = $(this).val();
+            console.log(query);
+            $.ajax({
+                url: '{{ path('app_reservationb') }}', // Utilisez le nom de la route pour l'URL
+                type: 'GET',
+                data: { q: query },
+                success: function(response) {
+                    console.log(response);
+                    // Ciblez uniquement le contenu de #tabv pour le remplacement
+                    $('#tabv').html($(response).find('#tabv').html());                }
+            });
+        });
+    });
+</script>
+
+<!-- Champ de recherche -->
+<input type="text" id="search" class="form-control" placeholder="Recherche par nom">
+
+<!-- Conteneur pour afficher les résultats -->
+<div id="tabv">
+    <!-- Les résultats de la recherche AJAX seront affichés ici -->
+      {% if seancesres is not empty %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Jour</th>
+                    <th>Horaire</th>
+
+                    <!-- Ajoutez d'autres en-têtes de colonne au besoin -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for seance in seancesres %}
+                    <tr>
+                        <td>{{ seance.nom }}</td>
+                        <td>{{ seance.jourseance }}</td>
+                      <td>{{ seance.horaire|date('Y-m-d H:i:s') }}</td>
+
+                        <!-- Ajoutez d'autres colonnes avec les attributs pertinents de la séance -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune séance trouvée.</p>
+    {% endif %}
+</div>
           </div>
   
 
@@ -392,7 +423,6 @@
                             <img src="{{ asset('uploads/' ~ seance.imageseance) }}" class="seance-image" alt="{{ seance.nom }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ seance.nom }}</h5>
-                        <p class="card-text">{{ seance.jourseance}}</p>
                          <p class="card-text">{{ seance.jourseance}}</p>
                     <p class="card-text">{{ seance.horaire|date('H:i') }}H</p>
                     <a href="{{ path('app_seance_show', {'idseance': seance.idseance}) }}">show</a>
@@ -406,6 +436,7 @@
             </div>
         {% endfor %}
     </div>
+   
   <h1>Statistiques sur le nombre de séances par type</h1>
 
 <canvas id="myChart" width="400" height="400"></canvas>
@@ -448,6 +479,7 @@
         });
     });
 </script>
+
 
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">

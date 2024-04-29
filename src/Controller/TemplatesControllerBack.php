@@ -19,59 +19,22 @@ class TemplatesControllerBack extends AbstractController
     #[Route('/rb', name: 'app_reservationb', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,SeanceRepository $seanceRepository): Response
     {
-      /*  $seance = new Seance();
-        $form = $this->createForm(SeanceType::class, $seance);
-        $form->handleRequest($request);
-         
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $imageFile = $form->get('imageseance')->getData();
-            if ($imageFile) {
-                // Move uploaded file to desired location
-                // Example:
-                $uploadsDirectory = $this->getParameter('uploads_directory');
-                $imageFileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
-                $imageFile->move(
-                    $uploadsDirectory,
-                    $imageFileName
-                );
-                // Set image file name to user entity
-                $seance->setImageseance($imageFileName);
-            }
-            $entityManager->persist($seance);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
-        }
-        else
-        {
-            dump($form->getErrors(true, false));
-            $seances = $seanceRepository->findAll();
-
-        return $this->renderForm('seance/seance_elements.html.twig', [
-            'seance' => $seance,
-            'seances' => $seances,
-
-            'form' => $form,
-        ]);*/
-
         $seance = new Seance();
         $form = $this->createForm(SeanceType::class, $seance);
         $form->handleRequest($request);
         $stats = $seanceRepository->getSeanceStatsByDayOfWeek();
+         // Récupérez le paramètre de recherche depuis la requête
+          $query = $request->query->get('q');
 
-        $criteria = [
-            'nom' => $request->query->get('nom'),
-            'jourseance' => $request->query->get('jourseance'),
-            'numesalle' => $request->query->get('numesalle')
-        ];
-
-        if ($criteria['nom'] || $criteria['jourseance'] || $criteria['numesalle']) {
-            $seancesr = $seanceRepository->findByCriteria($criteria);
-        }
-         else 
+           if ($query)
          {
-           $seancesr = $seanceRepository->findAll();
+               // Si une requête de recherche est soumise, récupérez les séances correspondantes depuis la base de données
+           $seancesres = $seanceRepository->findSeanceByNom($query); 
+         } 
+         else
+          {
+        // Sinon, récupérez toutes les séances
+        $seancesres = $seanceRepository->findAll();
          }
         if ($form->isSubmitted() && $form->isValid()) {
             
@@ -91,7 +54,7 @@ class TemplatesControllerBack extends AbstractController
             $entityManager->persist($seance);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reservationb', [], Response::HTTP_SEE_OTHER);
         }
         else
         {
@@ -101,10 +64,9 @@ class TemplatesControllerBack extends AbstractController
         return $this->renderForm('seance/seance_elements.html.twig', [
             'seance' => $seance,
             'seances' => $seances,
-            'seancesr' => $seancesr,
             'stats' => $stats,
-
-            'form' => $form,
+            'form' => $form,  
+            'seancesres'=>$seancesres,
         ]);
         }
 

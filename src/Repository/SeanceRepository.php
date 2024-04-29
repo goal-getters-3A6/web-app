@@ -56,6 +56,14 @@ class SeanceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findSeanceByNom($nom)
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->where('s.nom LIKE :nom')
+            ->setParameter('nom', '%' . $nom . '%');
+        
+        return $qb->getQuery()->getResult();
+    }
 //    /**
 //     * @return Seance[] Returns an array of Seance objects
 //     */
