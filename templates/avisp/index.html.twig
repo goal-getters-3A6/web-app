@@ -1,0 +1,69 @@
+{% extends 'plat/alimentaire.html.twig' %}
+{% block title %}
+    <h1 style="color: black;">Avisp index</h1>
+{% endblock %}
+{% block body %}
+<div style="height: 100px;"></div> 
+<div class="container py-4">
+    <h1 style="color: black;">Consultez avis</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commentaire</th>
+                <th>Star rate</th>
+                <th>Fav</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avisp in avisps %}
+            <tr>
+                <td>{{ avisp.commap }}</td>
+                <td>{{ avisp.star }}</td>
+                <td>{{ avisp.fav ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_avisp_edit', {'idap': avisp.idap}) }}" class="btn btn-danger">Modifiez</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+    <div id="ratingsChart" style="width: 400px; height: 200px;"></div> <!-- Highcharts container -->
+</div>
+<script src="https://code.highcharts.com/highcharts.js"></script> <!-- Highcharts script tag -->
+<script>
+    // Define the data for the chart
+    var data = {
+        categories: ['1', '2', '3', '4', '5'], // Rating values
+        series: [{
+            name: 'Number of Ratings',
+            data: [{{ ratingCounts[1] | default(0) }}, {{ ratingCounts[2] | default(0) }}, {{ ratingCounts[3] | default(0) }}, {{ ratingCounts[4] | default(0) }}, {{ ratingCounts[5] | default(0) }}],
+        }]
+    };
+    // Define the options for the chart
+    var options = {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: data.categories
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Ratings'
+            }
+        },
+        series: data.series
+    };
+    // Create the chart
+    Highcharts.chart('ratingsChart', options);
+</script>
+{% endblock %}

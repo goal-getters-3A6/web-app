@@ -1,0 +1,21 @@
+{# recherche.html.twig #}
+
+{# Start the form #}
+{{ form_start(form) }}
+
+{# Render the input field for the keyword #}
+{{ form_row(form.keyword) }}
+
+{# Render the submit button #}
+{{ form_row(form.search) }}
+
+{# End the form #}
+{{ form_end(form) }}
+
+{# Check if search results are defined #}
+{% if plats is defined %}
+    <h2>Search Results:</h2>
+    {% for plat in plats %}
+        {# Display search results here #}
+    {% endfor %}
+{% endif %}

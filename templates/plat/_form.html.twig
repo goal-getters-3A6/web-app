@@ -1,0 +1,4 @@
+{{ form_start(form) }} {# Start the form rendering #}
+    {{ form_widget(form) }} {# Render all form fields #}
+    <button class="btn">{{ button_label|default('Save') }}</button> {# Render submit button #}
+{{ form_end(form) }} {# End the form rendering #}

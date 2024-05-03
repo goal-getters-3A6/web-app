@@ -1,0 +1,61 @@
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+{{ form_row(form.nom) }}
+{{ form_row(form.prenom) }}
+{{ form_row(form.mail) }}
+{{ form_row(form.plainPassword) }}
+{{ form_row(form.image) }}
+{{ form_row(form.dateNaissance) }}
+{{ form_row(form.tel) }}
+
+<!-- Display fields for poids and taille -->
+<div style="display:flex;">
+	<label for="poids" style="margin-right: 38px;">Poids:
+
+	</label>
+	{{ form_widget(form.poids, {'attr': {'class': 'poids-input'}}) }}
+	<div style="color:black; margin-left: 10px; padding-top:3px;">
+
+		<span id="poids-value">{{ form.vars.value.poids }}</span>
+		kg</div>
+</div>
+<div style="display:flex;">
+
+	<label for="taille" style="margin-right: 40px;">Taille:
+	</label>
+
+	{{ form_widget(form.taille, {'attr': {'class': 'taille-input'}}) }}
+	<div style="color:black; margin-left: 10px; padding-top:3px;">
+
+		<span id="taille-value">{{ form.vars.value.taille }}</span>
+		cm</div>
+
+
+</div>
+
+{{ form_row(form.sexe) }}
+{{ form_row(form.agreeTerms) }}
+{{ form_row(form.captcha)}}
+{{ form_errors(form.captcha) }}
+{{ form_row(form.submit) }}
+
+{# JavaScript to update display values #}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+const poidsInputs = document.querySelectorAll('.poids-input');
+const tailleInputs = document.querySelectorAll('.taille-input');
+
+// Update display values on input change
+poidsInputs.forEach(function (input) {
+input.addEventListener('input', function () {
+document.getElementById('poids-value').textContent = this.value;
+});
+});
+
+tailleInputs.forEach(function (input) {
+input.addEventListener('input', function () {
+document.getElementById('taille-value').textContent = this.value;
+});
+});
+});
+</script>
+{{ form_end(form) }}

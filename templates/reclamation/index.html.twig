@@ -1,0 +1,55 @@
+{% extends 'abonnement/abonnementB.html.twig' %}
+
+{% block body %}
+    <div class="container">
+      <br>
+<br>
+<br>
+<br>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center mb-4">Liste des réclamations</h1>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Catégorie</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Pièce jointe</th>
+                                <th scope="col">Service</th>
+                                <th scope="col">État</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reclamation in reclamations %}
+                                <tr>
+                                  
+                                    <td>{{ reclamation.categorierec }}</td>
+                                    <td>{{ reclamation.descriptionrec }}</td>
+                                    <td>{{ reclamation.piecejointerec ? 'Oui' : 'Non' }}</td>
+                                    <td>{{ reclamation.servicerec }}</td>
+                                    <td>{{ reclamation.etatrec }}</td>
+                                    <td>
+                                        <a href="{{ path('app_reclamation_show', {'idrec': reclamation.idrec}) }}" class="btn btn-primary btn-sm">Détail</a>
+                                        <a href="{{ path('app_reclamation_editB', {'idrec': reclamation.idrec}) }}" class="btn btn-warning btn-sm">Traiter</a>
+                                        <a href="{{ path('app_reclamation_delete', {'idrec': reclamation.idrec}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center">Aucune réclamation trouvée.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('app_reclamation_new') }}" class="btn btn-success">Ajouter une nouvelle réclamation</a>
+    </div>
+{% endblock %}

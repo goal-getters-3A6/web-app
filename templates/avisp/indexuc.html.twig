@@ -1,0 +1,37 @@
+{% extends 'plat/alimentaire.html.twig' %}
+
+{% block title %}
+    <h1 style="color: black;">Avisp index</h1>
+{% endblock %}
+
+{% block body %}
+<div style="height: 100px;"></div> <!-- Empty space with height 100px -->
+
+<div class="container py-4">
+    <h1 style="color: black;">Conultez avis</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commentaire</th>
+                <th>Star rate</th>
+                <th>Fav</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for avisp in avisps %}
+            <tr>
+                <td>{{ avisp.commap }}</td>
+                <td>{{ avisp.star }}</td>
+                <td>{{ avisp.fav ? 'Yes' : 'No' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">pas de commentaires :c</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

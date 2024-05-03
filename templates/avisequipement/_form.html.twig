@@ -1,0 +1,26 @@
+{{ form_start(form, {'attr': {'class': 'forms-sample', 'novalidate': 'novalidate' }}) }}
+    <div class="d-flex justify-content-between align-items-center">
+
+ <div class="form-group">
+{{ form_label(form.commaeq, null, {'label_attr': {'style': 'color: #000'}}) }}       
+ {{ form_widget(form.commaeq, {'attr': {'class': 'form-control',  'style': 'color: #000'}}) }}
+        {% if form_errors(form.commaeq) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.commaeq) }}
+        </div>
+    {% endif %}
+    </div>
+
+        <button type="submit" class="btn btn-primary">{{ button_label|default('Publier') }}</button>
+    </div>
+
+    
+    {#<div class="d-flex justify-content-between align-items-center">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">{{ button_label|default('Publier') }}</button>
+        <button type="submit" class="btn btn-success" name="like">Like</button>
+        <button type="submit" class="btn btn-danger" name="dislike">Dislike</button>
+    </div>#}
+
+
+{{ form_end(form) }}

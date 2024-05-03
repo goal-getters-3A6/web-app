@@ -1,0 +1,53 @@
+{% extends 'plat/alimentaireback.html.twig' %}
+
+{% block title %}Plat{% endblock %}
+
+{% block body %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ plat.photop }}" alt="{{ plat.nomp }}" class="img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <h1 class="text-primary mb-4">{{ plat.nomp }}</h1>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th class="text-dark">Prix :</th>
+                                    <td>{{ plat.prixp }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-dark">Description :</th>
+                                    <td>{{ plat.descp }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-dark">Alergies :</th>
+                                    <td>
+                                        <div class="bg-light text-dark p-3 rounded">
+                                            {{ plat.alergiep }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-dark">Etat :</th>
+                                    <td>{{ plat.etatp ? 'En stock' : 'Rupture de stock' }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-dark">Calories :</th>
+                                    <td>{{ plat.calories }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('app_plat_index') }}" class="btn btn-primary">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

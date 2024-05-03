@@ -1,0 +1,93 @@
+{% extends 'equipement/equipementback.html.twig' %}
+{% block body %}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Striped Table</h4>
+            <p class="card-description"> Add class <code>.table-striped</code></p>
+            <div class="table-responsive">
+                <h4 class="card-title text-dark">Liste des avis d'équipements</h4>
+
+                <!-- Barre de recherche multicritère -->
+                <input type="text" class="form-control" id="searchInput" placeholder="Rechercher">
+                
+                <table class="table table-striped mt-3" id="searchResultsTable">
+                    <thead>
+                        <tr>
+                            <th>Utilisateur</th>
+                            <th>Commentaire</th>
+                            <th>Equipement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for avisequipement in avisequipements %}
+                            <tr>
+                                <td>
+                                    <img src="{{ asset(avisequipement.idUs.image) }}" style="width: 50px; height: 50px;" />
+                                    {{ avisequipement.idUs.nom ~ ' ' ~ avisequipement.idUs.prenom }}
+                                </td>
+                                <td>{{ avisequipement.commaeq }}</td>
+                                <td>
+                                    <img src="{{ asset(avisequipement.idEq.imageeq) }}" style="width: 50px; height: 50px;" />
+                                    {{ avisequipement.idEq.nomeq }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <br>
+                <br>
+                <a href="{{ path('app_equipement_back_index') }}" class="btn btn-light mt-3">Consulter les équipements </a>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    // Récupérer l'élément de champ de recherche
+    const searchInput = document.getElementById('searchInput');
+    // Récupérer le tableau des résultats de recherche
+    const searchResultsTable = document.getElementById('searchResultsTable');
+    // Récupérer toutes les lignes du tableau des résultats de recherche
+    const rows = searchResultsTable.getElementsByTagName('tr');
+
+    // Ajouter un écouteur d'événement pour détecter les modifications dans le champ de recherche
+    searchInput.addEventListener('input', function() {
+        // Récupérer la valeur de recherche saisie par l'utilisateur
+        const searchValue = searchInput.value.toLowerCase();
+
+        // Parcourir toutes les lignes du tableau des résultats de recherche
+        for (let i = 0; i < rows.length; i++) {
+            // Récupérer le contenu textuel de chaque cellule de la ligne
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            // Parcourir toutes les cellules de la ligne
+            for (let j = 0; j < cells.length; j++) {
+                const cellText = cells[j].textContent.toLowerCase();
+                // Vérifier si la valeur de recherche est présente dans le contenu textuel de la cellule
+                if (cellText.indexOf(searchValue) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            // Afficher ou masquer la ligne en fonction de si la valeur de recherche est trouvée dans la ligne
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
+</script>
+{% endblock %}

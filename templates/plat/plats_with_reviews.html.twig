@@ -1,0 +1,23 @@
+{# templates/plat/plats_with_reviews.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Plats with Reviews{% endblock %}
+
+{% block body %}
+    <h1>Plats with Reviews</h1>
+    {% if plats is empty %}
+        <p>No plats with reviews found.</p>
+    {% else %}
+        <ul>
+            {% for plat in plats %}
+                <li>{{ plat.nomp }}</li>
+                <ul>
+                    {% for avis in plat.avisps %}
+                        <li>{{ avis.commentaire }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

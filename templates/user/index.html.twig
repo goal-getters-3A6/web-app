@@ -1,0 +1,98 @@
+{% extends 'back-base.html.twig' %}
+
+{% block title %}Users
+{% endblock %}
+
+{% block body %}
+	<div style="display:flex;">
+		<h1 style="margin-right: 72vw;">Users
+		</h1>
+		<a href="{{ path('admin_user_add') }}" class="btn btn-outline-dark">Create new</a>
+	</div>
+    {% include 'statistics/statistics.html.twig' with {'stats': stats} %}
+
+	{% block stylesheets%}
+		<input type="text" id="search" class="form-control" placeholder="Search">
+
+
+		<script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}"></script>
+		<script>
+			$(document).ready(function () {
+$("#search").on("keyup", function () {
+var value = $(this).val().toLowerCase();
+$("tr").filter(function () {
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+});
+});
+});
+		</script>
+	{% endblock %}
+	<table class="table" id="tr">
+
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>E-Mail</th>
+				<th>Image</th>
+				<th>DateNaissance</th>
+				<th>DateInscription</th>
+				<th>Tel</th>
+				<th>Role</th>
+				<th>Poids</th>
+				<th>Taille</th>
+				<th>Sexe</th>
+				<th>Tfa</th>
+				<th>Verified</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.nom }}
+						{{ user.prenom }}</td>
+					<td>{{ user.mail }}</td>
+					<td>
+						<img src={{user.image}} alt="image" style="width: 60px; height: 60px;"></td>
+					<td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+					<td>{{ user.dateInscription ? user.dateInscription|date('Y-m-d') : '' }}</td>
+					<td>{{ user.tel }}</td>
+					<td>{{ user.role }}</td>
+					<td>{{ user.poids }}</td>
+					<td>{{ user.taille }}</td>
+					<td>{{ user.sexe }}</td>
+					<td>{{ user.tfa ? 'Yes'  : 'No' }}</td>
+					<td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+
+					<td>
+						<a class="btn btn-outline-dark btn-xs" href="{{ path('app_user_show', {'id': user.id}) }}">Show</a>
+
+						<a class="btn btn-outline-dark btn-xs" href="{{ path('app_user_edit', {'id': user.id}) }}">Edit</a>
+
+						{% if (app.user.id == user.id) %}
+							<a class="btn btn-outline-dark btn-xs" href="{{ path('disable_user', {'id': user.id}) }}" style="pointer-events: none">Disable</a>
+						{% else %}
+							{% if ( user.disabletoken) %}
+								<a class="btn btn-outline-success btn-xs" href="{{ path('enable_user', {'id': user.id}) }}">Enable</a>
+							{% else %}
+								<a class="btn btn-outline-danger btn-xs" href="{{ path('disable_user', {'id': user.id}) }}">Disable</a>
+							{% endif %}
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="13">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div>
+		{{ knp_pagination_render(users) }}
+	</div>
+
+	{# <a href="{{ path('app_register') }}">Create new</a> #}
+{% endblock %}

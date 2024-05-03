@@ -1,0 +1,9 @@
+# config/packages/scheb_2fa.yaml
+scheb_two_factor:
+  google:
+    enabled: true # If Google Authenticator should be enabled, default false
+    server_name: Go Fit Server # Server name used in QR code
+    issuer: Go fit pro # Issuer name used in QR code
+    digits: 6 # Number of digits in authentication code
+    window: 1 # How many codes before/after the current one would be accepted as valid
+    template: user/2fa_form.html.twig # Template used to render the authentication form

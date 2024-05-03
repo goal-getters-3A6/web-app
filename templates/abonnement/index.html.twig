@@ -1,0 +1,53 @@
+{% extends 'abonnement/abonnementB.html.twig' %}
+
+{% block title %}Abonnement index{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+    <br>
+<br>
+<br>
+<br>
+        <h1 class="text-center">Liste des Abonnements</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            
+                            <th scope="col">Montant</th>
+                            <th scope="col">Date d'Expiration</th>
+                            <th scope="col">Code Promo</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Durée</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for abonnement in abonnements %}
+                            <tr>
+                                
+                                <td>{{ abonnement.montantab }}</td>
+                                <td>{{ abonnement.dateexpirationab ? abonnement.dateexpirationab|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ abonnement.codepromoab }}</td>
+                                <td>{{ abonnement.typeab }}</td>
+                                <td>{{ abonnement.dureeab }}</td>
+                                <td>
+                                    <a href="{{ path('app_abonnement_show', {'idab': abonnement.idab}) }}" class="btn btn-info btn-sm">Détails</a>
+                                    {#<a href="{{ path('app_abonnement_editDate', {'idab': abonnement.idab}) }}" class="btn btn-primary btn-sm">Modifier</a>#}
+                                    <a href="{{ path('app_abonnement_delete', {'idab': abonnement.idab}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">Aucun abonnement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

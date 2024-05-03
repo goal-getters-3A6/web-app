@@ -1,0 +1,19 @@
+{% extends '/abonnement/abonnement.html.twig' %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<div style="text-align: center;">
+    <h1>Saisissez vos données</h1>
+
+    {{ include('abonnement/_form.html.twig') }}
+
+    <a href="{{ path('abonnements_utilisateur', {'userId': app.user.id}) }}">Mes Abonnements</a>
+<br
+<br>
+<br>
+<br>
+{% endblock %}
+
+

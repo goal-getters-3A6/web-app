@@ -1,0 +1,46 @@
+{% extends 'evenement/evenement.html.twig' %}
+
+
+
+{% block content %}
+    <style>
+        .card-img-top {
+            height: 400px; /* Hauteur fixe pour toutes les images */
+            object-fit: cover; /* Ajustement de la taille de l'image pour remplir le conteneur */
+        }
+    </style>
+
+    <h1>Tous les événements</h1>
+    <h2>   ............</h2>
+    <<div class="col text-center">
+            <h1>Nos événements</h1>
+        </div>
+
+    {% for flashMessage in app.flashes('warning') %}
+        <div class="alert alert-warning">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    
+    <div class="row">
+        {% for evenement in evenements %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('uploads/images/evenements/' ~ evenement.imageEve) }}" class="card-img-top" alt="Image de l'événement">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ evenement.nomEve }}</h5>
+                        <p class="card-text">Date de début : {{ evenement.dateDeve|date('d/m/Y') }}</p>
+                        <p class="card-text">Date de fin : {{ evenement.dateFeve|date('d/m/Y') }}</p>
+                        <p class="card-text">Adresse : {{ evenement.adresseEve }}</p>
+                        <a href="{{ path('app_evenement_show', {'idEve': evenement.idEve}) }}" class="btn btn-primary">Voir détails</a>
+                        <a href="{{ path('app_participation_new', {'idEve': evenement.idEve}) }}" class="btn btn-primary">Participer</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+    
+{% endblock %}

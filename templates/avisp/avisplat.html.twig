@@ -1,0 +1,27 @@
+{% extends 'plat/alimentaire.html.twig' %}
+
+{% block title %}Avis for {{ plat.nomp }}{% endblock %}
+
+{% block body %}
+    <h1>Avis for {{ plat.nomp }}</h1>
+
+    {% if avisplat is not empty %}
+        <h2>Commentaires</h2>
+        <ul>
+            {% for avis in avisplat %}
+                <li>{{ avis.commap }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
+
+    <h2>Add a Comment</h2>
+    {{ form_start(form) }}
+    {{ form_row(form.commap) }}
+    {{ form_row(form.star) }}
+    {{ form_row(form.fav) }}
+    <button type="submit">Add Comment</button>
+    {{ form_end(form) }}
+    
+{% endblock %}

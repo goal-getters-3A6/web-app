@@ -1,0 +1,37 @@
+{% extends 'base-clean.html.twig' %}
+
+{% block title %}Two Factor Auth
+{% endblock %}
+
+{% block body %}
+	<div style="margin-left:400px;">
+		<div class="container mt-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<div class="login-form bg-light mt-4 p-4">
+						<h1 class="h3 mb-3 font-weight-normal text-center">Two Factor Authentication</h1>
+						{% if error == 'InvalidTFA' %}
+							<div class="alert alert-danger" role="alert">
+								Invalid TFA code. Please try again.
+							</div>
+						{% endif %}
+
+						<p class="text-center">
+							Open your Authenticator app and type in the number.
+						</p>
+
+						<form class="form" action="{{ path('app_check_tfa') }}" method="post">
+							<div class="form-group">
+								<input id="_auth_code" type="text" name="_auth_code" autocomplete="one-time-code" class="form-control text-center" autofocus inputmode="numeric" pattern="[0-9]*"/>
+							</div>
+							<div class="d-flex justify-content-center">
+								<a class="btn btn-link mr-2" href="{{ path('app_logout') }}">{{ "Cancel"|trans({}, 'SchebTwoFactorBundle') }}</a>
+								<button type="submit" class="btn btn-primary">{{ "Login"|trans({}, 'SchebTwoFactorBundle') }}</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
