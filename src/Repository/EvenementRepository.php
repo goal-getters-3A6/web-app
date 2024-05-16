@@ -45,4 +45,59 @@ class EvenementRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function findFutureEvents(\DateTimeInterface $currentDate)
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.dateFeve > :currentDate')
+        ->setParameter('currentDate', $currentDate)
+        ->getQuery()
+        ->getResult()
+    ;
+}
+
+public function findArchivedEvents()
+    {
+        $currentDate = new \DateTime();
+        
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.dateFeve < :currentDate')
+            ->setParameter('currentDate', $currentDate)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function search($term)
+{
+    return $this->createQueryBuilder('e')
+        ->where('e.nomEve LIKE :term')
+        ->orWhere('e.nbrMax LIKE :term')
+        ->orWhere('e.dateDeve LIKE :term')
+        ->orWhere('e.dateFeve LIKE :term')
+        ->orWhere('e.adresseEve LIKE :term')
+        ->setParameter('term', '%'.$term.'%')
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function sortByAllAttributes(string $attribute, string $order = 'asc')
+    {
+        // Vérifier si l'attribut est valide
+        $validAttributes = ['nomEve', 'dateDeve', 'dateFeve', 'adresseEve', 'nbrMax']; // Liste des attributs valides
+        if (!in_array($attribute, $validAttributes)) {
+            throw new \InvalidArgumentException("L'attribut spécifié n'est pas valide.");
+        }
+
+        // Créer la requête pour trier les événements en fonction de l'attribut et de l'ordre spécifiés
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->orderBy('e.' . $attribute, $order);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
 }

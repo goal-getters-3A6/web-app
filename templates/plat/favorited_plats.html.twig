@@ -1,0 +1,88 @@
+{% extends 'plat/alimentaire.html.twig' %}
+{% block title %}Favorite Plats{% endblock %}
+
+{% block body %}
+<div style="height: 100px;"></div> 
+
+<!-- Plat Section -->
+<div class="plat">
+    <div style="height: 50px;"></div> 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col text-center">
+                <div class="section_title_container">
+                    <div class="section_title" style="color: #31241E; font-size: 32px; text-transform: uppercase; font-weight: bold;">Favorite Plats</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="height: 50px;"></div> 
+        
+        <div class="row plat_row">
+            {% if favoritePlats is defined %}
+                {% for plat in favoritePlats %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="plat_card p-3"> 
+                           {#<img src="{{ asset(plat.photop) }}" alt="{{ plat.nomp }}" style="width: 330px; height: 330px;">#}
+                        <img src="{{ path('user_images', {'imageName': plat.photop|url_encode}) }}"style="width: 330px; height: 330px;" >
+
+
+                            <div class="plat_details">
+                                <h3 class="plat_name">{{ plat.nomp | upper }}</h3>
+                                <div class="plat_description">
+                                    <p class="description_text mb-2">Description: {{ plat.descp }}</p>
+                                    <p class="description_text mb-2">Allergies: <span class="alergie">{{ plat.alergiep }}</span></p>
+                                    <p class="description_text mb-2">Calories: {{ plat.calories }}</p>
+                                    <p class="description_text mb-2">Prix: <span class="price">{{ plat.prixp }}</span></p>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                   
+                    <div class="col">
+                        <p style="color: #db1f48;">No favorite plats found.</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+           
+        </div>
+    </div>
+</div>
+
+<div style="height: 100px;"></div> 
+
+<style>
+    /* Button styles */
+    .plat_link {
+        background-color: #db1f48;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Button hover effect */
+    .plat_link:hover {
+        background-color: #ad1625; /* Darken the color on hover */
+    }
+
+    /* Plat card styles */
+    .plat_card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    /* Plat card hover effect */
+    .plat_card:hover {
+        transform: translateY(-5px); /* Move up on hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+{% endblock %}

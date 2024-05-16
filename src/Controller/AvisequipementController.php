@@ -11,10 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 #[Route('/avisequipement')]
 class AvisequipementController extends AbstractController
 {
+    #[Route('/user-images/{imageName}', name: 'user_images')]
+    public function getUserImage(string $imageName): Response
+    {
+        $imagePath = 'C:\xampp\htdocs\imageProjet\\' . $imageName;
+        
+        // Return the image as a response
+        return new BinaryFileResponse($imagePath);
+    }
     #[Route('/', name: 'app_avisequipement_index', methods: ['GET'])]
     public function index(AvisEquipementRepository $avisEquipementRepository): Response
     {
@@ -35,13 +45,13 @@ class AvisequipementController extends AbstractController
     public function search(Request $request, AvisEquipementRepository $avisEquipementRepository): Response
     {
         $criteria = array(
-            'commaeq' => $request->query->get('commaeq'), // Critère : commaeq
-            'idEq' => $request->query->get('idEq'), // Critère : idEq.nomeq
-            'idUsNom' => $request->query->get('idUsNom'), // Critère : idUs.nom
-            'idUsPrenom' => $request->query->get('idUsPrenom'), // Critère : idUs.prenom
+            'commaeq' => $request->query->get('commaeq'), 
+            'idEq' => $request->query->get('idEq'), 
+            'idUsNom' => $request->query->get('idUsNom'), 
+            'idUsPrenom' => $request->query->get('idUsPrenom'), 
         );
 
-        // Utiliser le repository pour rechercher avec les critères
+        
         $avisequipements = $avisEquipementRepository->findByCriteria($criteria);
 
         return $this->render('avisequipement/search_result.html.twig', [

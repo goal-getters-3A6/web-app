@@ -19,16 +19,20 @@ class Avisp
     private ?string $commap=null;
 
     #[ORM\Column]
-    private ?int $star;
+    private ?int $star=0;
 
     #[ORM\Column]
     private ?bool $fav;
 
-    #[ORM\ManyToOne(inversedBy: "avisePlats")]
+
+   #[ORM\ManyToOne(targetEntity: Plat::class)]
+   #[ORM\JoinColumn(name: "idPlat", referencedColumnName: "idp")]
     private ?Plat $idplat=null;
 
-    #[ORM\ManyToOne(inversedBy: "avisePlats")]
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "iduap", referencedColumnName: "id")]
     private ?User $iduap=null;
+
 
     public function getIdap(): ?int
     {

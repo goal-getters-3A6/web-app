@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<title>Go FIT</title>
+		<link rel="stylesheet" type="text/css" href="{{asset('Back/assets/vendors/mdi/css/materialdesignicons.min.css')}}"/>
+
+		<link rel="stylesheet" type="text/css" href="{{asset('Back/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}"/>
+
+		<link rel="stylesheet" type="text/css" href="{{asset('Back/assets/vendors/css/vendor.bundle.base.css')}}"/>
+
+		<link rel="stylesheet" type="text/css" href="{{asset('Back/assets/vendors/font-awesome/css/font-awesome.min.css')}}"/>
+
+		<link rel="stylesheet" type="text/css" href="{{asset('Back/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}"/>
+
+		<link rel="stylesheet" type="text/css" href="{{asset('Back/assets/css/style.css')}}"/>
+
+		<link rel="shortcut icon" href="{{asset('Back/assets/images/logo.png')}}"/>
+	</head>
+	<div>
+		<div class="container-scroller">
+			<nav class="sidebar sidebar-offcanvas" id="sidebar">
+				<div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+					<a class="sidebar-brand brand-logo" href="index.html"><img src="{{asset('Back/assets/images/logo.png')}}" alt="logo" style="height: 100px;"/></a>
+					<a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img src="{{asset('Back/assets/images/logo-mini.svg')}}')}}" alt="logo"/></a>
+				</div>
+				<ul class="nav">
+					<li class="nav-item nav-profile">
+						<a href="#" class="nav-link">
+							<div class="nav-profile-image">
+								<span class="login-status online"></span>
+								<!--change to offline or busy as needed-->
+							</div>
+							<div class="nav-profile-text d-flex flex-column pr-3"></div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_users_index')}}">
+
+							<i class="mdi mdi-home menu-icon"></i>
+							<span class="menu-title">Tableau de Bord</span>
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_users_index')}}">
+
+							<i class="mdi mdi-contacts menu-icon"> </i>
+							<span class="menu-title">Users</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_equipementb')}}">
+							 <i class="mdi mdi-football">  </i>
+							<span class="menu-title">Equipement</span>
+						</a>
+					</li>
+<li class="nav-item">
+	<a class="nav-link" href="{{path('app_reservationb')}} ">
+		<i class="mdi mdi-clock-fast">  </i>
+		<span class="menu-title">Seance</span>
+	</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="{{path('app_reservationback')}} ">
+		<i class="mdi mdi-calendar">  </i>
+		<span class="menu-title">Reservation</span>
+	</a>
+</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_abonnement_index')}} ">
+							<i class="mdi mdi-coin">  </i>
+							<span class="menu-title">Abonnement</span>
+						</a>
+					</li>
+					<li class="nav-item">
+	                  <a class="nav-link" href="{{path('app_plat_indexb')}} ">
+	            	<i class="mdi mdi-food-apple">  </i>
+	             	<span class="menu-title">Alimentaire</span>
+	                  </a>
+                    </li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_evenement_indexback')}} ">
+							<i class="mdi mdi-calendar-plus">  </i>
+							<span class="menu-title">Evenement</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_participation_index')}}">
+							<i class="mdi mdi-calendar-plus">  </i>
+							<span class="menu-title">Participant</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_reclamation_index')}} ">
+							<i class="mdi mdi-script">  </i>
+							<span class="menu-title">Reclamation</span>
+						</a>
+					</li>
+					<li class="nav-item sidebar-actions">
+						<div class="nav-link">
+							<div class="mt-4">
+
+								<ul class="mt-4 pl-0">
+									<li>
+										<a href="{{ path('app_logout') }}">Sign Out</a>
+
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</nav>
+			
+				<div class="main-panel"> {% block body %}{% endblock %}
+
+					</div>
+					<!-- main-panel ends -->
+				</div>
+				<!-- page-body-wrapper ends -->
+			</div>
+			<!-- container-scroller -->
+			<!-- plugins:js -->
+			<script src="{{asset('Back/assets/vendors/js/vendor.bundle.base.js')}}"></script>
+
+			<!-- endinject -->
+			<!-- Plugin js for this page -->
+			<script src="{{asset('Back/assets/vendors/chart.js')}}/Chart.min.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/flot/jquery.flot.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/flot/jquery.flot.resize.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/flot/jquery.flot.categories.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/flot/jquery.flot.fillbetween.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/flot/jquery.flot.stack.js')}}"></script>
+			<script src="{{asset('Back/assets/vendors/flot/jquery.flot.pie.js')}}"></script>
+			<!-- End plugin js for this page -->
+			<!-- inject:js -->
+			<script src="{{asset('Back/assets/js/off-canvas.js')}}"></script>
+			<script src="{{asset('Back/assets/js/hoverable-collapse.js')}}"></script>
+			<script src="{{asset('Back/assets/js/misc.js')}}"></script>
+			<!-- endinject -->
+			<!-- Custom js for this page -->
+			<script src="{{asset('Back/assets/js/dashboard.js')}}"></script>
+			<!-- End custom js for this page -->
+		</div>
+	</html>

@@ -1,547 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Services</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="SportFIT template project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="Front/styles/bootstrap-4.1.2/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="Front/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="Front/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="Front/plugins/OwlCarousel2-2.2.1/animate.css">
-<link href="Front/plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="Front/styles/services.css">
-<link rel="stylesheet" type="text/css" href="Front/styles/services_responsive.css">
-</head>
-<body>
+	<head>
+		<title>Services</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="SportFIT template project">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="{{asset('Front/styles/bootstrap-4.1.2/bootstrap.min.css')}}">
+		<link href="{{asset('Front/plugins/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="{{asset('Front/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('Front/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('Front/plugins/OwlCarousel2-2.2.1/animate.css')}}">
+		<link href="{{asset('Front/plugins/colorbox/colorbox.css')}}" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="{{asset('Front/styles/main_styles.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('Front/styles/responsive.css')}}">
+		<script src="https://code.responsivevoice.org/responsivevoice.js"></script>
 
-<div class="super_container">
-	
-	<!-- Header -->
+	</head>
+	<body>
 
-	<header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
-						<a href="#">
-							<div class="logo d-flex flex-row align-items-center justify-content-start"><img src="Front/images/dot.png" alt=""><div>Sport<span>fit</span></div></div>
-						</a>
-						<nav class="main_nav">
-							<ul class="d-flex flex-row align-items-center justify-content-start">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="about.html">About us</a></li>
-								<li class="active"><a href="services.html">Classes & Services</a></li>
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="contact.html">Contact</a></li>
-							</ul>
-						</nav>
-						<div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
-							<i class="fa fa-phone" aria-hidden="true"></i>
-							<div>652-345 3222 11</div>
+		<div
+			class="super_container">
+
+			<!-- Header -->
+
+			<header class="header">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
+								<a href="#">
+									<div class="logo d-flex flex-row align-items-center justify-content-start">
+										<img src="{{ asset ('Front/images/logo.png')}}" alt="" style="width: 75px;">
+										<div>Go<span>FIT</span>
+										</div>
+									</div>
+								</a>
+								<nav class="main_nav">
+									<ul class="d-flex flex-sm-row flex-column align-items-sm-start align-items-center justify-content-center">
+										<li>
+											<a href="{{path('app_accueil')}}">Accueil</a>
+										</li>
+										<li>
+											<a href="{{path('app_equipement')}} ">Equipement</a>
+										</li>
+										<li class="active">
+											<a href="{{path('app_reservation')}}">Reservation</a>
+										</li>
+										<li>
+											<a href="{{path('app_abonnement')}}">Abonnement</a>
+										</li>
+										<li>
+											<a href="{{path('app_alimentaire')}}">Alimentaire</a>
+										</li>
+										<li>
+											<a href="{{path('app_evenement')}}">Evenement</a>
+										</li>
+										<li>
+											<a href="{{path('app_reclamation')}}">Reclamation</a>
+										</li>
+										<li>
+											<a href="{{path('profile')}}">Profile</a>
+										</li>
+									</ul>
+								</nav>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<!-- Hamburger -->
+
+			<div class="hamburger_bar trans_400 d-flex flex-row align-items-center justify-content-start">
+				<div class="hamburger">
+					<div class="menu_toggle d-flex flex-row align-items-center justify-content-start">
+						<span>menu</span>
+						<div class="hamburger_container">
+							<div class="menu_hamburger">
+								<div class="line_1 hamburger_lines" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+								<div class="line_2 hamburger_lines" style="visibility: inherit; opacity: 1;"></div>
+								<div class="line_3 hamburger_lines" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Menu -->
+
+			<div class="menu trans_800">
+				<div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About us</a></li>
+						<li><a href="services.html">Classes & Services</a></li>
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="contact.html">Contact</a></li>
+					</ul>
+				</div>
+				<div class="menu_phone d-flex flex-row align-items-center justify-content-start">
+					<i class="fa fa-phone" aria-hidden="true"></i>
+					<span>652-345 3222 11</span>
+				</div>
+			</div>
+
+			<!-- Home -->
+
+			<div class="home">
+            <video width="100%" height="auto" controls>
+<source src="{{ asset('Front/videos/TheGarageActionBlack.mp4') }}" type="video/mp4">
+
+	          Your browser does not support the video tag.
+            </video>
+
+				<div class="overlay"></div>
+				<div class="home_container">
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<div class="home_content">
+									<div class="home_title">Nos Services</div>
+									<div class="home_subtitle">Crossfit, Yoga, Boxe, Spinning , BodyPump, BodyAttack
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Services -->
+
+			<div class="services">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="section_title_container">
+								<div class="section_subtitle">Bienvenue à Go FIT</div>
+								<div class="section_title">Nos cours</div>
+							</div>
+						</div>
+					</div>
+					<div
+						class="row services_row">
+
+						<!-- Service -->
+						<div class="col-xl-4 col-md-6 service_col">
+							<div class="service">
+								<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+									<div>
+										<div class="service_icon"><img src="Front/images/boxe.png" alt=""></div>
+									</div>
+									<div class="service_title">Les cours de Boxe</div>
+								</div>
+								<div class="service_text">
+									<p>La boxe est un sport complet dont les bienfaits se ressentent aussi bien physiquement que mentalement. En pratiquant cette discipline, vous allez perdre du poids et tonifier l'ensemble des muscles de votre corps. Vous allez aussi apprendre à mieux maîtriser votre souffle, votre cardio et vos émotions.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Service -->
+						<div class="col-xl-4 col-md-6 service_col">
+							<div class="service">
+								<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+									<div>
+										<div class="service_icon"><img src="Front/images/icon_5.png" alt=""></div>
+									</div>
+									<div class="service_title">Les cours de Yoga</div>
+								</div>
+								<div class="service_text">
+									<p>Le yoga est une pratique physique et mentale, combinant des postures et des techniques de respiration. La recherche de l'harmonie du corps et de l'esprit est au cœur de la pratique du yoga, dont les postures et les exercices respiratoires développent autant la souplesse physique que mentale.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Service -->
+						<div class="col-xl-4 col-md-6 service_col">
+							<div class="service">
+								<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+									<div>
+										<div class="service_icon"><img src="Front/images/icon_6.png" alt=""></div>
+									</div>
+									<div class="service_title">Les cours de Spinning</div>
+								</div>
+								<div class="service_text">
+									<p>Comme tout exercice cardiovasculaire, le spinning aide à brûler des calories, ce qui peut contribuer à la perte de poids ou au maintien d'un poids santé lorsqu'il est combiné avec une alimentation équilibrée. Pédaler sur un vélo de spinning renforce les muscles des jambes, y compris les quadriceps, les ischio-jambiers, les mollets et les muscles fessiers.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Service -->
+						<div class="col-xl-4 col-md-6 service_col">
+							<div class="service">
+								<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+									<div>
+										<div class="service_icon"><img src="Front/images/icon_7.png" alt=""></div>
+									</div>
+									<div class="service_title">Les cours de Crossfit</div>
+								</div>
+								<div class="service_text">
+									<p>Le CrossFit combine principalement la force athlétique, l'haltérophilie, la gymnastique et les sports d'endurance. Le mot CrossFit vient de la contraction de cross fitness (en français, entraînement croisé), appelé ainsi parce qu'il mélange différentes activités physiques et sportives préexistantes.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Service -->
+						<div class="col-xl-4 col-md-6 service_col">
+							<div class="service">
+								<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+									<div>
+										<div class="service_icon"><img src="Front/images/bodyattack.png" alt=""></div>
+									</div>
+									<div class="service_title">Les cours de BodyAttack</div>
+								</div>
+								<div class="service_text">
+									<p>Bienfaits du Body Attack : découverte des avantages comme l'amélioration de la condition physique, la tonification musculaire, le renforcement de l'équilibre et la coordination, ainsi que les bénéfices sociaux et de détente.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Service -->
+						<div class="col-xl-4 col-md-6 service_col">
+							<div class="service">
+								<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+									<div>
+										<div class="service_icon"><img src="Front/images/bodypump.png" alt=""></div>
+									</div>
+									<div class="service_title">Les cours de Bodypump</div>
+								</div>
+								<div class="service_text">
+									<p>Le BodyPump permet au pratiquant de remodeler sa silhouette et d'affiner sa masse musculaire. Il permet de faire disparaître une partie de la masse graisseuse grâce à de nombreuses répétitions sur une période de quatre à sept minutes par groupe musculaire.</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Timetable -->
+
+			<div class="timetable">
+				<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="Front/images/timetable.jpg" data-speed="0.8"></div>
+				<div class="tt_overlay"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="section_title_container">
+								<div class="section_title" style="color: #ffffff;">Horaire des cours</div>
+							</div>
+							<div class="row">
+								{% for seance in allReservations %}
+									<div class="col-md-4">
+										<div class="card mb-4">
+										<img src="{{ path('user_images', {'imageName': seance.imageseance|url_encode}) }}" alt="{{ seance.nom }}">
+											<div class="card-body">
+												<h5 class="card-title">{{ seance.nom }}</h5>
+												<p class="card-text">{{ seance.jourseance}}</p>
+												<p class="card-text">{{ seance.horaire|date('H:i') }}H</p>
+											</div>
+										</div>
+									</div>
+								{% else %}
+									<div class="col">
+										<p>No records found</p>
+									</div>
+								{% endfor %}
+							</div>
+
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</header>
+		{% block title %}Reserver votre seance
+		{% endblock %}
+		{% block body %}
+			{{ include('reservation/_form.html.twig',{'button_label': 'Ajouter'}) }}
+			{% set errorMessages = app.flashes('error') %}
 
-	<!-- Hamburger -->
-	
-	<div class="hamburger_bar trans_400 d-flex flex-row align-items-center justify-content-start">
-		<div class="hamburger">
-			<div class="menu_toggle d-flex flex-row align-items-center justify-content-start">
-				<span>menu</span>
-				<div class="hamburger_container">
-					<div class="menu_hamburger">
-						<div class="line_1 hamburger_lines" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
-						<div class="line_2 hamburger_lines" style="visibility: inherit; opacity: 1;"></div>
-						<div class="line_3 hamburger_lines" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+			{% for message in errorMessages %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+			{% if errorMessages|length == 0 and successMessage is defined %}
+				<script>
+					function readTextWithResponsiveVoice(text) {
+responsiveVoice.speak(text, "French Female", {volume: 1});
+}
+readTextWithResponsiveVoice('{{ successMessage }}');
+				</script>
+			{% endif %}
+
+
+			{% if pdfLink %}
+				<a href="{{ pdfLink }}" target="_blank" id="pdfLink" style="display: none;">Voir le PDF</a>
+			{% endif %}
+			<script>
+				// Check if the link should be visible on page load
+if (localStorage.getItem('showPdfLink') === 'true') {
+document.getElementById('pdfLink').style.display = 'block';
+}
+
+// Show the link when the form is submitted and store the state
+document.querySelector('form').addEventListener('submit', function () {
+document.getElementById('pdfLink').style.display = 'block';
+localStorage.setItem('showPdfLink', 'true');
+});
+			</script>
+			<h2>Calcul de l'IMC</h2>
+			<div>
+				<label for="weight">Poids (kg) :</label>
+				<input type="number" id="weight" name="weight" step="0.01">
+			</div>
+			<div>
+				<label for="height">Taille (m) :</label>
+				<input type="number" id="height" name="height" step="0.01">
+			</div>
+			<button id="calculate-btn" class="btn btn-primary">Calculer</button>
+			<script></script>
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+document.getElementById("btnAjouter").addEventListener("click", function () { // Récupérer le texte à lire à voix haute (par exemple, un message de succès)
+var message = "{{ successMessage }}";
+});
+});
+			</script>
+
+			<!-- Modal -->
+			<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="resultModalLabel">Résultat de l'IMC</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="result-message" style="color: blue;"></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<!-- Menu -->
+			<script>
+				document.getElementById('calculate-btn').addEventListener('click', function () {
+var weight = parseFloat(document.getElementById('weight').value);
+var height = parseFloat(document.getElementById('height').value);
+var resultMessage = document.getElementById('result-message');
+if (!isNaN(weight) && !isNaN(height)) {
+var imc = weight / (height * height);
+var interpretation = '';
 
-	<div class="menu trans_800">
-		<div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="about.html">About us</a></li>
-				<li><a href="services.html">Classes & Services</a></li>
-				<li><a href="blog.html">Blog</a></li>
-				<li><a href="contact.html">Contact</a></li>
-			</ul>
-		</div>
-		<div class="menu_phone d-flex flex-row align-items-center justify-content-start">
-			<i class="fa fa-phone" aria-hidden="true"></i>
-				<span>652-345 3222 11</span>
-		</div>
-	</div>
+if (imc < 18.5) {
+interpretation = 'Insuffisance pondérale,Il est recommandé de consulter un professionnel de santé pour obtenir des conseils sur une alimentation équilibrée et saine. Pour le sport, des activités douces comme le yoga peuvent être bénéfiques';
+} else if (imc >= 18.5 && imc < 25) {
+interpretation = 'Poids normal,Continuez à maintenir un mode de vie sain et équilibré pour conserver votre poids idéal. Une combinaison d\'activités cardiovasculaires comme le spinning ou le bodyattack et de renforcement musculaire comme le bodypump peut être efficace';
+} else if (imc >= 25 && imc < 30) {
+interpretation = 'Surpoids,Il serait bénéfique d\'adopter un régime alimentaire équilibré et de faire de l\'exercice régulièrement. Le crossfit ou la boxe peuvent être de bonnes options pour brûler des calories et renforcer les muscles';
 
-	<!-- Home -->
+} else {
+interpretation = 'Obésité,Il est fortement recommandé de consulter un professionnel de santé pour obtenir des conseils sur la perte de poids et le maintien d\'un mode de vie sain. Des activités à faible impact comme le yoga peuvent être un bon point de départ';
+} resultMessage.textContent = 'Votre IMC est ' + imc.toFixed(2) + '. ' + interpretation + '. Prends soin de ton corps. C\'est le seul endroit où tu es obligé de vivre.';
+$('#resultModal').modal('show'); // Afficher la modal
+} else {
+resultMessage.textContent = 'Veuillez saisir un poids et une taille valides.';
+$('#resultModal').modal('show'); // Afficher la modal
+}
+});
+			</script>
+			<h2>Interprétation de l'IMC</h2>
+			<table
+				class="imc-table" style="width: 30%;">
+				<!-- Largeur de la table définie à 80% -->
+				<thead>
+					<tr>
+						<th style="border: 1px solid #ddd;">IMC</th>
+						<th style="border: 1px solid #ddd;">Interprétation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="imc-row imc-underweight">
+						<td style="border: 1px solid #ddd;">
+							<18.5</td>
+								<td style="border: 1px solid #ddd;">Insuffisance pondérale</td>
+							</tr>
+						</td>
+					</tr>
+					<tr class="imc-row imc-normalweight">
+						<td style="border: 1px solid #ddd;">18.5 - 24.9</td>
+						<td style="border: 1px solid #ddd;">Poids normal</td>
+					</tr>
+					<tr class="imc-row imc-overweight">
+						<td style="border: 1px solid #ddd;">25 - 29.9</td>
+						<td style="border: 1px solid #ddd;">Surpoids</td>
+					</tr>
+					<tr class="imc-row imc-obesity">
+						<td style="border: 1px solid #ddd;">>= 30</td>
+						<td style="border: 1px solid #ddd;">Obésité</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endblock %}
 
-	<div class="home">
-		<div class="background_image" style="background-image:url(Front/images/services.jpg)"></div>
-		<div class="overlay"></div>
-		<div class="home_container">
+		<!-- Footer -->
+
+		<footer class="footer">
 			<div class="container">
 				<div class="row">
-					<div class="col">
-						<div class="home_content">
-							<div class="home_title">Services</div>
-							<div class="home_subtitle">Pilates, Yoga, Fitness, Spinning & many more</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Services -->
-
-	<div class="services">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container">
-						<div class="section_subtitle">welcome to sportfit</div>
-						<div class="section_title">Our Courses</div>
-					</div>
-				</div>
-			</div>
-			<div class="row services_row">
-				
-				<!-- Service -->
-				<div class="col-xl-4 col-md-6 service_col">
-					<div class="service">
-						<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-							<div><div class="service_icon"><img src="Front/images/icon_4.png" alt=""></div></div>
-							<div class="service_title">Weight Loss Class</div>
-						</div>
-						<div class="service_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-xl-4 col-md-6 service_col">
-					<div class="service">
-						<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-							<div><div class="service_icon"><img src="Front/images/icon_5.png" alt=""></div></div>
-							<div class="service_title">Yoga Classes</div>
-						</div>
-						<div class="service_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-xl-4 col-md-6 service_col">
-					<div class="service">
-						<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-							<div><div class="service_icon"><img src="Front/images/icon_6.png" alt=""></div></div>
-							<div class="service_title">Spinning Class</div>
-						</div>
-						<div class="service_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-xl-4 col-md-6 service_col">
-					<div class="service">
-						<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-							<div><div class="service_icon"><img src="Front/images/icon_7.png" alt=""></div></div>
-							<div class="service_title">Private Fit Class</div>
-						</div>
-						<div class="service_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-xl-4 col-md-6 service_col">
-					<div class="service">
-						<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-							<div><div class="service_icon"><img src="Front/images/icon_8.png" alt=""></div></div>
-							<div class="service_title">Nutrition Classes</div>
-						</div>
-						<div class="service_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-xl-4 col-md-6 service_col">
-					<div class="service">
-						<div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-							<div><div class="service_icon"><img src="Front/images/icon_9.png" alt=""></div></div>
-							<div class="service_title">Pillates Class</div>
-						</div>
-						<div class="service_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- Timetable -->
-
-	<div class="timetable">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="Front/images/timetable.jpg" data-speed="0.8"></div>
-		<div class="tt_overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container">
-						<div class="section_subtitle">welcome to sportfit</div>
-						<div class="section_title">Classes Timetable</div>
-					</div>
-					<div class="timetable_filtering">
-						<ul class="d-flex flex-row align-items-start justify-content-start flex-wrap">
-							<li class="active item_filter_btn" data-filter="*">All Classes</li>
-							<li class="item_filter_btn" data-filter=".weight_loss">Weight Loss</li>
-							<li class="item_filter_btn" data-filter=".aerobics">Aerobics</li>
-							<li class="item_filter_btn" data-filter=".crossfit">Crossfit</li>
-							<li class="item_filter_btn" data-filter=".fitness">Fitness</li>
-							<li class="item_filter_btn" data-filter=".yoga">Yoga</li>
-							<li class="item_filter_btn" data-filter=".pilates">Pilates</li>
-							<li class="item_filter_btn" data-filter=".stretching">Stretching</li>
-						</ul>
-					</div>
-					<div class="timetable_container d-flex flex-sm-row flex-column align-items-start justify-content-sm-between justify-content-start">
-
-						<!-- Monday -->
-						<div class="tt_day">
-							<div class="tt_title">monday</div>
-							<div class="tt_day_content grid">
-
-								<!-- Class -->
-								<div class="tt_class grid-item weight_loss">
-									<div class="tt_class_title">Weight Loss</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">9:00</div>
+					<div class="col-lg-8 offset-lg-2">
+						<div class="footer_container">
+							<div class="footer_content">
+								<div class="footer_logo">
+									<a href="#">
+										<div class="logo d-flex flex-row align-items-center justify-content-center"><img src="Front/images/logo.png" alt=""><div>Go<span>FIT</span>
+											</div>
+										</div>
+									</a>
 								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">10:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">13:00</div>
-								</div>
-
-							</div>
-						</div>
-
-						<!-- Tuesday -->
-						<div class="tt_day">
-							<div class="tt_title">tuesday</div>
-							<div class="tt_day_content grid">
-
-								<!-- Class -->
-								<div class="tt_class grid-item weight_loss">
-									<div class="tt_class_title">Weight Loss</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">8:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">12:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">13:00</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Wednesday -->
-						<div class="tt_day">
-							<div class="tt_title">wednesday</div>
-							<div class="tt_day_content grid">
-
-								<!-- Class -->
-								<div class="tt_class grid-item crossfit">
-									<div class="tt_class_title">Crossfit</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">9:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">10:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">13:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">17:00</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Thursday -->
-						<div class="tt_day">
-							<div class="tt_title">thursday</div>
-							<div class="tt_day_content grid">
 								
-								<!-- Class -->
-								<div class="tt_class grid-item fitness">
-									<div class="tt_class_title">Fitness</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">9:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">10:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item yoga">
-									<div class="tt_class_title">Yoga</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">12:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item pilates">
-									<div class="tt_class_title">Pilates</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">13:00</div>
-								</div>
 							</div>
+							<div class="footer_image text-center"><img src="Front/images/footer.png" alt=""></div>
 						</div>
-
-						<!-- Friday -->
-						<div class="tt_day">
-							<div class="tt_title">friday</div>
-							<div class="tt_day_content grid">
-								
-								<!-- Class -->
-								<div class="tt_class grid-item yoga">
-									<div class="tt_class_title">Yoga</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">9:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">10:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">13:00</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Saturday -->
-						<div class="tt_day">
-							<div class="tt_title">Saturday</div>
-							<div class="tt_day_content grid">
-								
-								<!-- Class -->
-								<div class="tt_class grid-item weight_loss">
-									<div class="tt_class_title">Weight Loss</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">9:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item pilates">
-									<div class="tt_class_title">Pilates</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">10:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">13:00</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Sunday -->
-						<div class="tt_day">
-							<div class="tt_title">Sunday</div>
-							<div class="tt_day_content grid">
-								
-								<!-- Class -->
-								<div class="tt_class grid-item stretching">
-									<div class="tt_class_title">Stretching</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">9:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class grid-item aerobics">
-									<div class="tt_class_title">Aerobics</div>
-									<div class="tt_class_instructor">Jessica Smith</div>
-									<div class="tt_class_time">10:00</div>
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-
-								<!-- Class -->
-								<div class="tt_class empty grid-item">
-									
-								</div>
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<!-- Extra -->
-
-	<div class="extra d-flex flex-column align-items-center justify-content-center text-center">
-		<div class="background_image" style="background-image:url(Front/images/extra_wide.jpg)"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="extra_content d-flex flex-column align-items-center justify-content-center text-center">
-						<div class="extra_title">15% Discount</div>
-						<div class="extra_text">
-							<p>Morbi sed varius risus, vitae molestie lectus. Donec id hendrerit velit, eu fringilla neque. Etiam id finibus sapien. Donec sollicitudin luctus ex non pharetra.llus.</p>
-						</div>
-						<div class="button extra_button"><a href="#">Join Now</a></div>
-					</div>
-				</div>
-			</div>
-		</div>			
-	</div>
-
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="footer_container">
-						<div class="footer_content">
-							<div class="footer_logo">
-								<a href="#">
-									<div class="logo d-flex flex-row align-items-center justify-content-center"><img src="Front/images/dot.png" alt=""><div>Sport<span>fit</span></div></div>
-								</a>
-							</div>
-							<nav class="footer_nav">
-								<ul class="d-flex flex-sm-row flex-column align-items-sm-start align-items-center justify-content-center">
-									<li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About us</a></li>
-									<li><a href="services.html">Classes & Services</a></li>
-									<li><a href="blog.html">Blog</a></li>
-									<li><a href="contact.html">Contact</a></li>
-								</ul>
-							</nav>
-							<div class="newsletter_container">
-								<form action="#" id="newsletter_form" class="newsletter_form">
-									<input type="text" class="newsletter_input" placeholder="Enter your email here" required="required">
-									<button class="newsletter_button">go</button>
-								</form>
-							</div>
-							<div class="copyright d-flex flex-row align-items-start justify-content-sm-end justify-content-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-						</div>
-						<div class="footer_image text-center"><img src="Front/images/footer.png" alt=""></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-</div>
-
-<script src="Front/js/jquery-3.2.1.min.js"></script>
-<script src="Front/styles/bootstrap-4.1.2/popper.js"></script>
-<script src="Front/styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-<script src="Front/plugins/greensock/TweenMax.min.js"></script>
-<script src="Front/plugins/greensock/TimelineMax.min.js"></script>
-<script src="Front/plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="Front/plugins/greensock/animation.gsap.min.js"></script>
-<script src="Front/plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="Front/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="Front/plugins/easing/easing.js"></script>
-<script src="Front/plugins/progressbar/progressbar.min.js"></script>
-<script src="Front/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="Front/plugins/colorbox/jquery.colorbox-min.js"></script>
-<script src="Front/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="Front/js/services.js"></script>
-</body>
-</html>
+		</footer>
+	</body>
+</html></div><script src="{{asset('Front/js/jquery-3.2.1.min.js')}}"></script><script src="{{asset('Front/styles/bootstrap-4.1.2/popper.js')}}"></script><script src="{{asset('Front/styles/bootstrap-4.1.2/bootstrap.min.js')}}"></script><script src="{{asset('Front/plugins/greensock/TweenMax.min.js')}}"></script><script src="{{asset('Front/plugins/greensock/TimelineMax.min.js')}}"></script><script src="{{asset('Front/plugins/scrollmagic/ScrollMagic.min.js')}}"></script><script src="{{asset('Front/plugins/greensock/animation.gsap.min.js')}}"></script><script src="{{asset('Front/plugins/greensock/ScrollToPlugin.min.js')}}"></script><script src="{{asset('Front/plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script><script src="{{asset('Front/plugins/easing/easing.js')}}"></script><script src="{{asset('Front/plugins/progressbar/progressbar.min.js')}}"></script><script src="{{asset('Front/plugins/parallax-js-master/parallax.min.js')}}"></script><script src="{{asset('Front/plugins/colorbox/jquery.colorbox-min.js')}}"></script><script src="{{asset('Front/js/custom.js')}}"></script></body></html>

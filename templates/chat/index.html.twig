@@ -1,0 +1,124 @@
+{% extends '/abonnement/abonnement.html.twig' %}
+{% block body %}
+<br><br><br>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Chatbot</title>
+    <style>
+        #chat-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #user-input {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #send-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #chat-title {
+            text-align: center;
+            color: #004369;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+       
+    .custom-button {
+        background-color: #004369;
+        color: white;
+        padding: 15px 40px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        border-radius: 8px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border: none;
+    }
+
+    .custom-button:hover {
+        background-color: #00274c;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-title">Soyez les bienvenus ! </div>
+        <div id="chat-box" class="chat-box">
+            <!-- Zone où les réponses du chatbot seront affichées -->
+        </div>
+        <br><br>
+        <div>
+            <input type="text" id="user-input" placeholder="Entrez votre message...">
+            <br><br>
+            <button id="send-btn"  style="background-color: #004369; color: white;padding: 15px 32px;font-size: 16px;border-radius: 5px;">Envoyer</button>
+        </div>
+        
+    </div>
+
+    <script>
+        // JavaScript dans votre page Symfony
+        var chatBox = document.getElementById('chat-box');
+        var userInput = document.getElementById('user-input');
+        var sendBtn = document.getElementById('send-btn');
+
+        function addMessage(message, sender) {
+            var messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            if (sender === 'user') {
+                messageDiv.style.textAlign = 'right';
+                messageDiv.style.color = 'blue';
+            } else {
+                messageDiv.style.textAlign = 'left';
+                messageDiv.style.color = 'green';
+            }
+            chatBox.appendChild(messageDiv);
+        }
+
+        sendBtn.addEventListener('click', function() {
+            var userMessage = userInput.value;
+            addMessage(userMessage, 'user');
+
+            fetch('/api/chatbot', {
+                method: 'POST',
+                body: JSON.stringify({ user_input: userMessage }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                var botResponse = data.response;
+                addMessage(botResponse, 'bot');
+            });
+
+            userInput.value = '';
+        });
+    </script>
+</body>
+</html>
+<br><br><br><br><br>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'reservation/reservationback.html.twig' %}
 
 {% block title %}Reservation{% endblock %}
 
@@ -7,10 +7,7 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Idreservation</th>
-                <td>{{ reservation.idreservation }}</td>
-            </tr>
+            
             <tr>
                 <th>Nompersonne</th>
                 <td>{{ reservation.nompersonne }}</td>
@@ -19,6 +16,19 @@
                 <th>Prenompersonne</th>
                 <td>{{ reservation.prenompersonne }}</td>
             </tr>
+             <tr>
+                <th>La Seance</th>
+                <td>{{ reservation.ids.nom }}</td>
+            </tr>
+             <tr>
+                <th>Le jour</th>
+                    <td>{{ reservation.ids.jourseance }}</td>
+             </tr>
+             <tr>
+                 <th>L'Horaire</th>
+                    <td>{{ reservation.ids.horaire|date('H:i') }}</td>
+             </tr>
+                  
         </tbody>
     </table>
 

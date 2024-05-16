@@ -1,17 +1,40 @@
-{# templates/abonnement/edit.html.twig #}
-
-{% extends '/abonnement/abonnement.html.twig' %}
+{% extends 'base-clean.html.twig' %}
 
 {% block title %}Modifier Abonnement{% endblock %}
 
 {% block body %}
-    <h1>Modifier Abonnement</h1>
+<br><br><br><br><br>
+<div style="text-align: center;">
+    <h1>Prolongez votre abonnement</h1>
+    <br><br><br>
 
-    <form method="post">
-        <div class="form-group">
-            <label for="new_expiration_date">Nouvelle Date d'expiration :</label>
-            <input type="date" id="new_expiration_date" name="new_expiration_date" class="form-control">
+    <form method="post" style="max-width: 400px; margin: 0 auto;">
+        <div style="margin-bottom: 20px;">
+            <label for="new_expiration_date" style="display: block; font-weight: bold;">Nouvelle Date d'expiration :</label>
+            <input type="date" id="new_expiration_date" name="new_expiration_date" class="form-control" style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc;">
         </div>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" class="custom-button" style="width: 100%;">Enregistrer</button>
     </form>
+</div>
+
+<style>
+    .custom-button {
+        background-color: #F5F5DC;
+        color: black;
+        padding: 15px 0;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.4s;
+    }
+
+    .custom-button:hover {
+        background-color: #45a049;
+    }
+</style>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}

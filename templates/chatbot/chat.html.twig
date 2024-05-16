@@ -1,0 +1,51 @@
+{% extends 'abonnement/abonnement.html.twig' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chatbot Endpoint</title>
+    <style>
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <form id="messageForm">
+        <textarea id="message" name="message" placeholder="Entrez votre message"></textarea>
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <!-- Ajouter un élément pour afficher la réponse -->
+    <div id="response"></div>
+
+    <script>
+        document.getElementById("messageForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+            var message = document.getElementById("message").value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{{ path('chatbot_endpoint') }}", true); // Utilisez la fonction path() pour générer l'URL du endpoint
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Mettre à jour le contenu de l'élément de réponse avec la réponse reçue
+                    document.getElementById("response").innerHTML = "<p>" + xhr.responseText + "</p>";
+                }
+            };
+
+            var data = JSON.stringify({"message": message});
+            xhr.send(data);
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

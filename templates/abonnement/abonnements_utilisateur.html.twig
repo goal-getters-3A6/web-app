@@ -1,25 +1,30 @@
-{% extends '/abonnement/abonnement.html.twig' %}
+{% extends 'base-clean.html.twig' %}
 
 {% block title %}Abonnements de {{ user.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Abonnements de {{ user.nom }}</h1>
-
+<div style="margin-top: 50px; padding: 20px;">
+    <h1 style="text-align: center;">Les abonnements de {{ user.nom }}</h1>
+<br><br><br>
     {% if abonnements is empty %}
-        <p>Aucun abonnement trouvé pour cet utilisateur.</p>
+        <p style="text-align: center;">Aucun abonnement trouvé pour cet utilisateur.</p>
     {% else %}
-        <ul>
+        <ul style="list-style-type: none; padding: 0; margin: 0 auto; max-width: 600px;">
             {% for abonnement in abonnements %}
-                <li>
-                    <strong>{{ abonnement.typeab }}</strong>
-                    <p>Prix : {{ abonnement.montantab }} € / mois</p>
-                    <p>Date d'expiration : {{ abonnement.dateexpirationab|date('d/m/Y') }}</p>
+                <li style="border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; padding: 15px;">
+                    <h4><strong>Type:</strong> {{ abonnement.typeab }}<h4>
+                    <p><strong>Prix :</strong> {{ abonnement.montantab }} € / mois</p>
+                    <p><strong>Date d'expiration :</strong> {{ abonnement.dateexpirationab|date('d/m/Y') }}</p>
                     {# Bouton Modifier #}
-                    <form action="{{ path('app_abonnement_editDate', {'userId': abonnement.getIdu}) }}" method="get">
-                        <button type="submit">Modifier</button>
-                    </form>
+                    <div style="text-align: center;">
+                        <form action="{{ path('app_abonnement_editDate', {'userId': abonnement.getIdu}) }}" method="get">
+                            <button type="submit" style="background-color: #F5F5DC;color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Modifier</button>
+                        </form>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
+</div>
+<br><br><br><br><br><br><br><br><br>
 {% endblock %}

@@ -14,13 +14,25 @@
             <div class="mb-3">
                 {{ form_row(form.codepromoab, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.codepromoab) }}
+              
             </div>
            
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+                <button type="submit" class="btn btn-primary"style="background-color: #F5F5DC; /* Beige */
+border: none;
+color: black; /* Couleur du texte */
+padding: 15px 32px;
+text-align: center; /* Centrer le texte */
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+border-radius: 8px;
+transition-duration: 0.4s;
+cursor: pointer;">{{ button_label|default('Enregistrer') }}</button>
                   
             </div>
- 
+ <br>
+
             {{ form_end(form) }}
         </div>
        

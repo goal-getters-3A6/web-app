@@ -1,11 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'plat/alimentaire.html.twig' %}
 
 {% block title %}New Avisp{% endblock %}
 
 {% block body %}
-    <h1>Create new Avisp</h1>
-
-    {{ include('avisp/_form.html.twig') }}
-
-    <a href="{{ path('app_avisp_index') }}">back to list</a>
+<div style="height: 100px;"></div> <!-- Empty space with height 100px -->
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #004369; color: white; font-size: 24px; font-weight: bold;">
+                    Laissez un avis
+                </div>
+                <div class="card-body">
+                    {% include 'avisp/_form.html.twig' with {'form': form, 'idp': plat.idp } %}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('app_plat_index') }}" class="btn btn-primary" style="background-color: #db1f48; border-color: #db1f48;">Retour a la liste</a>
+                </div>
+            </div>
+            <div class="mt-3">
+                {% for i in 1..5 %}
+                    {% if i <= form.vars.value.star %}
+                        <i class="fas fa-star" style="color: #ffcc00;"></i>
+                    {% else %}
+                        <i class="far fa-star" style="color: #ccc;"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

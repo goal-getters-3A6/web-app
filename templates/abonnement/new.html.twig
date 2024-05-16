@@ -1,4 +1,4 @@
-{% extends '/abonnement/abonnement.html.twig' %}
+{% extends 'base-clean.html.twig' %}
 
 {% block body %}
 <br>
@@ -6,14 +6,35 @@
 <br>
 <div style="text-align: center;">
     <h1>Saisissez vos données</h1>
+<br>
 
     {{ include('abonnement/_form.html.twig') }}
-
-    <a href="{{ path('abonnements_utilisateur', {'userId': app.user.id}) }}">Mes Abonnements</a>
-<br
 <br>
+
+    <div style="margin-top: 30px;">
+        <a href="{{ path('abonnements_utilisateur', {'userId': app.user.id}) }}" class="custom-button">Mes Abonnements</a>
+        <a href="{{ path('process', {'type': 'Ordinaire'}) }}" class="custom-button">Paiement en ligne</a>
+    </div>
+</div>
+
+<style>
+    .custom-button {
+        background-color: #F5F5DC;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 8px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        margin: 10px;
+    }
+</style>
+<br>
+<br>
+<br><br>
 <br>
 <br>
 {% endblock %}
-
-

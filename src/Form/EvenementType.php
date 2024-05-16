@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,8 +18,12 @@ class EvenementType extends AbstractType
             ->add('dateFeve')
             ->add('nbrMax')
             ->add('adresseEve')
-            ->add('imageEve')
-        ;
+            ->add('imageEve', FileType::class, [
+                'label' => 'Image de l\'événement',
+                'mapped' => false, // Ne pas mapper ce champ à une propriété de l'entité
+                'required' => false, // Le champ n'est pas obligatoire
+            ])
+        ; 
     }
 
     public function configureOptions(OptionsResolver $resolver): void

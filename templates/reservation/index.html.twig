@@ -3,12 +3,11 @@
 {% block title %}Reservation index{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
+    <h1>Reservation List</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Idreservation</th>
                 <th>Nompersonne</th>
                 <th>Prenompersonne</th>
                 <th>actions</th>
@@ -17,9 +16,10 @@
         <tbody>
         {% for reservation in reservations %}
             <tr>
-                <td>{{ reservation.idreservation }}</td>
                 <td>{{ reservation.nompersonne }}</td>
-                <td>{{ reservation.prenompersonne }}</td>
+                <td>{{ reservation.Prenompersonne }}</td>
+
+                
                 <td>
                     <a href="{{ path('app_reservation_show', {'idreservation': reservation.idreservation}) }}">show</a>
                     <a href="{{ path('app_reservation_edit', {'idreservation': reservation.idreservation}) }}">edit</a>

@@ -1,0 +1,9 @@
+{% extends 'abonnement/abonnement.html.twig' %}
+{% block body %}
+<div style="text-align: center;">
+  
+
+    {{ include('reclamation/_form.html.twig') }}
+
+    <a href="{{ path('reclamations_utilisateur', {'userId': app.user.id}) }}">Mes Réclamations</a>
+{% endblock %}

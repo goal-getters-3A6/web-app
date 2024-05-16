@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PlatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass:PlatRepository::class)]
 class Plat
@@ -11,28 +13,45 @@ class Plat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int  $idp=null;
+    private ?int $idp = null;
 
     #[ORM\Column(length:255)]
-    private ?string $nomp=null;
+    private ?string $nomp = null;
 
-    #[ORM\Column]
-    private ?float $prixp=null;
-
-    #[ORM\Column(length:255)]
-    private ?string $descp=null;
+    #[ORM\Column(type:"float")]
+    private ?float $prixp = null;
 
     #[ORM\Column(length:255)]
-    private ?string $alergiep=null;
-
-    #[ORM\Column]
-    private ?bool $etatp;
+    private ?string $descp = null;
 
     #[ORM\Column(length:255)]
-    private ?string $photop = 'C:/Users/Yosr/Downloads/desktop-app/src/main/resources/imgs/pizza.PNG';
+    private ?string $alergiep = null;
 
-    #[ORM\Column]
-    private ?int $calories;
+    #[ORM\Column(type:"boolean")]
+    private ?bool $etatp = false;
+
+    #[ORM\Column(length:255)]
+    private ?string $photop = 'oooo';
+
+    #[ORM\Column(type:"integer")]
+    private ?int $calories = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Avisp::class, mappedBy="idplat", orphanRemoval=true)
+     */
+    private $avisp;
+
+ /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoritedPlats")
+     */
+    private $favoritedBy;
+
+    public function __construct()
+    {
+        $this->avisp = new ArrayCollection();
+        $this->favoritedBy = new ArrayCollection();
+    }
+
 
     public function getIdp(): ?int
     {
@@ -123,5 +142,31 @@ class Plat
         return $this;
     }
 
+    /**
+     * @return Collection|Avisp[]
+     */
+    public function getAvisp(): Collection
+    {
+        return $this->avisp;
+    }
 
+    public function getIdplat(): ?Plat
+    {
+        return $this->idp;
+    }
+
+    public function setIdplat(?Plat $idplat): self
+    {
+        $this->idp = $idplat;
+
+        return $this;
+    }
+
+/**
+     * @return Collection|User[]
+     */
+    public function getFavoritedBy(): Collection
+    {
+        return $this->favoritedBy;
+    }
 }

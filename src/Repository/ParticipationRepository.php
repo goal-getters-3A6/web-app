@@ -45,4 +45,39 @@ class ParticipationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function search($term)
+{
+    return $this->createQueryBuilder('p')
+        ->where('p.nomP LIKE :term')
+        ->orWhere('p.prenomP LIKE :term')
+        ->orWhere('p.email LIKE :term')
+        ->orWhere('p.age LIKE :term')
+        ->setParameter('term', '%'.$term.'%')
+        ->getQuery()
+        ->getResult();
+}
+
+
+   //////////trie//////////////
+   public function getParticipantsCountByEvent(): array
+   {
+       $qb = $this->createQueryBuilder('p')
+           ->select('COUNT(p.idP) as participantsCount, e.nomEve as eventName')
+           ->leftJoin('p.idf_event', 'e')
+           ->groupBy('e.nomEve');
+   
+       $results = $qb->getQuery()->getResult();
+   
+       return array_map(function ($row) {
+           return (object) [
+               'eventName' => $row['eventName'],
+               'participantCount' => $row['participantsCount'],
+           ];
+       }, $results);
+   }
+
+
+
 }

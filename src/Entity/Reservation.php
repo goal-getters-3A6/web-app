@@ -15,46 +15,31 @@ class Reservation
     #[ORM\Column]
     private ?int $idreservation=null;
 
-    #[ORM\Column(length:255)]
-    private ?string $nompersonne=null;
 
-    #[ORM\Column(length:255)]
-    private ?string $prenompersonne=null;
-
-    #[ORM\ManyToOne(inversedBy: "reservations")]
+    #[ORM\ManyToOne(targetEntity: Seance::class)]
+    #[ORM\JoinColumn(name: 'ids', referencedColumnName: 'idseance')]
     private ?Seance $ids=null;
 
-    #[ORM\ManyToOne(inversedBy: "reservations")]
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'iduser', referencedColumnName: 'id')]    
     private ?User $iduser=null;
 
     public function getIdreservation(): ?int
     {
         return $this->idreservation;
     }
-
     public function getNompersonne(): ?string
     {
-        return $this->nompersonne;
+        return $this->iduser ? $this->iduser->getNom() : null;
     }
-
-    public function setNompersonne(string $nompersonne): static
-    {
-        $this->nompersonne = $nompersonne;
-
-        return $this;
-    }
-
+    
     public function getPrenompersonne(): ?string
     {
-        return $this->prenompersonne;
+        return $this->iduser ? $this->iduser->getPrenom() : null;
     }
+  
 
-    public function setPrenompersonne(string $prenompersonne): static
-    {
-        $this->prenompersonne = $prenompersonne;
-
-        return $this;
-    }
+   
 
     public function getIds(): ?Seance
     {

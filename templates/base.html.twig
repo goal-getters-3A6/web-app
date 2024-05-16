@@ -59,11 +59,15 @@
 												<a href="{{path('app_alimentaire')}}">Alimentaire</a>
 											</li>
 											<li>
-												<a href="{{path('app_evenement')}}">Evenement</a>
+												<a href="{{path('app_evenement_index')}}">Evenement</a>
 											</li>
 											<li>
 												<a href="{{path('app_reclamation')}}">Reclamation</a>
 											</li>
+											<li>
+												<a href="{{path('profile')}}">Profile</a>
+											</li>
+
 										</ul>
 									</nav>
 
@@ -74,7 +78,7 @@
 				{% endblock %}
 			</header>
 
-			<!-- Hamburger maryemmmc ctrl f-->
+			<!-- Hamburger -->
 
 			<div class="hamburger_bar trans_400 d-flex flex-row align-items-center justify-content-start">
 				<div class="hamburger">
@@ -111,16 +115,304 @@
 				{% endblock %}
 			</div>
 
-			{% for flash in app.flashes('success') %}
-				<div class="alert alert-success">{{ flash }}</div>
-			{% endfor %}
-			{% for flash in app.flashes('error') %}
-				<div class="alert alert-danger">{{ flash }}</div>
-			{% endfor %}
+			<!-- Home -->
+
+			<div class="col">
+    <div class="home_content text-center">
+        <div class="video_link">
+            <img src="{{ asset('Front/images/acc.jpg') }}" alt="">
+            <div class="video_link_content d-flex flex-row align-items-center justify-content-start">
+               
+               
+            </div>
+        </div>
+        <div class="home_title">Bienvenue </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<!-- Boxes -->
+
+			<div class="boxes">
+				{% block boxes %}
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<div
+									class="boxes_container d-flex flex-lg-row flex-column align-items-start justify-content-start">
+
+									<!-- Box -->
+									<div class="box">
+										<div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="{{ asset ('Front/images/icon_8.png')}}" alt=""></div>
+										<div class="box_title">Découvrez notre Gestion des Plats</div>
+										<div class="box_text">
+											<p>des recommandations culinaires sur mesure pour les sportifs ! Explorez, partagez des avis, et marquez vos plats préférés. Une expérience gastronomique adaptée à votre mode de vie actif.</p>
+										</div>
+										
+									</div>
+
+									<!-- Box -->
+									<div class="box">
+										<div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="{{ asset ('Front/images/icon_13.png')}}" alt=""></div>
+										<div class="box_title">Découvrez notre Gestion des Equipements</div>
+										<div class="box_text">
+											<p>Explorez les avis détaillés sur les équipements, une mine d'informations pour guider vos choix et optimiser vos performances.</p>
+										</div>
+										
+									</div>
+
+									<!-- Box -->
+									<div class="box">
+										<div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="{{ asset ('Front/images/icon_12.png')}}" alt=""></div>
+										<div class="box_title">Découvrez notre Gestion des Abonnements</div>
+										<div class="box_text">
+											<p>Choisissez entre notre abonnement familial ,ordinaire et premium pour accéder à une expérience enrichie dans notre salle.</p>
+										</div>
+										
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endblock %}
+			</div>
+
+			<!-- About -->
+
+			<div class="about">
+				{% block about %}
+					<div class="container about_container">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="about_content">
+									<div class="section_title_container">
+										<div class="section_subtitle"> Go FIT</div>
+										<div class="section_title">A propos
+											<span>
+												Go FIT</span>
+										</div>
+									</div>
+									<div class="text_highlight">Découvrez notre salle de sport dynamique, où le fitness rencontre la convivialité.</div>
+									<div class="about_text">
+										<p>Nous sommes bien plus qu'un simple centre de remise en forme. Chaque jour, notre salle vibre au rythme d'événements passionnants, de séances variées et de plats alimentaires sains et énergisants pour accompagner vos entraînements. Nos équipements de pointe sont là pour vous offrir une expérience optimale, que vous soyez novice ou athlète chevronné. Avec une variété d'abonnements flexibles, nous rendons l'accès à la forme physique facile et adapté à chacun. De plus, notre équipe dévouée est toujours prête à répondre à vos questions et à prendre en compte vos réclamations pour améliorer constamment votre expérience.</p>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="about_background">
+						<div class="container fill_height">
+							<div class="row fill_height">
+								<div class="col-lg-6 offset-lg-6 fill_height">
+									<div class="about_image"><img src="{{ asset ('Front/images/a1.png')}}" alt=""></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endblock %}
+			</div>
+
+			<!-- Testimonials -->
+
+<div class="testimonials">
+    {% block testimonials %}
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{{ asset ('Front/images/testimonials.jpg')}}" data-speed="0.8"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section_title_container">
+                    <div class="section_subtitle" style="color: beige;">Bienvenue chez Go FIT</div>
+                    <div class="section_title">Découvrez Go FIT, votre destination ultime pour une vie active et épanouie.</div>
+					<p style="color: beige;">Rejoignez-nous aujourd'hui et commencez votre voyage vers une vie plus saine et plus heureuse.</p>
+                </div>
+
+                
+
+            </div>
+        </div>
+        
+    </div>
+    {% endblock %}
+</div>
+
+
+			<!-- Gallery -->
+
+			<div class="gallery">
+				{% block gallery %}
+					<!-- Gallery Slider -->
+					<div class="gallery_slider_container">
+						<div
+							class="owl-carousel owl-theme gallery_slider">
+
+							<!-- Slide -->
+							<div class="owl-item"><img src="{{ asset ('Front/images/gallery_3.jpg')}}" alt=""></div>
+
+							<!-- Slide -->
+							<div class="owl-item"><img src="{{ asset ('Front/images/gallery_4.jpg')}}" alt=""></div>
+
+							<!-- Slide -->
+							<div class="owl-item"><img src="{{ asset ('Front/images/gallery_5.jpg')}}" alt=""></div>
+
+							<!-- Slide -->
+							<div class="owl-item"><img src="{{ asset ('Front/images/gallery_1.jpg')}}" alt=""></div>
+
+							<!-- Slide -->
+							<div class="owl-item"><img src="{{ asset ('Front/images/gallery_2.jpg')}}" alt=""></div>
+
+						</div>
+					</div>
+				{% endblock %}
+			</div>
+
+			<!-- Services -->
+
+			<div class="services">
+    {% block services %}
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="section_title_container">
+                        <div class="section_subtitle">Bienvenue chez Go FIT</div>
+                        <div class="section_title">Nos Services</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row services_row">
+
+                <!-- Service Abonnement -->
+                <div class="col-xl-4 col-md-6 service_col">
+                    <div class="service">
+                        <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                            <div>
+                                <div class="service_icon"><img src="{{ asset ('Front/images/icon_11.png')}}" alt=""></div>
+                            </div>
+                            <div class="service_title">Abonnements</div>
+                        </div>
+                        <div class="service_text">
+                            <p>Choisissez parmi nos divers abonnements celui qui correspond le mieux à vos besoins.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Réclamation -->
+                <div class="col-xl-4 col-md-6 service_col">
+                    <div class="service">
+                        <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                            <div>
+                                <div class="service_icon"><img src="{{ asset ('Front/images/icon_5.png')}}" alt=""></div>
+                            </div>
+                            <div class="service_title">Réclamations</div>
+                        </div>
+                        <div class="service_text">
+                            <p>Nous prenons en compte vos réclamations pour améliorer constamment nos services.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Alimentaire -->
+                <div class="col-xl-4 col-md-6 service_col">
+                    <div class="service">
+                        <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                            <div>
+                                <div class="service_icon"><img src="{{ asset ('Front/images/icon_8.png')}}" alt=""></div>
+                            </div>
+                            <div class="service_title">Plats Alimentaires</div>
+                        </div>
+                        <div class="service_text">
+                            <p>Découvrez nos options de plats alimentaires sains et énergisants pour accompagner votre entraînement.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Equipement -->
+                <div class="col-xl-4 col-md-6 service_col">
+                    <div class="service">
+                        <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                            <div>
+                                <div class="service_icon"><img src="{{ asset ('Front/images/icon_13.png')}}" alt=""></div>
+                            </div>
+                            <div class="service_title">Équipements</div>
+                        </div>
+                        <div class="service_text">
+                            <p>Nos équipements de pointe sont là pour vous offrir une expérience optimale.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Evenement -->
+                <div class="col-xl-4 col-md-6 service_col">
+                    <div class="service">
+                        <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                            <div>
+                                <div class="service_icon"><img src="{{ asset ('Front/images/icon_10.png')}}" alt=""></div>
+                            </div>
+                            <div class="service_title">Événements</div>
+                        </div>
+                        <div class="service_text">
+                            <p>Restez à l'affût de nos événements passionnants organisés régulièrement.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Réservation -->
+                <div class="col-xl-4 col-md-6 service_col">
+                    <div class="service">
+                        <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                            <div>
+                                <div class="service_icon"><img src="{{ asset ('Front/images/icon_7.png')}}" alt=""></div>
+                            </div>
+                            <div class="service_title">Réservations</div>
+                        </div>
+                        <div class="service_text">
+                            <p>Réservez vos séances et événements préférés pour ne jamais manquer une occasion de vous entraîner.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endblock %}
+</div>
+
+
+			<!-- Blog -->
+
+			<div class="blog">
+				{% block blog %}
+					<div class="blog_overlay"></div>
+					<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{{ asset ('Front/images/blog.jpg')}}" data-speed="0.8"></div>
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<div class=" d-flex flex-row align-items-start justify-content-start">
+									<div class="section_title_container">
+    <div class="section_subtitle" style="color: beige;">Contact</div>
+    <div class="section_title" style="color: white;">Contactez-nous</div>
+    <div class="contact_info">
+        <p style="color: beige;">Besoin d'aide ?</p>
+        <p style="color: beige;">Appelez-nous au : <a href="tel:+21699360543" style="color: white;">+216 99 360 543</a></p>
+        <p style="color: beige;">Ou envoyez-nous un e-mail : <a href="mailto:info@gofit.com" style="color: white;">info@gofit.com</a></p>
+        <p style="color: beige;">Visitez-nous à l'adresse suivante :</p>
+        <p style="color: beige;">123 Rue de la Forme, Ville, Pays</p>
+    </div>
+</div>
+
+									
+								</div>
+							</div>
+						</div>
+					
+					</div>
+				{% endblock %}
+			</div>
+
 
 			{% block body %}{% endblock %}
 
-			<!-- Footer ctrl s -->
+			<!-- Footer -->
 
 			<footer class="footer">
 				{% block footer %}
@@ -136,34 +428,7 @@
 												</div>
 											</a>
 										</div>
-										<nav class="footer_nav">
-											<ul class="d-flex flex-sm-row flex-column align-items-sm-start align-items-center justify-content-center">
-												<li>
-													<a href="{{path('app_apropos')}}">A propos</a>
-												</li>
-												<li>
-													<a href="{{path('app_contact')}}">Contact</a>
-												</li>
-											</ul>
-										</nav>
-										<div class="newsletter_container">
-											<form action="#" id="newsletter_form" class="newsletter_form">
-												<input type="text" class="newsletter_input" placeholder="Enter your email here" required="required">
-												<button class="newsletter_button">go</button>
-											</form>
-										</div>
-										<div
-											class="copyright d-flex flex-row align-items-start justify-content-sm-end justify-content-center">
-											<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-											Copyright &copy;<script>
-												document.write(new Date().getFullYear());
-											</script>
-											All rights reserved | This template is made with
-											<i class="fa fa-heart-o" aria-hidden="true"></i>
-											by
-											<a href="https://colorlib.com" target="_blank">Colorlib</a>
-											<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-										</div>
+										
 									</div>
 									<div class="footer_image text-center"><img src="{{ asset ('Front/images/footer.png')}}" alt=""></div>
 								</div>

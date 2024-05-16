@@ -1,3 +1,5 @@
+
+<br><br><br><br><br><br><br>
 {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
 {{ form_row(form.nom) }}
 {{ form_row(form.prenom) }}
@@ -34,6 +36,8 @@
 
 {{ form_row(form.sexe) }}
 {{ form_row(form.agreeTerms) }}
+{{ form_row(form.captcha)}}
+{{ form_errors(form.captcha) }}
 {{ form_row(form.submit) }}
 
 {# JavaScript to update display values #}

@@ -1,16 +1,13 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Evenement{% endblock %}
 
-{% block body %}
-    <h1>Evenement</h1>
+{% extends 'evenement/evenement.html.twig' %}
+                       
+{% block boxes %}
+ <h1>Evenement</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>IdEve</th>
-                <td>{{ evenement.idEve }}</td>
-            </tr>
+         
             <tr>
                 <th>NomEve</th>
                 <td>{{ evenement.nomEve }}</td>
@@ -31,16 +28,25 @@
                 <th>AdresseEve</th>
                 <td>{{ evenement.adresseEve }}</td>
             </tr>
-            <tr>
-                <th>ImageEve</th>
-                <td>{{ evenement.imageEve }}</td>
-            </tr>
+          <tr>
+    <th>ImageEve</th>
+             <td> <img src="{{ path('user_images', {'imageName': evenement.imageEve|url_encode}) }}"alt="Image de l'événement" style="width: 200px; height: 200px;"></td>
+</tr>  
         </tbody>
     </table>
 
     <a href="{{ path('app_evenement_index') }}">back to list</a>
 
-    <a href="{{ path('app_evenement_edit', {'idEve': evenement.idEve}) }}">edit</a>
 
-    {{ include('evenement/_delete_form.html.twig') }}
+
+
+
+
 {% endblock %}
+
+
+
+
+
+
+

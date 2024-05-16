@@ -22,7 +22,8 @@
                     <br>
 <br>
 <br>
-                       <img src="{{ asset(equipement.imageeq) }}" class="img-fluid" style="max-height: 200px;">
+                       <img src="{{ path('user_images', {'imageName': equipement.imageeq|url_encode}) }}"class="img-fluid" style="max-height: 200px;">
+
                     </div>
                     <div class="col-md-8">
                         <p><strong class="text-dark">Equipement:</strong> <span class="text-dark">{{ equipement.nomeq }}</span></p>

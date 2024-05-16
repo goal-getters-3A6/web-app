@@ -1,4 +1,4 @@
-{% extends 'abonnement/abonnementB.html.twig' %}
+{% extends 'back-base.html.twig' %}
 
 {% block body %}
     <div class="container">
@@ -8,9 +8,13 @@
 <br>
         <div class="row">
             <div class="col-md-12">
+            <p class="card-description"> Add class <code>.table-striped</code></p>
+             <div class="table-responsive">
                 <h1 class="text-center mb-4">Liste des réclamations</h1>
+                <!-- Barre de recherche multicritère -->
+                <input type="text" class="form-control" id="searchInput" placeholder="Rechercher">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                     <table class="table table-striped mt-3" id="searchResultsTable">
                         <thead>
                             <tr>
                                 
@@ -35,8 +39,10 @@
                                         <a href="{{ path('app_reclamation_show', {'idrec': reclamation.idrec}) }}" class="btn btn-primary btn-sm">Détail</a>
                                         <a href="{{ path('app_reclamation_editB', {'idrec': reclamation.idrec}) }}" class="btn btn-warning btn-sm">Traiter</a>
                                         <a href="{{ path('app_reclamation_delete', {'idrec': reclamation.idrec}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+
                                     </td>
                                 </tr>
+                                
                             {% else %}
                                 <tr>
                                     <td colspan="8" class="text-center">Aucune réclamation trouvée.</td>
@@ -44,12 +50,47 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                                                            <a href="{{ path('app_reclamation_stats') }}" class="btn btn-danger btn-sm">Statistiques</a>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="text-center mt-4">
-        <a href="{{ path('app_reclamation_new') }}" class="btn btn-success">Ajouter une nouvelle réclamation</a>
-    </div>
+    
+    <script>
+    //l'élément de champ de recherche
+    const searchInput = document.getElementById('searchInput');
+    //le tableau des résultats de recherche
+    const searchResultsTable = document.getElementById('searchResultsTable');
+    //toutes les lignes du tableau des résultats de recherche
+    const rows = searchResultsTable.getElementsByTagName('tr');
+
+   //détecter les modifications dans le champ de recherche
+    searchInput.addEventListener('input', function() {
+        // recupere la valeur de recherche saisie 
+        const searchValue = searchInput.value.toLowerCase();
+
+        // Parcourir toutes les lignes du tableau des résultats de recherche
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+            for (let j = 0; j < cells.length; j++) {
+                const cellText = cells[j].textContent.toLowerCase();
+                // Vérifier si la valeur de recherche est présente dans le contenu textuel 
+                if (cellText.indexOf(searchValue) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            // Afficher ou masquer la ligne en fonction de si la valeur de recherche est trouvée dans la ligne
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
+</script>
 {% endblock %}

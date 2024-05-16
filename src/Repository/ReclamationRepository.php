@@ -45,4 +45,51 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function findByCriteria(array $criteria): array
+{
+    $queryBuilder = $this->createQueryBuilder('r');
+
+   //filtre par catégory
+    if (!empty($criteria['categorierec'])) {
+        $queryBuilder
+            ->andWhere('r.categorierec = :categorierec')
+            ->setParameter('categorierec', $criteria['categorierec']);
+    }
+
+    if (!empty($criteria['descriptionrec'])) {
+        $queryBuilder
+            ->andWhere('r.descriptionrec LIKE :descriptionrec')
+            ->setParameter('descriptionrec', '%' . $criteria['descriptionrec'] . '%');
+    }
+
+    
+    if (!empty($criteria['servicerec'])) {
+        $queryBuilder
+            ->andWhere('r.servicerec = :servicerec')
+            ->setParameter('servicerec', $criteria['servicerec']);
+    }
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
+public function getStatsByCategory(): array
+{
+    //On peut y accéder directement via le repository en utilisant la méthode createQueryBuilder
+    $queryBuilder = $this->createQueryBuilder('r')
+        ->select('r.categorierec, COUNT(r.idrec) as total')
+        ->groupBy('r.categorierec');
+
+    $result = $queryBuilder->getQuery()->getResult();
+
+    $stats = [];
+    foreach ($result as $row) {
+        $stats[$row['categorierec']] = $row['total'];
+    }
+
+    return $stats;
+}
+
+
 }

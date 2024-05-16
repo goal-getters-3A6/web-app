@@ -1,0 +1,138 @@
+
+{% extends 'back-base.html.twig' %}
+
+        {% block body %}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+          <div class="content-wrapper">
+            <div class="page-header">   
+            </div>
+            <div class="row">
+              <h1>Reservation List</h1>
+            </div>
+               {# Afficher le tableau des réservations uniquement si des résultats de recherche sont disponibles #}
+               {% if reservations %}
+                <table class="table">
+                   <thead>
+                       <tr>
+                             <th>Nom de l'Adherent</th>
+                             <th>Prenom de l'Adherent</th>
+                             <th> La seance</th>
+                             <th>Le jour</th>
+                             <th>L'Horaire</th>
+                             <th>actions</th>
+                        </tr>
+                    </thead>
+               <tbody>
+                      {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.iduser.nom }}</td>
+                    <td>{{ reservation.Prenompersonne }}</td>
+                    <td>{{ reservation.ids.nom }}</td>
+                    <td>{{ reservation.ids.jourseance }}</td>
+                    <td>{{ reservation.ids.horaire|date('H:i') }}</td>
+                    <td>
+                        <a href="{{ path('app_reservation_show', {'idreservation': reservation.idreservation}) }}" style="color: yellow;">show</a>
+                        <a href="{{ path('app_reservation_edit', {'idreservation': reservation.idreservation}) }}" style="color: blue;">edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+               </tbody>
+            </table>
+            {% else %}
+                <p>Aucun résultat trouvé.</p> 
+           {% endif %}
+            <h2>Résultats triés par jour :</h2>
+             <table class="table">
+             <!-- Entête du tableau -->
+             <thead>
+            <tr>
+                <th>Nom de l'Adherent</th>
+                <th>Prenom de l'Adherent</th>
+                <th>La séance</th>
+                <th>Le jour</th>
+                <th>L'Horaire</th>
+                <th>Actions</th>
+            </tr>
+                </thead>
+              <!-- Corps du tableau -->
+             <tbody>
+            {% for r in sortResult %}
+                <tr>
+                    <td>{{ r.iduser.nom }}</td>
+                    <td>{{ r.Prenompersonne }}</td>
+                    <td>{{ r.ids.nom }}</td>
+                    <td>{{ r.ids.jourseance }}</td>
+                    <td>{{ r.ids.horaire|date('H:i') }}</td>
+                    <td>
+                        <a href="{{ path('app_reservation_show', {'idreservation': r.idreservation}) }}" style="color: yellow;">show</a>
+                        <a href="{{ path('app_reservation_edit', {'idreservation': r.idreservation}) }}" style="color: blue;">edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+                </tbody>
+             </table>
+               {# Formulaire de recherche #}
+             <form method="get" action="{{ path('app_reservation_index') }}">
+             <label for="searchBy">Choisir l'attribut de recherche :</label>
+             <select name="searchBy" id="searchBy">
+             <option value="sessionDay">Jour de la séance</option>
+             <option value="userName">Nom de l'adhérent</option>
+             <option value="sessionName">Nom de la séance</option>
+   
+              </select>
+               <input type="text" name="searchTerm" placeholder="Entrez votre terme de recherche">
+               <button type="submit" style="background-color: blue; color: white;">Rechercher</button>
+              </form> 
+              {# Afficher les données clusterisées #}
+              {% if clusteredData is defined %}
+              <h2>Données Clusterisées</h2>
+               <ul>
+                {% for cluster in clusteredData %}
+               <li>Cluster {{ loop.index }} : {{ cluster }}</li>
+              {% endfor %}
+               </ul>
+             {% endif %} 
+                {# Affichage des statistiques des réservations par nom de séance #}
+               <div>
+                <h2>Statistiques des Réservations par Nom de Séance</h2>
+                 <ul>
+        {% for stat in sessionStatistics %}
+            <li>{{ stat.session_name }} : {{ stat.reservation_count }} réservations</li>
+        {% endfor %}
+    </ul>
+</div>
+ <canvas id="reservationChart" width="800" height="400"></canvas>
+
+    <script>
+        // Récupérer les données des statistiques depuis le serveur
+        const sessionStatistics = {{ sessionStatistics|json_encode|raw }};
+
+        // Extraire les noms de séance et les comptages de réservation
+        const sessionNames = sessionStatistics.map(stat => stat.session_name);
+        const reservationCounts = sessionStatistics.map(stat => stat.reservation_count);
+
+        // Créer un nouveau graphique à barres
+        const ctx = document.getElementById('reservationChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sessionNames,
+                datasets: [{
+                    label: 'Nombre de réservations',
+                    data: reservationCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %} 

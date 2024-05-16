@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -128,6 +129,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('captcha', ReCaptchaType::class)
             ->add('submit', SubmitType::class, ['label' => 'S\'inscrire']);;
     }
 

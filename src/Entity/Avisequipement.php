@@ -22,10 +22,10 @@ class Avisequipement
     private ?string $commaeq=null;
 
     #[ORM\Column(type: "boolean")]
-    private ?bool $likes;
+    private ?bool $like;
 
     #[ORM\Column(type: "boolean")]
-    private ?bool $dislikes;
+    private ?bool $dislike;
 
    // #[ORM\ManyToOne(inversedBy: "aviseEquipement")]
    #[ORM\ManyToOne(targetEntity: User::class)]
@@ -55,26 +55,26 @@ private ?Equipement $idEq;
         return $this;
     }
 
-    public function isLikes(): ?bool
+    public function isLike(): ?bool
     {
-        return $this->likes;
+        return $this->like;
     }
 
-    public function setLikes(bool $likes): static
+    public function setLike(bool $like): static
     {
-        $this->likes = $likes;
+        $this->like = $like;
 
         return $this;
     }
 
-    public function isDislikes(): ?bool
+    public function isDislike(): ?bool
     {
-        return $this->dislikes;
+        return $this->dislike;
     }
 
-    public function setDislikes(bool $dislikes): static
+    public function setDislike(bool $dislike): static
     {
-        $this->dislikes = $dislikes;
+        $this->dislike = $dislike;
 
         return $this;
     }

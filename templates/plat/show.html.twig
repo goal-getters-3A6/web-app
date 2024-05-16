@@ -1,50 +1,54 @@
-{% extends 'base.html.twig' %}
+{% extends 'plat/alimentaire.html.twig' %}
 
 {% block title %}Plat{% endblock %}
 
 {% block body %}
-    <h1>Plat</h1>
+    <div style="height: 100px;"></div> <!-- Empty space with height 100px -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-4">
+             {# <img src="{{ asset(plat.photop) }}" alt="{{ plat.nomp }}" style="width: 330px; height: 330px;">#}
+    <img src="{{ path('user_images', {'imageName': plat.photop|url_encode}) }}"style="width: 330px; height: 330px;" >
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Idp</th>
-                <td>{{ plat.idp }}</td>
-            </tr>
-            <tr>
-                <th>Nomp</th>
-                <td>{{ plat.nomp }}</td>
-            </tr>
-            <tr>
-                <th>Prixp</th>
-                <td>{{ plat.prixp }}</td>
-            </tr>
-            <tr>
-                <th>Descp</th>
-                <td>{{ plat.descp }}</td>
-            </tr>
-            <tr>
-                <th>Alergiep</th>
-                <td>{{ plat.alergiep }}</td>
-            </tr>
-            <tr>
-                <th>Etatp</th>
-                <td>{{ plat.etatp ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Photop</th>
-                <td>{{ plat.photop }}</td>
-            </tr>
-            <tr>
-                <th>Calories</th>
-                <td>{{ plat.calories }}</td>
-            </tr>
-        </tbody>
-    </table>
+            </div>
+            <div class="col-md-8">
+                <h1 style="color: #004369; font-size: 28px; font-weight: bold;">{{ plat.nomp }}</h1>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th style="color: black;">Prix : </th>
+                            <td style="color: black;">{{ plat.prixp }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Description : </th>
+                            <td style="color: black;">{{ plat.descp }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Alergies : </th>
+                            <td>
+                                <div style="background-color: #ffcccc; color: black; padding: 10px; border-radius: 5px;"> <!-- Set color to black -->
+                                    {{ plat.alergiep }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Etat : </th>
+                            <td style="color: black;">{{ plat.etatp ? 'En stock' : 'Ripture stock' }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: black;">Calories : </th>
+                            <td style="color: black;">{{ plat.calories }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <a href="{{ path('app_plat_index') }}">back to list</a>
+                <a href="{{ path('app_plat_index') }}" class="btn btn-secondary" style="background-color: #db1f48;">Retour a la liste</a>
+                <a href="{{ path('app_avisp_new', {'idp': plat.idp}) }}" class="btn btn-secondary" style="background-color: #db1f48;">laissez un avis</a>
+                <a href="{{ path('app_avisp_indexuc', {'idp': plat.idp}) }}" class="btn btn-secondary" style="background-color: #db1f48;">consultez avis du plat</a>
+               
 
-    <a href="{{ path('app_plat_edit', {'idp': plat.idp}) }}">edit</a>
-
-    {{ include('plat/_delete_form.html.twig') }}
+             
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -21,17 +21,7 @@ class EquipementRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipement::class);
     }
 
-   // EquipementRepository.php
-
-   // Méthode pour récupérer tous les équipements triés par date de maintenance
-   /* public function findAllSortedByMaintenanceDate($sortDirection = 'ASC')
-    {
-        return $this->createQueryBuilder('e')
-            ->orderBy('e.datepremainte', $sortDirection)
-            ->getQuery()
-            ->getResult();
-    }
-   */
+   
   public function countByCategory(string $category): int
     {
         return $this->createQueryBuilder('e')
@@ -46,14 +36,14 @@ class EquipementRepository extends ServiceEntityRepository
 {
     $queryBuilder = $this->createQueryBuilder('ae');
 
-    // Si le critère `equipement.nomeq` est spécifié
+    
     if (!empty($criteria['nomeq'])) {
         $queryBuilder
             ->andWhere('ae.nomeq = :nomeq')
             ->setParameter('nomeq', $criteria['nomeq']);
     }
 
-    // Si le critère `equipement.categeq` est spécifié
+    
     if (!empty($criteria['categeq'])) {
         $queryBuilder
             ->andWhere('ae.categeq = :categeq')
@@ -64,6 +54,11 @@ class EquipementRepository extends ServiceEntityRepository
 
     return $queryBuilder->getQuery()->getResult();
 }
+
+
+
+
+
 
 
 //    /**

@@ -1,11 +1,48 @@
-{% extends 'base.html.twig' %}
+{% extends 'evenement/evenement.html.twig' %}
 
 {% block title %}New Participation{% endblock %}
 
-{% block body %}
-    <h1>Create new Participation</h1>
+{% block boxes %}
 
-    {{ include('participation/_form.html.twig') }}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card" style="background-color: #fafaea;">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="text-center mb-0">Create New Participation</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        <div class="form-group">
+                            {{ form_widget(form) }}
+                        </div>
 
-    <a href="{{ path('app_participation_index') }}">back to list</a>
+
+                        <button type="submit" class="btn btn-primary btn-block">Save</button>
+                        {{ form_end(form) }}
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
+
+
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('Front/styles/bootstrap-4.1.2/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Front/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Front/styles/main_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Front/styles/responsive.css') }}">
+    <style>
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+
+
+{% endblock %}
+

@@ -15,6 +15,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use MathPHP\Statistics\Average;
 
 
 #[Route('/reclamation')]
@@ -85,13 +86,12 @@ public function editB(Request $request, Reclamation $reclamation, EntityManagerI
     // Récupérer les données envoyées dans la requête
     $etatrec = $request->request->getInt('etatrec', 0); // Utilisez getInt pour obtenir un entier ou 0 si la valeur n'est pas un entier
 
-    // Modifier les attributs de l'entité Reclamation
     $reclamation->setEtatrec($etatrec);
     if ($request->isMethod('POST')) {
     // Enregistrer les modifications dans la base de données
     $entityManager->flush();
     return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
-    // Rendre le modèle Twig editB.html.twig avec les données de la réclamation   
+     
 }
 return $this->render('reclamation/editB.html.twig', [
     'reclamation' => $reclamation,
@@ -117,16 +117,16 @@ return $this->render('reclamation/editB.html.twig', [
          $user=new User();
         // Vérifier si un utilisateur est connecté
         if ($currentUser) {
-            // Récupérer l'utilisateur à partir de son ID
+          
             $user = $userRepository->find($userId);//trajaa user 
 
-            // Vérifier si l'utilisateur existe
+            
             if ($user) {
                 // Forcer le chargement complet de l'utilisateur
                 $entityManager->refresh($user);
 
                 // Vérifier si l'utilisateur actuel correspond à l'utilisateur dans la route
-                if ($user->getId()===30) {
+                if ($user->getId()) {
                     // Récupérer les abonnements de l'utilisateur
                     $recalamationUtilisateur = $entityManager->getRepository(Reclamation::class)->findBy(['idu' => $user]);
                     // Rendre la vue avec les abonnements de l'utilisateur connecté
@@ -135,16 +135,48 @@ return $this->render('reclamation/editB.html.twig', [
                         'reclamations' => $recalamationUtilisateur,
                     ]);
                 } else {
-                    // Gérer le cas où l'utilisateur actuel n'est pas autorisé à accéder aux abonnements de cet utilisateur
-                    // Retourner une réponse appropriée, par exemple une erreur 403
+                    
                 }
             } else {
-                // Gérer le cas où l'utilisateur n'existe pas
-                // Retourner une réponse appropriée, par exemple une erreur 404
+                
             }
         } else {
-            // Gérer le cas où aucun utilisateur n'est connecté
-            // Redirection, message d'erreur, etc.
+            
         }
+    }
+
+    #[Route('/reclamation/search', name: 'app_reclamation_search', methods: ['GET'])]
+    public function searchReclamations(Request $request,ReclamationRepository $reclamationRepository): Response
+    {
+        $criteria = array(
+            'categorierec' => $request->query->get('categorierec'),
+            'descriptionrec' =>$request->query->get('descriptionrec'),
+            'servicerec' => $request->query->get('servicerec')
+            
+    );
+        $reclamations = $reclamationRepository->findByCriteria($criteria);    
+        return $this->render('reclamation/search.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+    }
+    #[Route('/reclamation/stats', name: 'app_reclamation_stats', methods: ['GET'])]
+    public function stats(ReclamationRepository $reclamationRepository): Response
+    {        // Récupérer statistiques de reclamation par catégorie
+        $stats = $reclamationRepository->getStatsByCategory();
+
+        // Calculer la moyenne des réclamations par catégorie
+        $data = array_values($stats); // On utilise array_values pour obtenir un tableau numérique
+        $average = Average::mean($data);
+
+        
+        return $this->render('reclamation/stats.html.twig', [
+            'stats' => $stats,
+            'average' => $average,
+        ]);
+
+        // Passer les statistiques à votre modèle Twig
+        return $this->render('reclamation/stats.html.twig', [
+            'stats' => $stats,
+        ]);
     }
 }

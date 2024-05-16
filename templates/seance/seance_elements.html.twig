@@ -1,0 +1,226 @@
+{% extends 'back-base.html.twig' %}
+					{% block body %}
+						<div class="content-wrapper">
+							<div class="page-header"></div>
+							<div class="row">
+								<div class="col-md-6 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Seance formulaire</h4>
+
+											<div class="container">
+												{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+												<div class="form-group">
+													{{form_label(form.nom,'Nom')}}
+													{{ form_widget(form.nom,{'attr':{'class':'form-control'}}) }}
+													<div class="alert alert-danger">
+														{{ form_errors(form.nom) }}
+													</div>
+
+												</div>
+												<br>
+												<div class="form-group">
+													{{form_label(form.jourseance,'Jour')}}
+													{{ form_widget(form.jourseance,{'attr':{'class':'form-control'}}) }}
+													<div class="alert alert-danger">
+														{{ form_errors(form.jourseance) }}
+													</div>
+												</div>
+												<div class="form-group">
+													{{form_label(form.horaire,'Horaire')}}
+													{{ form_widget(form.horaire, {'attr': {'class': 'form-control'}, 'value': seance.horaire ? seance.horaire|date('Y-m-d H:i:s') : '' }) }}
+													<div class="alert alert-danger">
+														{{ form_errors(form.horaire) }}
+													</div>
+												</div>
+												<div class="form-group">
+													{{form_label(form.duree,'Duree')}}
+													{{ form_widget(form.duree,{'attr':{'class':'form-control'}}) }}
+													<div class="alert alert-danger">
+														{{ form_errors(form.duree) }}
+													</div>
+												</div>
+												<br>
+												<div class="form-group">
+													{{form_label(form.numesalle,'Numero salle')}}
+													{{ form_widget(form.numesalle,{'attr':{'class':'form-control'}}) }}
+													<div class="alert alert-danger">
+														{{ form_errors(form.numesalle) }}
+													</div>
+												</div>
+												<div class="input-group">
+													{{ form_label(form.imageseance) }}
+													{{ form_widget(form.imageseance, {'attr': {'class': 'form-control', 'accept': 'image/*'}}) }}
+
+													<div class="alert alert-danger">
+														{{ form_errors(form.imageseance) }}
+
+													</div>
+												</div>
+												<br>
+
+												<button class="btn btn-primary mr-2">{{ button_label|default('Save') }}</button>
+												{{ form_end(form) }}
+											</div>
+										</div>
+
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+							<!-- Inclusion de jQuery -->
+							<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+							<!-- Script JavaScript pour la recherche AJAX -->
+							<script>
+								$(document).ready(function () {
+$('#search').on('keyup', function () {
+var query = $(this).val();
+console.log(query);
+$.ajax({
+url: '{{ path('app_reservationb') }}', // Utilisez le nom de la route pour l'URL
+type: 'GET',
+data: {
+q: query
+},
+success: function (response) {
+console.log(response);
+// Ciblez uniquement le contenu de #tabv pour le remplacement
+$('#tabv').html($(response).find('#tabv').html());
+}
+});
+});
+});
+							</script>
+
+							<!-- Champ de recherche -->
+							<input
+							type="text" id="search" class="form-control" placeholder="Recherche par nom">
+
+							<!-- Conteneur pour afficher les résultats -->
+							<div
+								id="tabv">
+								<!-- Les résultats de la recherche AJAX seront affichés ici -->
+								{% if seancesres is not empty %}
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Nom</th>
+												<th>Jour</th>
+												<th>Horaire</th>
+
+												<!-- Ajoutez d'autres en-têtes de colonne au besoin -->
+											</tr>
+										</thead>
+										<tbody>
+											{% for seance in seancesres %}
+												<tr>
+													<td>{{ seance.nom }}</td>
+													<td>{{ seance.jourseance }}</td>
+													<td>{{ seance.horaire|date('Y-m-d H:i:s') }}</td>
+
+													<!-- Ajoutez d'autres colonnes avec les attributs pertinents de la séance -->
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								{% else %}
+									<p>Aucune séance trouvée.</p>
+								{% endif %}
+							</div>
+						</div>
+
+
+						<div class="row">
+							{% for seance in seances %}
+								
+								<div class="col-md-4">
+
+									<div class="card mb-4">
+									       <img src="{{ path('user_images', {'imageName': seance.imageseance|url_encode}) }}" alt="{{ seance.nom }}">
+                                            <div class="card-body">
+
+											<h5 class="card-title">{{ seance.nom }}</h5>
+											<p class="card-text">{{ seance.jourseance}}</p>
+											<p class="card-text">{{ seance.horaire|date('H:i') }}H</p>
+											<a href="{{ path('app_seance_show', {'idseance': seance.idseance}) }}">show</a>
+											<a href="{{ path('app_seance_edit', {'idseance': seance.idseance}) }}">edit</a>
+									</div>
+								</div>
+						</div>
+								
+							{% else %}
+								<div class="col">
+									<p>No records found</p>
+								</div>
+							{% endfor %}
+						</div>
+
+						<h1>Statistiques sur le nombre de séances par type</h1>
+
+						<canvas id="myChart" width="400" height="400"></canvas>
+
+						<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+						<script>
+							document.addEventListener('DOMContentLoaded', function () {
+var ctx = document.getElementById('myChart').getContext('2d');
+var stats = {{ stats | json_encode| raw }};
+
+var labels = stats.map(function (stat) {
+return stat.typeSeance;
+});
+
+var data = stats.map(function (stat) {
+return stat.nombreSeances;
+});
+
+var chart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: labels,
+datasets: [
+{
+label: 'Nombre de séances',
+data: data,
+backgroundColor: 'rgba(54, 162, 235, 0.2)',
+borderColor: 'rgba(54, 162, 235, 1)',
+borderWidth: 1
+}
+]
+},
+options: {
+scales: {
+yAxes: [
+{
+ticks: {
+beginAtZero: true
+}
+}
+]
+}
+}
+});
+});
+						</script>
+
+
+						<footer class="footer">
+							<div class="d-sm-flex justify-content-center justify-content-sm-between">
+								<span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+								<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+									Free
+									<a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard template</a>
+									from Bootstrapdash.com</span>
+							</div>
+						</footer>
+					</div>
+					<!-- main-panel ends -->
+				</div>
+				<!-- page-body-wrapper ends -->
+			</div>
+		{% endblock %}
+		

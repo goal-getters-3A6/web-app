@@ -1,9 +1,28 @@
-{% extends 'abonnement/abonnement.html.twig' %}
+{% extends 'base-clean.html.twig' %}
+
 {% block body %}
+<br><br>
 <div style="text-align: center;">
   
 
     {{ include('reclamation/_form.html.twig') }}
 
-    <a href="{{ path('reclamations_utilisateur', {'userId': app.user.id}) }}">Mes Réclamations</a>
+    <a href="{{ path('reclamations_utilisateur', {'userId': app.user.id}) }}" class="custom-button">Mes Réclamations</a>
+    <style>
+    .custom-button {
+        background-color: #004369;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 8px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        margin: 10px;
+    }
+</style>
+<br><br><br><br><br><br>
 {% endblock %}
+

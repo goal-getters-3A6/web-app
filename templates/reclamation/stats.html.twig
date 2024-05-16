@@ -1,0 +1,52 @@
+{# templates/reclamation/stats.html.twig #}
+
+{% extends 'back-base.html.twig' %}
+
+{% block title %}Statistiques des Réclamations par Catégorie{% endblock %}
+
+{% block body %}
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1 style="text-align: center;">Statistiques des Réclamations par Catégorie</h1>
+        <canvas id="reclamationChart" width="400" height="200"></canvas> {# Le graphique sera affiché ici #}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('reclamationChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [{% for category, count in stats %}"{{ category }}",{% endfor %}],
+                    datasets: [{
+                        label: 'Nombre de Réclamations',
+                        data: [{% for category, count in stats %}{{ count }},{% endfor %}],
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

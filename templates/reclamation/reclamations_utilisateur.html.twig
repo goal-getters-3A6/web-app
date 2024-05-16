@@ -1,22 +1,24 @@
-{% extends '/abonnement/abonnement.html.twig' %}
+{% extends 'base-clean.html.twig' %}
 
 {% block title %}Réclamations de {{ user.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Réclamations de {{ user.nom }}</h1>
+<div style="margin-top: 50px; padding: 20px; text-align: center;">
+    <h1>Les réclamations de {{ user.nom }}</h1>
+    <br><br><br>
 
     {% if reclamations is empty %}
         <p>Aucune réclamation trouvée pour cet utilisateur.</p>
     {% else %}
-        <ul>
+        <ul style="list-style-type: none; padding: 0; margin: 0 auto; max-width: 600px;">
             {% for reclamation in reclamations %}
-                <li>
-                    <strong>{{ reclamation.categorierec }}</strong>
-                    <p>Description : {{ reclamation.descriptionrec }}</p>
-                    {# Ajoutez d'autres détails de réclamation si nécessaire #}
+                <li style="border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; padding: 15px;">
+                    <h4><strong>Catégorie :</strong> {{ reclamation.categorierec }}</h4>
+                    <p><strong>Description :</strong> {{ reclamation.descriptionrec }}</p>
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
+</div>
+<br><br><br><br><br><br><br><br><br>
 {% endblock %}
-

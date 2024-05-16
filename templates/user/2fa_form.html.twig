@@ -1,9 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-clean.html.twig' %}
 
 {% block title %}Two Factor Auth
 {% endblock %}
 
 {% block body %}
+<br><br><br><br><br><br><br>
 	<div style="margin-left:400px;">
 		<div class="container mt-4">
 			<div class="row justify-content-center">
@@ -27,6 +28,7 @@
 							<div class="d-flex justify-content-center">
 								<a class="btn btn-link mr-2" href="{{ path('app_logout') }}">{{ "Cancel"|trans({}, 'SchebTwoFactorBundle') }}</a>
 								<button type="submit" class="btn btn-primary">{{ "Login"|trans({}, 'SchebTwoFactorBundle') }}</button>
+								<br><br><br><br>
 							</div>
 						</form>
 					</div>
@@ -34,4 +36,6 @@
 			</div>
 		</div>
 	</div>
+	<br><br><br><br>
 {% endblock %}
+

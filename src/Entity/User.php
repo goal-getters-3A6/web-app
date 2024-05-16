@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     private ?bool $statut = false;
 
     #[ORM\Column]
-    private ?int $nbTentative = null;
+    private ?int $nbTentative = 0;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
@@ -92,7 +92,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
     {
         return $this->id;
     }
-
 
     public function getNom(): ?string
     {
@@ -165,7 +164,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 
         return $this;
     }
-
+    public function incrementNbTentative() {
+        $this->nbTentative++;
+    }
     public function getImage(): ?string
     {
         return $this->image;

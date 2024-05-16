@@ -29,7 +29,7 @@
                 <td>{{ equipement.nomeq }}</td>
                 <td>{{ equipement.desceq }}</td>
                 <td>{{ equipement.doceq }}</td>
-                <td>{{ equipement.imageeq }}</td>
+                               <td> <img src="{{ path('user_images', {'imageName': equipement.imageeq|url_encode}) }}"></td>
                 <td>{{ equipement.categeq }}</td>
                 <td>{{ equipement.noteeq }}</td>
                 <td>{{ equipement.marqueeq }}</td>

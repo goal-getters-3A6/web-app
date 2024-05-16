@@ -1,0 +1,55 @@
+{% extends 'abonnement/abonnementB.html.twig' %}
+
+{% block title %}Détails de la Réclamation{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+        <h1 class="text-center mb-4">Détails de la Réclamation</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th scope="row">ID</th>
+                            <td>{{ reclamation.idrec }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Catégorie</th>
+                            <td>{{ reclamation.categorierec }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Description</th>
+                            <td>{{ reclamation.descriptionrec }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pièce jointe</th>
+                            <td>{{ reclamation.piecejointerec }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ODD</th>
+                            <td>{{ reclamation.oddrec }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Service</th>
+                            <td>{{ reclamation.servicerec }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">État</th>
+                            <td>{{ reclamation.etatrec }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    <a href="{{ path('app_reclamation_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                    {{ include('reclamation/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -16,9 +16,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AvispRepository extends ServiceEntityRepository
 {
+   
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Avisp::class);
+    }
+
+    public function getAverageRatingForPlat($platId)
+    {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->select('AVG(a.star) as average_rating')
+            ->andWhere('a.idplat = :platId')
+            ->setParameter('platId', $platId);
+
+        $averageRating = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return $averageRating;
     }
 
 //    /**

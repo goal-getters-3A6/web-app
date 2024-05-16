@@ -27,7 +27,8 @@
                 <td>{{ evenement.dateFeve ? evenement.dateFeve|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ evenement.nbrMax }}</td>
                 <td>{{ evenement.adresseEve }}</td>
-                <td>{{ evenement.imageEve }}</td>
+             <td> <img src="{{ path('user_images', {'imageName': evenement.imageEve|url_encode}) }}"alt="Image de l'événement" style="width: 200px; height: 200px;"></td>
+
                 <td>
                     <a href="{{ path('app_evenement_show', {'idEve': evenement.idEve}) }}">show</a>
                     <a href="{{ path('app_evenement_edit', {'idEve': evenement.idEve}) }}">edit</a>
